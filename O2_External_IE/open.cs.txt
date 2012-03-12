@@ -1,0 +1,47 @@
+// This file is part of the OWASP O2 Platform (http://www.owasp.org/index.php/OWASP_O2_Platform) and is released under the Apache 2.0 License (http://www.apache.org/licenses/LICENSE-2.0)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
+using O2.Interfaces.O2Core;
+using O2.Kernel;
+using O2.DotNetWrappers.DotNet;
+using O2.DotNetWrappers.Windows;
+using O2.DotNetWrappers.ExtensionMethods;
+using O2.Views.ASCX.Ascx.MainGUI;
+using O2.Views.ASCX.classes.MainGUI;
+using O2.Views.ASCX;
+using O2.External.IE.Wrapper;
+using O2.External.IE.Interfaces;
+using O2.External.IE.ExtensionMethods;
+
+namespace O2.Script
+{
+    public class open
+    {    
+    	private static IO2Log log = PublicDI.log;
+
+		public static IO2Browser webBrowser(string title, int width, int height)
+		{
+			return O2Gui.open<Panel>(title, width, height).add_WebBrowserWithLocationBar();        	
+		}
+		
+		public static IO2Browser webBrowser(string title)
+		{
+			return O2Gui.open<Panel>(title).add_WebBrowserWithLocationBar();        	
+		}
+		
+        public static IO2Browser webBrowser()
+        {
+            return O2Gui.open<Panel>("Web Browser").add_WebBrowserWithLocationBar();        	
+        }
+
+        public static ascx_LogViewer logViewer()
+        {
+            return O2Gui.open<ascx_LogViewer>("O2 Log Viewer");        	
+        }
+
+    }
+}

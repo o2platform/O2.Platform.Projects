@@ -1,0 +1,11 @@
+
+_UpgradeReport_Files
+_ReSharper.*
+bin
+obj
+*.pdb
+*.user
+UpgradeLog.xml
+*.suo
+*.pidb
+*.userprefs

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F6942664-5E64-4182-B3EB-11F481F461FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>O2.External.IE</RootNamespace>
+    <AssemblyName>O2_External_IE</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\_3rdPartyDlls\FilesWithNoCode\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BruteForceEngines\FormBruteForm.cs" />
+    <Compile Include="BruteForceEngines\FormBruteForm_v2.cs" />
+    <Compile Include="DI.cs" />
+    <Compile Include="ExtensionMethods\Html_ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IEChangeSink.cs" />
+    <Compile Include="ExtensionMethods\IEScreenshot_ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IE_Http_ExtensionMethods.cs" />
+    <Content Include="open.cs.txt" />
+    <Content Include="show.cs.txt" />
+    <Compile Include="Wrapper\ExtendedWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\IE_Controls_ExtensionMethods.cs" />
+    <Compile Include="Interfaces\IO2Browser.cs" />
+    <Compile Include="Interfaces\IO2HtmlAnchor.cs" />
+    <Compile Include="Interfaces\IO2HtmlForm.cs" />
+    <Compile Include="Interfaces\IO2HtmlFormField.cs" />
+    <Compile Include="Interfaces\IO2HtmlImg.cs" />
+    <Compile Include="Interfaces\IO2HtmlLink.cs" />
+    <Compile Include="Interfaces\IO2HtmlPage.cs" />
+    <Compile Include="Interfaces\IO2HtmlScript.cs" />
+    <Compile Include="Wrapper\O2BrowserIE.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebObjects\IE_HtmlPage.cs" />
+    <Compile Include="WebObjects\IE_Anchor.cs" />
+    <Compile Include="WebObjects\IE_Form.cs" />
+    <Compile Include="WebObjects\IE_Form_Field.cs" />
+    <Compile Include="WebObjects\IE_Img.cs" />
+    <Compile Include="WebObjects\IE_Script.cs" />
+    <Compile Include="WebObjects\old\O2Form.cs" />
+    <Compile Include="WebObjects\old\O2FormInputField.cs" />
+    <Compile Include="WebObjects\old\O2HtmlPage.cs" />
+    <Compile Include="WebObjects\old\O2JavaScript.cs" />
+    <Compile Include="WebObjects\IE_Link.cs" />
+    <Compile Include="Wrapper\O2BrowserIE_Screenshot.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
+      <Name>O2.FluentSharp.BCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
+      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
+      <Name>O2.FluentSharp.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj">
+      <Project>{E76BCE43-8511-4CE8-A965-C0150F713CE9}</Project>
+      <Name>O2_External_SharpDevelop</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

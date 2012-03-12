@@ -1,0 +1,4 @@
+﻿6-Dec-2009
+	* ascx_SourceCodeEditor
+		- added right-click menu to  with: Compile, Copy, Paste, Save and Open 
+		- added ability to open a file via an OpenFileDialog pop-up box

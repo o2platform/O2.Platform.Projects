@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BB1489A2-57AB-4A8D-A4DA-7C7E444512B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>O2_Misc_Microsoft_MPL_Libs</RootNamespace>
+    <AssemblyName>O2_Misc_Microsoft_MPL_Libs</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v3.5">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IdentityModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HtmlAgilityPack\crc32.cs" />
+    <Compile Include="HtmlAgilityPack\EncodingFoundException.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlAttribute.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlAttributeCollection.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlCmdLine.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlCommentNode.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlConsoleListener.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlDocument.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlElementFlag.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlEntity.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlNameTable.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlNode.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlNodeCollection.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlNodeNavigator.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlNodeType.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlParseError.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlParseErrorCode.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlTextNode.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlWeb.cs" />
+    <Compile Include="HtmlAgilityPack\HtmlWebException.cs" />
+    <Compile Include="HtmlAgilityPack\IOLibrary.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocument.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocumentCodeFragment.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocumentFragment.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocumentFragmentList.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocumentFragmentType.cs" />
+    <Compile Include="HtmlAgilityPack\MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="HtmlAgilityPack\NameValuePair.cs" />
+    <Compile Include="HtmlAgilityPack\NameValuePairList.cs" />
+    <Compile Include="InputSimulator\IInputDeviceStateAdaptor.cs" />
+    <Compile Include="InputSimulator\IInputMessageDispatcher.cs" />
+    <Compile Include="InputSimulator\IInputSimulator.cs" />
+    <Compile Include="InputSimulator\IKeyboardSimulator.cs" />
+    <Compile Include="InputSimulator\IMouseSimulator.cs" />
+    <Compile Include="InputSimulator\InputBuilder.cs" />
+    <Compile Include="InputSimulator\InputSimulator.cs" />
+    <Compile Include="InputSimulator\KeyboardSimulator.cs" />
+    <Compile Include="InputSimulator\MouseButton.cs" />
+    <Compile Include="InputSimulator\MouseSimulator.cs" />
+    <Compile Include="InputSimulator\Native\HARDWAREINPUT.cs" />
+    <Compile Include="InputSimulator\Native\INPUT.cs" />
+    <Compile Include="InputSimulator\Native\InputType.cs" />
+    <Compile Include="InputSimulator\Native\KEYBDINPUT.cs" />
+    <Compile Include="InputSimulator\Native\KeyboardFlag.cs" />
+    <Compile Include="InputSimulator\Native\MouseFlag.cs" />
+    <Compile Include="InputSimulator\Native\MOUSEINPUT.cs" />
+    <Compile Include="InputSimulator\Native\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="InputSimulator\Native\NativeMethods.cs" />
+    <Compile Include="InputSimulator\Native\VirtualKeyCode.cs" />
+    <Compile Include="InputSimulator\Native\XButton.cs" />
+    <Compile Include="InputSimulator\WindowsInputDeviceStateAdaptor.cs" />
+    <Compile Include="InputSimulator\WindowsInputMessageDispatcher.cs" />
+    <Compile Include="Irony_Parser\Ast\Base\AstException.cs" />
+    <Compile Include="Irony_Parser\Ast\Base\AstInterfaces.cs" />
+    <Compile Include="Irony_Parser\Ast\Base\AstNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Expressions\BinaryOperationNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Expressions\ExpressionListNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Expressions\IncDecNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Expressions\UnaryOperationNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Functions\FunctionCallNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Functions\FunctionDefNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Functions\ParamListNode.cs" />
+    <Compile Include="Irony_Parser\Ast\PrimitiveNodes\IdentifierNode.cs" />
+    <Compile Include="Irony_Parser\Ast\PrimitiveNodes\LiteralValueNode.cs" />
+    <Compile Include="Irony_Parser\Ast\PrimitiveNodes\StringTemplateNode.cs" />
+    <Compile Include="Irony_Parser\Ast\SpecialNodes\EmptyStatementNode.cs" />
+    <Compile Include="Irony_Parser\Ast\SpecialNodes\NotSupportedNode.cs" />
+    <Compile Include="Irony_Parser\Ast\SpecialNodes\NullNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Statements\AssignmentNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Statements\BlockNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Statements\IfNode.cs" />
+    <Compile Include="Irony_Parser\Ast\Statements\StatementListNode.cs" />
+    <Compile Include="Irony_Parser\Interpreter\CommandLine.cs" />
+    <Compile Include="Irony_Parser\Interpreter\DataStack.cs" />
+    <Compile Include="Irony_Parser\Interpreter\DynamicCallDispatcher.cs" />
+    <Compile Include="Irony_Parser\Interpreter\EvaluationContext.cs" />
+    <Compile Include="Irony_Parser\Interpreter\LanguageRuntime.cs" />
+    <Compile Include="Irony_Parser\Interpreter\LanguageRuntime_Init.cs" />
+    <Compile Include="Irony_Parser\Interpreter\RuntimeException.cs" />
+    <Compile Include="Irony_Parser\Interpreter\ScriptInterpreter.cs" />
+    <Compile Include="Irony_Parser\Interpreter\StackFrame.cs" />
+    <Compile Include="Irony_Parser\Interpreter\ValuesTable.cs" />
+    <Compile Include="Irony_Parser\Microsoft\BigInteger.cs" />
+    <Compile Include="Irony_Parser\Microsoft\Complex64.cs" />
+    <Compile Include="Irony_Parser\Microsoft\MathResources.Designer.cs">
+      <DependentUpon>MathResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Irony_Parser\Parsing\Construction\GrammarDataBuilder.cs" />
+    <Compile Include="Irony_Parser\Parsing\Construction\LanguageDataBuilder.cs" />
+    <Compile Include="Irony_Parser\Parsing\Construction\ParserDataBuilder.cs" />
+    <Compile Include="Irony_Parser\Parsing\Construction\ParserDataBuilder_HelperClasses.cs" />
+    <Compile Include="Irony_Parser\Parsing\Construction\ScannerDataBuilder.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\BnfExpression.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\BnfTerm.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\Grammar.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\GrammarData.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\GrammarError.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\GrammarHint.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\LanguageAttribute.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\NonTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Grammar\TermReportGroups.cs" />
+    <Compile Include="Irony_Parser\Parsing\LanguageData.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\CoreParser.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\CoreParser_ErrorHandling.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\Parser.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParserData.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParserDataPrinter.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParserMessage.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParserStack.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParserTrace.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParseTree.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParseTreeExtensions.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParseTreeNode.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParsingContext.cs" />
+    <Compile Include="Irony_Parser\Parsing\Parser\ParsingEventArgs.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\Scanner.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\ScannerData.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\SourceLocation.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\SourceStream.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\Token.cs" />
+    <Compile Include="Irony_Parser\Parsing\Scanner\TokenEditorInfo.cs" />
+    <Compile Include="Irony_Parser\Parsing\StringUtils.cs" />
+    <Compile Include="Irony_Parser\Parsing\SymbolTable.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\CommentTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\CompoundTerminalBase.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\ConstantTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\CustomTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\DataLiteralBase.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\DsvLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\FixedLengthLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\FreeTextLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\IdentifierTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\ImpliedSymbolTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\KeyTerm.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\NewLineTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\NumberLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\QuotedValueLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\RegExBasedTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\RegExLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\StringLiteral.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\TerminalFactory.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\WikiTerminals\WikiBlockTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\WikiTerminals\WikiTagTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\WikiTerminals\WikiTextTerminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\WikiTerminals\_WikiTerminalBase.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\_ISourceStream.cs" />
+    <Compile Include="Irony_Parser\Parsing\Terminals\_Terminal.cs" />
+    <Compile Include="Irony_Parser\Parsing\TokenFilters\CodeOutlineFilter.cs" />
+    <Compile Include="Irony_Parser\Parsing\TokenFilters\TokenFilter.cs" />
+    <Compile Include="Irony_Parser\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\AtomPubClient.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\DataContractContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\HttpContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\JsonContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\PollingAgent.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\SyndicationContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\SyndicationFeedExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\XElementContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\XmlContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http.Extensions\XmlSerializerContentExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\AsyncResult.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\CacheResponseProperty.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\CompletedAsyncResult.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\DelegatingStream.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\DetectEofStream.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\DrainOnCloseStream.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\AcceptRangeUnit.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\AuthenticationHelper.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\ByteRange.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\CacheControl.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Challenge.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Connection.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\ContentCoding.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\ContentRange.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Cookie.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Credential.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\DateOrDeltaSeconds.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\DateOrEntityTag.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\EntityTag.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Expect.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\HeaderFormatter.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\HeaderStore.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\HeaderString.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\HeaderValues.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Host.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\HttpHeaders.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Product.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\ProductOrComment.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Range.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\RequestHeaders.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\ResponseHeaders.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\StringWithOptionalQuality.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\TransferCoding.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Via.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\Headers\Warning.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpAsyncStage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpClient.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpContent.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpFormFile.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpFormValue.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpMessageCore.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpMessageExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpMethod.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpMethodExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpMultipartMimeForm.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpProcessingException.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpProcessingStage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpQueryString.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpRequestMessage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpResponseMessage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpStage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpStageProcessingAsyncResult.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpStageProcessingAsyncState.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpStageProcessingException.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpTransportSettings.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpUrlEncodedForm.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpUtility.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\HttpWebRequestTransportStage.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\ICreateHttpContent.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\InternalsVisibleTo.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\SendCompletedEventArgs.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.Http\StreamExtensions.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\AdapterStream.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\AsyncResult.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\CachingParameterInspector.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\ExtensionHelpers.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\FormsPostDispatchMessageFormatter.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\HelpExampleGenerator.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\HelpPageInvoker.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\RequestInterceptor.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\RequestInterceptorBindingElement.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\ResponseWebFormatPropertyAttacher.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\AtomPubServiceBase.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\AtomPubServiceHost.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\CollectionServiceBase.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\CollectionServiceHost.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\SingletonServiceBase.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\SpecializedServices\SingletonServiceHost.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\UnhandledOperationInvoker.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebCacheAttribute.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebErrorHandler.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebHelpAttribute.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebHttpBehavior2.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebProtocolException.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebServiceHost2.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebServiceHost2Factory.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WrappedOperationSelector.cs" />
+    <Compile Include="WCF REST Starter Kit Preview 2\PasteXmlAsType\Converter.cs" />
+    <Compile Include="XObjects\Cmdline\update.cs" />
+    <Compile Include="XObjects\Cmdline\XObjectsGenerator.cs" />
+    <Compile Include="XObjects\Src\API\ContentModel.cs" />
+    <Compile Include="XObjects\Src\API\FsmXObjects.cs" />
+    <Compile Include="XObjects\Src\API\Interfaces.cs" />
+    <Compile Include="XObjects\Src\API\XObjects.cs" />
+    <Compile Include="XObjects\Src\API\XObjectsQueryExtension.cs" />
+    <Compile Include="XObjects\Src\API\XObjectsSimpleType.cs" />
+    <Compile Include="XObjects\Src\ClrAnnotation.cs" />
+    <Compile Include="XObjects\Src\ClrPropertyInfo.cs" />
+    <Compile Include="XObjects\Src\ClrSimpleTypeInfo.cs" />
+    <Compile Include="XObjects\Src\ClrTypeInfo.cs" />
+    <Compile Include="XObjects\Src\CodeDomHelper.cs" />
+    <Compile Include="XObjects\Src\CompiledFacets.cs" />
+    <Compile Include="XObjects\Src\Constants.cs" />
+    <Compile Include="XObjects\Src\Enums.cs" />
+    <Compile Include="XObjects\Src\FacetChecker.cs" />
+    <Compile Include="XObjects\Src\FSM.cs" />
+    <Compile Include="XObjects\Src\FSMGenerator.cs" />
+    <Compile Include="XObjects\Src\FXT\Base.cs" />
+    <Compile Include="XObjects\Src\FXT\Deanonymize.cs" />
+    <Compile Include="XObjects\Src\FXT\DmlExtensions.cs" />
+    <Compile Include="XObjects\Src\FXT\Linq2Xsd.cs" />
+    <Compile Include="XObjects\Src\FXT\QueryExtensions.cs" />
+    <Compile Include="XObjects\Src\NameMangler.cs" />
+    <Compile Include="XObjects\Src\NamespaceList.cs" />
+    <Compile Include="XObjects\Src\PropertyBuilder.cs" />
+    <Compile Include="XObjects\Src\SimpleTypeCodeDomHelper.cs" />
+    <Compile Include="XObjects\Src\SimpleTypeValidator.cs" />
+    <Compile Include="XObjects\Src\SOMQueryExtensions.cs" />
+    <Compile Include="XObjects\Src\TypeBuilder.cs" />
+    <Compile Include="XObjects\Src\TypesToCodeDom.cs" />
+    <Compile Include="XObjects\Src\XmlComplianceUtil.cs" />
+    <Compile Include="XObjects\Src\XmlConvert.cs" />
+    <Compile Include="XObjects\Src\XObjectException.cs" />
+    <Compile Include="XObjects\Src\XObjectsSettings.cs" />
+    <Compile Include="XObjects\Src\XsdToTypesConverter.cs" />
+    <Compile Include="XObjects\XOTask\LinqToXsdTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Irony_Parser\Parsing\Construction\_about_parser_construction.txt" />
+    <Content Include="XObjects\Cmdline\Cmdline.csproj" />
+    <Content Include="XObjects\XObjects.csproj" />
+    <Content Include="XObjects\XObjects.sln" />
+    <Content Include="XObjects\XOTask\XOTask.csproj" />
+    <Content Include="XObjects\XOTask\XOTask.sln" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Irony_Parser\Microsoft\MathResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MathResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Microsoft.Scripting.Math</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Irony_Parser\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
+      <Name>O2.FluentSharp.BCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
+      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
+      <Name>O2.FluentSharp.CoreLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2483564D-4343-4624-A0C6-63ABC932544A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>O2SharpDevelop</RootNamespace>
+    <AssemblyName>O2SharpDevelop</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.6.9.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeCompletion\CodeCompletionData.cs" />
+    <Compile Include="CodeCompletion\CodeCompletionKeyHandler.cs" />
+    <Compile Include="CodeCompletion\CodeCompletionProvider.cs" />
+    <Compile Include="CodeCompletion\form_O2EditorWithCodeComplete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodeCompletion\HostCallbackImplementation.cs" />
+    <Compile Include="CodeCompletion\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodeCompletion\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CodeCompletion\ToolTipProvider.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\O2_DC\FileUtility.Minimal.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Ambience.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\BusyManager.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CecilReader.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ClassFinder.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CSharp\CSharpAmbience.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CSharp\ExpressionFinder.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CSharp\OverloadResolution.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CSharp\TypeInference.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\CtrlSpaceResolveHelper.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\DiffUtility.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\DomCache.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\EasyCodeDom.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ExpressionContext.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ExtensionMethods.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\FilePosition.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\FoldingRegion.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\FusionNative.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\GacInterop.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\HostCallback.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\IComment.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\IExpressionFinder.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\AbstractEntity.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\AbstractMember.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\AbstractReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\AnonymousMethodReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\ArrayReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\AttributeReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\BoundTypeParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\CombinedReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\CompoundClass.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\ConstructedReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DecoratingReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultAttribute.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultClass.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultComment.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultCompilationUnit.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultEvent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultField.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultMethod.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultProperty.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultTypeParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultUsing.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\DefaultUsingScope.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\ElementReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\GenericReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\GetClassReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\MethodGroupReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\NullReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\PointerReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\ProxyReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\ReferenceReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\SearchClassReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\SystemTypes.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Implementations\UnknownReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ClassType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ExplicitInterfaceImplementation.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IAttribute.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IClass.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ICompilationUnit.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IDomProgressMonitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IEntity.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IEvent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IField.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IFreezable.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IMember.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IMethod.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IProperty.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ITypeParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IUsing.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\IUsingScope.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ModifierEnum.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\ParameterModifiers.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Interfaces\Region.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\IResolver.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\LanguageProperties.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\LazyList.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\LoggingService.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\MemberLookupHelper.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\CodeSnippetConverter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\CSharpToVBNetConvertVisitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\InferredReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\LambdaParameterReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\LambdaReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\NRefactoryASTConvertVisitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\NRefactoryInformationProvider.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\NRefactoryResolver.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\ResolveVisitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\TypeVisitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\NRefactoryResolver\VBNetToCSharpConvertVisitor.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\DefaultProjectContent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\DomAssemblyName.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\IProjectContent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\ParseInformation.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\ProjectContentRegistry.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ProjectContent\ReflectionProjectContent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReadOnlyDictionary.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\CodeGenerator.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\CodeGeneratorOptions.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\CSharpCodeGenerator.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\IDocument.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\NRefactoryCodeGenerator.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\NRefactoryRefactoringProvider.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\RefactoringProvider.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\TextFinder.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Refactoring\VBNetCodeGenerator.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\DomPersistence.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionClass.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionEvent.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionField.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionLoader.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionMethod.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionParameter.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionProperty.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionReturnType.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ReflectionLayer\ReflectionTypeNameSyntaxError.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\ResolveResult.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\Tag.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\VBNet\ExpressionFinder.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\VBNet\VBNetAmbience.cs" />
+    <Compile Include="ICSharpCode.SharpDevelop.Dom\Project\Src\XmlDoc.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\BookmarkActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\CaretActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\ClipBoardActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\FoldActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\FormatActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\HomeEndActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\IEditAction.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\MiscActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Actions\SelectionActions.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\AbstractSegment.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\BookmarkManager\Bookmark.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\BookmarkManager\BookmarkEventHandler.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\BookmarkManager\BookmarkManager.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\BookmarkManager\BookmarkManagerMemento.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\DefaultDocument.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\DefaultTextEditorProperties.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\DocumentEventArgs.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\DocumentFactory.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FoldingStrategy\FoldingManager.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FoldingStrategy\FoldMarker.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FoldingStrategy\IFoldingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FoldingStrategy\IndentFoldingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FormattingStrategy\DefaultFormattingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\FormattingStrategy\IFormattingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\DefaultHighlightingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\FontContainer.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightBackground.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightColor.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightInfo.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightingColorNotFoundException.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightingDefinitionInvalidException.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightingDefinitionParser.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightingManager.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightingStrategyFactory.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\HighlightRuleSet.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\IHighlightingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\NextMarker.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\PrevMarker.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\Span.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\SpanStack.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\SyntaxModes\FileSyntaxModeProvider.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\SyntaxModes\ISyntaxModeFileProvider.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\SyntaxModes\ResourceSyntaxModeProvider.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\SyntaxModes\SyntaxMode.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\HighlightingStrategy\TextWord.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\IDocument.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\ISegment.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\ITextEditorProperties.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\LineManager\DeferredEventList.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\LineManager\LineManager.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\LineManager\LineManagerEventArgs.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\LineManager\LineSegment.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\LineManager\LineSegmentTree.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\MarkerStrategy\MarkerStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\MarkerStrategy\TextMarker.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\Selection\ColumnRange.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\Selection\DefaultSelection.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\Selection\ISelection.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\Selection\SelectionManager.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextAnchor.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextBufferStrategy\GapTextBufferStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextBufferStrategy\ITextBufferStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextBufferStrategy\StringTextBufferStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextLocation.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Document\TextUtilities.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\AbstractMargin.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\BracketHighlighter.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\BrushRegistry.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\Caret.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\AbstractCompletionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\CodeCompletionListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\CodeCompletionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\DeclarationViewWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\ICompletionData.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\CompletionWindow\ICompletionDataProvider.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\DrawableLine.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\FoldMargin.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\GutterMargin.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\HRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\IconBarMargin.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\Ime.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\InsightWindow\IInsightDataProvider.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\InsightWindow\InsightWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextArea.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextAreaClipboardHandler.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextAreaControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextAreaDragDropHandler.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextAreaMouseHandler.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextAreaUpdate.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextEditorControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\TextView.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Gui\ToolTipRequestEventArgs.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\ParserFoldingStrategy.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\IUndoableOperation.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\UndoableDelete.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\UndoableInsert.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\UndoableReplace.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\UndoQueue.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Undo\UndoStack.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\AugmentableRedBlackTree.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\CheckedList.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\FileReader.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\LoggingService.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\LookupTable.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\MouseWheelHandler.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\RedBlackTreeIterator.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\RtfWriter.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TextUtility.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipPainter.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipPainterTools.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipSection.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipSpacer.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipSplitter.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\TipText.cs" />
+    <Compile Include="ICSharpCode.TextEditor\Project\Src\Util\WeakCollection.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\AST\Expressions.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\AST\GlobalLevel.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\AST\Node.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\AST\Statements.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\AST\TypeLevel.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\Attributes.cs" />
+    <Compile Include="NRefactory\NRefactoryASTGenerator\Main.cs" />
+    <Compile Include="NRefactory\Project\Src\AstBuilder\ExpressionBuilder.cs" />
+    <Compile Include="NRefactory\Project\Src\AstBuilder\StatementBuilder.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\AbstractNode.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\Enums.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\BlockStatement.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\CompilationUnit.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\Expression.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\LocalVariableDeclaration.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\PrimitiveExpression.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\General\Statement.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\Generated.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\INode.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\INullable.cs" />
+    <Compile Include="NRefactory\Project\Src\Ast\TypeReference.cs" />
+    <Compile Include="NRefactory\Project\Src\EnvironmentInformationProvider.cs" />
+    <Compile Include="NRefactory\Project\Src\IAstVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\AbstractLexer.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\CSharp\ConditionalCompilation.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\CSharp\Keywords.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\CSharp\Lexer.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\CSharp\Tokens.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\ILexer.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\LookupTable.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\BlankLine.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\Comment.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\CommentType.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\ISpecial.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\PreProcessingDirective.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\SpecialTracker.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Special\TagComment.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\Token.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\VBNet\Keywords.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\VBNet\Lexer.cs" />
+    <Compile Include="NRefactory\Project\Src\Lexer\VBNet\Tokens.cs" />
+    <Compile Include="NRefactory\Project\Src\Location.cs" />
+    <Compile Include="NRefactory\Project\Src\OperatorPrecedence.cs" />
+    <Compile Include="NRefactory\Project\Src\ParserFactory.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\AbstractParser.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\CSharp\CSharpParser.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\CSharp\Parser.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\Errors.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\IParser.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\ModifierList.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\VBNet\ParamModifierList.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\VBNet\Parser.cs" />
+    <Compile Include="NRefactory\Project\Src\Parser\VBNet\VBNetParser.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\AbstractOutputFormatter.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\AbstractPrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\CSharp\CSharpOutputVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\CSharp\OutputFormatter.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\CSharp\PrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\IOutputAstVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\SpecialNodesInserter.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\VBNet\VBNetOutputFormatter.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\VBNet\VBNetOutputVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\PrettyPrinter\VBNet\VBNetPrettyPrintOptions.cs" />
+    <Compile Include="NRefactory\Project\Src\SnippetParser.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\AbstractAstTransformer.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\AbstractASTVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\CodeDOMOutputVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\CodeDOMVerboseOutputGenerator.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\ConvertVisitorBase.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\CSharpConstructsConvertVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\LookupTableVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\NodeTrackingAstVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\NotImplementedAstVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\PrefixFieldsVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\RenameIdentifierVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\SetParentVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\ToCSharpConvertVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\ToVBNetConvertVisitor.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\ToVBNetRenameConflictingVariables.cs" />
+    <Compile Include="NRefactory\Project\Src\Visitors\VBNetConstructsConvertVisitor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\ASPX.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\BAT-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Boo.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Coco-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\CPP-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\CSharp-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\HTML-Mode.xshd" />
+    <None Include="ICSharpCode.TextEditor\Project\Resources\ICSharpCode.TextEditor.snk" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Java-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Mode.xsd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Patch-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\PHP-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\Tex-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\VBNET-Mode.xshd" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\XML-Mode.xshd" />
+    <None Include="NRefactory\Project\Src\Lexer\BuildKeywords.pl" />
+    <None Include="NRefactory\Project\Src\Parser\CSharp\cs.ATG" />
+    <None Include="NRefactory\Project\Src\Parser\Frames\Parser.frame" />
+    <None Include="NRefactory\Project\Src\Parser\Frames\Scanner.frame" />
+    <None Include="NRefactory\Project\Src\Parser\gen.bat" />
+    <None Include="NRefactory\Project\Src\Parser\gen.sh" />
+    <None Include="NRefactory\Project\Src\Parser\VBNet\VBNET.ATG" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CodeCompletion\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\RightArrow.cur" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\SyntaxModes.xml" />
+    <EmbeddedResource Include="ICSharpCode.TextEditor\Project\Resources\TextEditorControl.bmp" />
+    <Content Include="NRefactory\Project\Src\Lexer\CSharp\KeywordList.txt" />
+    <Content Include="NRefactory\Project\Src\Lexer\VBNet\KeywordList.txt" />
+    <Content Include="NRefactory\Project\Src\Parser\Frames\SharpCoco.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
+      <Name>O2.FluentSharp.BCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
+      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
+      <Name>O2.FluentSharp.CoreLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

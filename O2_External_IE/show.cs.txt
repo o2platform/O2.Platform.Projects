@@ -1,0 +1,44 @@
+// This file is part of the OWASP O2 Platform (http://www.owasp.org/index.php/OWASP_O2_Platform) and is released under the Apache 2.0 License (http://www.apache.org/licenses/LICENSE-2.0)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
+using O2.Interfaces.O2Core;
+using O2.Kernel;
+using O2.DotNetWrappers.DotNet;
+using O2.DotNetWrappers.Windows;
+using O2.DotNetWrappers.ExtensionMethods;
+using O2.Views.ASCX.classes.MainGUI;
+using O2.Views.ASCX;
+using O2.External.SharpDevelop.Ascx;
+
+namespace O2.External.IE
+{
+    public class show
+    {    
+        private static IO2Log log = PublicDI.log;
+
+        public static PropertyGrid info(object _object)
+        {
+            var propertyGrid = O2Gui.open<PropertyGrid>();
+            propertyGrid.show(_object);
+            return propertyGrid;
+        }
+		
+        public static ascx_SourceCodeViewer htmlCode(string htmlCode)
+        {
+            var sourceCodeViewer = O2Gui.load<ascx_SourceCodeViewer>();
+            sourceCodeViewer.setDocumentContents(htmlCode,"*.html");
+            return sourceCodeViewer;
+        }
+		
+        public static ascx_SourceCodeViewer csharpCode(string csharpCode)
+        {
+            var sourceCodeViewer = O2Gui.load<ascx_SourceCodeViewer>();
+            sourceCodeViewer.setDocumentContents(csharpCode,"*.cs");
+            return sourceCodeViewer;
+        }
+    }
+}
