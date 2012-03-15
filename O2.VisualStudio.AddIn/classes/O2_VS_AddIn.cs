@@ -15,6 +15,8 @@ using O2.DotNetWrappers.DotNet;
 using O2.VisualStudio.Commands;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.CommandBars;
+using O2.Platform;
+using O2.Kernel;
 
 namespace O2.VisualStudio
 {
@@ -43,8 +45,11 @@ namespace O2.VisualStudio
 				this.VS_AddIn = addin;
 				this.VS_Type = vsType;
 
+				PublicDI.config.setLocalScriptsFolder(PublicDI.config.CurrentExecutableDirectory.pathCombine("O2.Platform.Scripts"));
+				openO2LogViewer();
+				syncO2Repositories();
 
-
+				
 				this.add_TopMenu("O2 Platform");
 
 				this.add_Command<O2_ScriptWithPanel>()
@@ -56,6 +61,27 @@ namespace O2.VisualStudio
 				ex.log();
 			}
 			return this;
+		}
+
+		public void syncO2Repositories()
+		{
+			try
+			{
+				GitHub_Actions.TargetDir = PublicDI.config.CurrentExecutableDirectory;
+				GitHub_Actions.LogMessage = (message) => "[GitHub Actions] {0}".info(message);
+
+				GitHub_Actions.LogMessage("Target Dir: {0}".format(GitHub_Actions.TargetDir));
+				GitHub_Actions.CloneRepository("O2.Platform.Scripts");
+			}
+			catch (Exception ex)
+			{
+				ex.log();
+			}
+		}
+
+		public void openO2LogViewer()
+		{
+			O2Gui.open<Panel>("O2 Log Viewer", 400, 300).add_LogViewer();
 		}
 
 		public void add_Button()
@@ -78,9 +104,10 @@ namespace O2.VisualStudio
 	{
 		public static CommandBarPopup add_TopMenu(this O2_VS_AddIn o2AddIn, string caption)
 		{
+			var addAfterMenu = "Help"; //"Tools"
 			var commandBars = (CommandBars)o2AddIn.VS_Dte.CommandBars;
 			var menuCommandBar = commandBars["MenuBar"];
-			var position = (commandBars["Tools"].Parent as CommandBarControl).Index;
+			var position = (commandBars[addAfterMenu].Parent as CommandBarControl).Index;
 			position++;
 			var newMenu = (CommandBarPopup)menuCommandBar.Controls.Add(MsoControlType.msoControlPopup, System.Type.Missing, System.Type.Missing, position, true);
 			newMenu.Caption = caption;
