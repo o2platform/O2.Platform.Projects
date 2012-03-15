@@ -22,10 +22,13 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             PublicDI.CurrentScript = pathToFileToCompile;
             var csharpCompiler = new CSharp_FastCompiler();
             csharpCompiler.generateDebugSymbols= generateDebugSymbols;
-            var compileProcess = new System.Threading.AutoResetEvent(false);
-            csharpCompiler.compileSourceCode(pathToFileToCompile.contents());
+			var compileProcess = new System.Threading.AutoResetEvent(false);            
             csharpCompiler.onCompileFail = () => compileProcess.Set();
             csharpCompiler.onCompileOK = () => compileProcess.Set();
+
+			O2Thread.mtaThread(()=> {            
+										csharpCompiler.compileSourceCode(pathToFileToCompile.contents());
+									});
             compileProcess.WaitOne();
             return csharpCompiler.assembly();
         }
@@ -74,16 +77,19 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 
         public static Assembly assembly(this CSharp_FastCompiler csharpCompiler)
         {
-            if (csharpCompiler != null)
-                if (csharpCompiler.CompilerResults != null)
-                    if (csharpCompiler.CompilerResults.Errors.HasErrors == false)
-                    {
-                        if (csharpCompiler.CompilerResults.CompiledAssembly != null)
-                            return csharpCompiler.CompilerResults.CompiledAssembly;
-                    }
-                    else
-                        "CompilationErrors:".line().add(csharpCompiler.CompilationErrors).error();
-
+			if (csharpCompiler != null)
+			{
+				if (csharpCompiler.CompiledAssembly.notNull())
+					return csharpCompiler.CompiledAssembly;
+				if (csharpCompiler.CompilerResults != null)
+					if (csharpCompiler.CompilerResults.Errors.HasErrors == false)
+					{
+						if (csharpCompiler.CompilerResults.CompiledAssembly != null)
+							return csharpCompiler.CompilerResults.CompiledAssembly;
+					}
+					else
+						"CompilationErrors:".line().add(csharpCompiler.CompilationErrors).error();
+			}
             return null;
         }
 

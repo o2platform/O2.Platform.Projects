@@ -182,11 +182,24 @@ namespace O2.External.SharpDevelop.Ascx
             {
                 if (loadedReferences.contains(referenceAssembly).isFalse())
                 {
- //                   var assemblyWithoutExtension = Path.GetFileNameWithoutExtension(referenceAssembly);
+					if (referenceAssembly.fileExists())
+						this.myProjectContent.add_Reference(this.pcRegistry, referenceAssembly, statusMessage);
+					else
+					{
+						var assembly = referenceAssembly.assembly();
+						if (assembly.notNull() && assembly.Location.fileExists())
+						{
+							this.myProjectContent.add_Reference(this.pcRegistry, assembly.Location, statusMessage);
+						}
+						else
+							"[addReference] could not find assembly for: {0}".error(referenceAssembly);
+						
+					}
+ 
                     //if (gacAssemblies.contains(assemblyWithoutExtension))
                     //    this.myProjectContent.add_Reference(this.pcRegistry, assemblyWithoutExtension, statusMessage);
                     //else
-                    this.myProjectContent.add_Reference(this.pcRegistry, referenceAssembly, statusMessage);
+                    
                     loadedReferences.Add(referenceAssembly);
                 }
             }

@@ -9,6 +9,7 @@ using O2.External.SharpDevelop.ExtensionMethods;
 using O2.Kernel.ExtensionMethods;
 using O2.API.AST.ExtensionMethods.CSharp;
 using O2.Kernel;
+using System.Reflection;
 
 namespace O2.External.SharpDevelop.AST
 {
@@ -24,13 +25,14 @@ namespace O2.External.SharpDevelop.AST
         public CompilationUnit CompilationUnit { get; set; }
         public List<string> ExtraSourceCodeFilesToCompile { get; set; }
         public AstDetails AstDetails { get; set; }
-        public string AstErrors { get; set; }
-        public bool generateDebugSymbols { get; set; }
-        public string CompilationErrors { get; set; }        
-        public CompilerResults CompilerResults { get; set; }
-        public bool ExecuteInStaThread { get; set; }
-        public bool ExecuteInMtaThread { get; set; }
-        public bool WorkOffline { get; set; }                
+        public string			AstErrors { get; set; }
+        public bool				generateDebugSymbols	{ get; set; }
+        public string			CompilationErrors		{ get; set; }      
+  		public Assembly			CompiledAssembly		{ get; set; }
+        public CompilerResults	CompilerResults			{ get; set; }
+        public bool				ExecuteInStaThread		{ get; set; }
+        public bool				ExecuteInMtaThread		{ get; set; }
+        public bool				WorkOffline				{ get; set; }                
 
         public Action onAstFail { get; set; }
         public Action onAstOK { get; set; }
@@ -134,6 +136,9 @@ namespace O2.External.SharpDevelop.AST
             {
                 if (codeSnippet.valid())
                 {
+					if (getCachedAssemblyForCode_and_RaiseEvents(codeSnippet))
+						return;
+					
                     FinishedCompilingCode.Reset();
                     createAstStack = new Stack<string>();
                     //      createAstStack.Clear();
@@ -148,6 +153,23 @@ namespace O2.External.SharpDevelop.AST
                 ex.log("in compileSnippet");
             }
         }
+
+		public bool getCachedAssemblyForCode_and_RaiseEvents(string codeSnippet)
+		{
+			var filesMd5 = codeSnippet.md5Hash();
+			var cachedCompilation = CompileEngine.getCachedCompiledAssembly_MD5(filesMd5);
+			if (cachedCompilation.notNull())
+			{
+				this.CompiledAssembly = cachedCompilation;
+
+				CompileEngine.loadReferencedAssembliesIntoMemory(this.CompiledAssembly);
+				this.invoke(this.onCompileOK);				
+				FinishedCompilingCode.Set();
+
+				return true;
+			}
+			return false;
+		}
 
         public void compileSnippet()
         {
@@ -195,6 +217,8 @@ namespace O2.External.SharpDevelop.AST
             }
             else
             {
+				if (getCachedAssemblyForCode_and_RaiseEvents(sourceCode))
+					return;
                 // we need to do make sure we include any extra references included in the code
                 var astCSharp = new Ast_CSharp(sourceCode);
                 mapCodeO2References(astCSharp);
@@ -211,8 +235,9 @@ namespace O2.External.SharpDevelop.AST
                         {
 
                             if (compiling == false && compileStack.Count > 0)
-                            {
+                            {								
                                 compiling = true;
+								CompiledAssembly = null;
                                 FinishedCompilingCode.Reset();
                                 compileExtraSourceCodeReferencesAndUpdateReferencedAssemblies();
                                 this.sleep(forceAstBuildDelay, DebugMode);            // wait a bit to allow more entries to be cleared from the stack
@@ -239,9 +264,7 @@ namespace O2.External.SharpDevelop.AST
                                 foreach (var referencedAssembly in ReferencedAssemblies)
                                     compilerParams.ReferencedAssemblies.Add(referencedAssembly);
 
-                                CompilerResults = csharpCodeProvider.CompileAssemblyFromSource(compilerParams, sourceCode);
-
-                                FinishedCompilingCode.Set();
+                                CompilerResults = csharpCodeProvider.CompileAssemblyFromSource(compilerParams, sourceCode);                                
 
                                 if (CompilerResults.Errors.Count > 0 || CompilerResults.CompiledAssembly == null)
                                 {
@@ -260,10 +283,17 @@ namespace O2.External.SharpDevelop.AST
                                 }
                                 else
                                 {
+									CompiledAssembly = CompilerResults.CompiledAssembly;
+									if (CompiledAssembly.Location.fileExists())
+									{
+										var codeMd5 = sourceCode.md5Hash();
+										CompileEngine.CachedCompiledAssemblies.add(codeMd5, CompiledAssembly.Location);
+									}
                                     DebugMode.ifDebug("Compilation was OK");
                                     this.invoke(onCompileOK);
                                 }
-                                compiling = false;                                
+                                compiling = false;
+								FinishedCompilingCode.Set();
                                 compileSourceCode();
                             }
                         }
@@ -499,10 +529,13 @@ namespace O2.External.SharpDevelop.AST
         }
 
         public object executeFirstMethod()
-        {        	
-        	var parametersValues = InvocationParameters.valuesArray();
-            var assembly = CompilerResults.CompiledAssembly;
-            return assembly.executeFirstMethod(ExecuteInStaThread, ExecuteInMtaThread, parametersValues);        	
+        {
+			if (CompiledAssembly.notNull())
+			{
+				var parametersValues = InvocationParameters.valuesArray();
+				return CompiledAssembly.executeFirstMethod(ExecuteInStaThread, ExecuteInMtaThread, parametersValues);
+			}
+			return null;
         }                       
         
         
