@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
@@ -60,7 +61,7 @@ namespace O2.External.SharpDevelop.Ascx
         public bool allowCodeCompilation = true;
         public O2CodeCompletion o2CodeCompletion;
         public string AutoBackupSaveDir = PublicDI.config.O2TempDir.pathCombine("_AutoSavedScripts");
-        public bool AutoBackUpOnCompileSucess = false;
+        public bool AutoBackUpOnCompileSuccess = true;
         public bool checkForDebugger = false;
         public O2MappedAstData compiledFileAstData = null;
         public INode CurrentINode = null;
@@ -96,44 +97,50 @@ namespace O2.External.SharpDevelop.Ascx
                 tecSourceCode.TextEditorProperties.Font = new Font("Courier New", 9, FontStyle.Regular);
 
                 mapExternalExecutionEngines();
-                this.onCaretMove(caretMoved);
+                //this.onCaretMove(caretMoved);
                 runOnLoad = false;
             }
         }
-        
 
 
-        void caretMoved(Caret caret)
-        {
-            // same code as the one in "public static INode iNode(this O2MappedAstData o2MappedAstData, string file, Caret caret)" in O2MappedAstData_ExtensionMethods.cs (O2 Script)
-            var o2MappedAstData = compiledFileAstData;
-            var file = sPathToFileLoaded;
+		// reason from commment:
+		// the idea with this method was to show information about the current carret position, but as it is 
+		// it is expensive and doesn't add a lot of value 
+		/*        void caretMoved(Caret caret)
+				{
+		
 
-            if (o2MappedAstData != null && file != null && caret != null)
-            {
-                if (o2MappedAstData.FileToINodes.hasKey(file))
-                {
-                    var allINodes = o2MappedAstData.FileToINodes[file];
-                    var adjustedLine = caret.Line + 1;
-                    var adjustedColumn = caret.Column + 1;
-                    CurrentINode = allINodes.getINodeAt(adjustedLine, adjustedColumn);
-                    if (CurrentINode != null)                    
-                        lbCurrentAstNode.set_Text("Current Ast Node: {0}".format(CurrentINode.typeName()));                                                                    
-                }
+					// same code as the one in "public static INode iNode(this O2MappedAstData o2MappedAstData, string file, Caret caret)" in O2MappedAstData_ExtensionMethods.cs (O2 Script)
+					var o2MappedAstData = compiledFileAstData;
+					var file = sPathToFileLoaded;
+
+					if (o2MappedAstData != null && file != null && caret != null)
+					{
+						if (o2MappedAstData.FileToINodes.hasKey(file))
+						{
+							var allINodes = o2MappedAstData.FileToINodes[file];
+							var adjustedLine = caret.Line + 1;
+							var adjustedColumn = caret.Column + 1;
+							CurrentINode = allINodes.getINodeAt(adjustedLine, adjustedColumn);
+							if (CurrentINode != null)                    
+								lbCurrentAstNode.set_Text("Current Ast Node: {0}".format(CurrentINode.typeName()));                                                                    
+						}
                 
-            }
-            if (compiledFileAstData.notNull())
-            {
-                //var iNode = compiledFileAstData.iNode(sPathToFileLoaded, caret);
-				//if (iNode != null)	
-				//{					
-					//CurrentINode = iNode;
-					//lbCurrentAstNode.set_Text("Current Ast Node: {0}".format(iNode.typeName()))
-                //}
-            }
-        }
+					}
+					if (compiledFileAstData.notNull())
+					{
+						//var iNode = compiledFileAstData.iNode(sPathToFileLoaded, caret);
+						//if (iNode != null)	
+						//{					
+							//CurrentINode = iNode;
+							//lbCurrentAstNode.set_Text("Current Ast Node: {0}".format(iNode.typeName()))
+						//}
+					}
+  
+				}
+				*/
 
-        void TextArea_KeyUp(object sender, KeyEventArgs e)
+		void TextArea_KeyUp(object sender, KeyEventArgs e)
         {
             handlePressedKeys(e);
         }
@@ -856,10 +863,10 @@ namespace O2.External.SharpDevelop.Ascx
         {
             var sourceCode = getSourceCode();
             if (sourceCode != "")
-            {
-                saveSourceCode(); // always save before compiling  
-                var csharpCompiler = new AST.CSharp_FastCompiler();
-                csharpCompiler.onAstFail +=
+            {				
+				saveSourceCode(); // always save before compiling  
+				var csharpCompiler = new AST.CSharp_FastCompiler();
+				csharpCompiler.onAstFail +=
                     ()=>{
                             "AST Creation for provided source code failed".error();
                         };   
@@ -903,23 +910,24 @@ namespace O2.External.SharpDevelop.Ascx
 				CompileEngine_WinForms.addErrorsListToTreeView(tvCompilationErrors, compileEngine.sbErrorMessage);
                 showErrorsInSourceCodeEditor(compileEngine.sbErrorMessage.str());
             }
-            else
+         /*   else
             {
                 if (compiledFileAstData.notNull())
                     compiledFileAstData.Dispose();
                 compiledFileAstData = new O2MappedAstData(sPathToFileLoaded);
-            }
+            }*/
             
             return compiledAssembly;
         }
 
         private void compileDotNetCode()
         {
+			cboxCompliledSourceCodeMethods.enabled(false);	
             O2Thread.mtaThread (
                 () =>
                 {
                     try
-                    {   
+                    {													
                         //start the compilation in a separate thread
                         var compiledAssembly = sPathToFileLoaded.extension(".h2") ? compileH2File() : compileCSSharpFile();
                         // then continue on the gui thread
@@ -940,10 +948,12 @@ namespace O2.External.SharpDevelop.Ascx
                                cboxCompliledSourceCodeMethods.Items.Clear();
                                if (compiledAssembly != null)
                                {
+								   cboxCompliledSourceCodeMethods.Enabled = true;
                                    autoBackup();
                                    var previousExecutedMethod = cboxCompliledSourceCodeMethods.Text;
                                    O2Messages.dotNetAssemblyAvailable(compiledAssembly.Location);
-                                   foreach (var method in PublicDI.reflection.getMethods(compiledAssembly))
+								   //only show the first ten
+                                   foreach (var method in PublicDI.reflection.getMethods(compiledAssembly).Take(5))
                                        if (false == method.IsAbstract && false == method.IsSpecialName)
                                            cboxCompliledSourceCodeMethods.Items.Add(new Reflection_MethodInfo(method));
                                    // remap the previously executed method
@@ -956,6 +966,7 @@ namespace O2.External.SharpDevelop.Ascx
                                            }
                                        cboxCompliledSourceCodeMethods.SelectedIndex = 0;
                                    }
+								   cboxCompliledSourceCodeMethods.enabled();
                                }
                                refresh();
                            });
@@ -970,14 +981,14 @@ namespace O2.External.SharpDevelop.Ascx
         
         private void autoBackup()
         {
-            if (AutoBackUpOnCompileSucess)
+            if (AutoBackUpOnCompileSuccess)
             {
                 var code = getSourceCode();
                 AutoBackupSaveDir.createDir();    // make sure it exits
                 var extension = sPathToFileLoaded.extension();
                 if (extension.valid().isFalse())
                     extension = ".cs";
-                var targetFile = AutoBackupSaveDir.pathCombine(Files.getFileSaveDateTime_Now().trim() + extension);
+                var targetFile = AutoBackupSaveDir.pathCombine("code_Editor_" + Files.getFileSaveDateTime_Now().trim() + extension);
                 if (extension == ".h2")
                     new H2(code).save(targetFile);
                 else
@@ -1070,14 +1081,11 @@ namespace O2.External.SharpDevelop.Ascx
         }
 
         public void showLogViewerControl()
-        {
-            if (this.controls<ascx_LogViewer>(true) == null)
-            {
-                int splitterLocation = (int)(this.Width * .20);
-                var logViewer = this.add_Control<ascx_LogViewer>();
-                this.insert_Right(logViewer, splitterLocation);
-            }
-            //O2Messages.setAscxDockStateAndOpenIfNotAvailable("ascx_LogViewer", O2DockState.DockBottom, "O2 Logs");
+        {                       
+			int splitterLocation = (int)(150); 
+            var logViewer = this.add_Control<ascx_LogViewer>();
+            this.insert_Right(logViewer, splitterLocation);
+			btShowLogs.visible(false);            
         }
 
 

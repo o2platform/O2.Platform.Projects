@@ -487,7 +487,7 @@ namespace O2.External.SharpDevelop.Ascx
 
         private void enableOrDisableAutoBackupOnCompileSucessforCSharpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AutoBackUpOnCompileSucess = !AutoBackUpOnCompileSucess;
+            AutoBackUpOnCompileSuccess = !AutoBackUpOnCompileSuccess;
         }
 
         private void tecSourceCode_MouseMove(object sender, MouseEventArgs e)
@@ -510,7 +510,15 @@ namespace O2.External.SharpDevelop.Ascx
         {
             tbExecutionHistoryOrLog.Visible = false; 
         }
-        
 
+		private void clearCompileCacheToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CompileEngine.CachedCompiledAssemblies.Clear();			
+		}
+
+		private void clearLocalFileMappingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CompileEngine.clearLocalScriptFileMappings();
+		}
     }
 }

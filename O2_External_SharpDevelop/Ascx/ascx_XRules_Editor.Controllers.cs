@@ -33,7 +33,7 @@ namespace O2.Core.XRules.Ascx
         }
 
         public void loadXRuleDatabase()
-        {
+        {						
             directoryWithXRulesDatabase.openDirectory(PublicDI.config.LocalScriptsFolder);
             directoryWithLocalXRules.openDirectory(PublicDI.config.LocallyDevelopedScriptsFolder);            
             loadXRulesTemplates(lbCurrentXRulesTemplates);

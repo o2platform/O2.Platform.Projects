@@ -162,11 +162,12 @@ namespace O2.External.SharpDevelop.AST
 			{
 				this.CompiledAssembly = cachedCompilation;
 
-				CompileEngine.loadReferencedAssembliesIntoMemory(this.CompiledAssembly);
-				this.invoke(this.onCompileOK);				
-				FinishedCompilingCode.Set();
-
-				return true;
+				if (CompileEngine.loadReferencedAssembliesIntoMemory(this.CompiledAssembly))
+				{
+					this.invoke(this.onCompileOK);				
+					FinishedCompilingCode.Set();
+					return true;
+				}
 			}
 			return false;
 		}

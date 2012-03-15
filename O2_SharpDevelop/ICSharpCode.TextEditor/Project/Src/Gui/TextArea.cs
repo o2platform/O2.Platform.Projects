@@ -210,6 +210,7 @@ namespace ICSharpCode.TextEditor
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 //			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 //			SetStyle(ControlStyles.UserPaint, true);
+
 			SetStyle(ControlStyles.Opaque, false);
 			SetStyle(ControlStyles.ResizeRedraw, true);
 			SetStyle(ControlStyles.Selectable, true);
@@ -224,7 +225,7 @@ namespace ICSharpCode.TextEditor
 			
 			
 			new TextAreaMouseHandler(this).Attach();
-			new TextAreaDragDropHandler().Attach(this);
+//			new TextAreaDragDropHandler().Attach(this);  //DinisCruz: don't want this handled here
 			
 			bracketshemes.Add(new BracketHighlightingSheme('{', '}'));
 			bracketshemes.Add(new BracketHighlightingSheme('(', ')'));

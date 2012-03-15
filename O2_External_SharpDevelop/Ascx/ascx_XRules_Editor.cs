@@ -78,21 +78,23 @@ namespace O2.Core.XRules.Ascx
         }
 
         private void directoryWithLocalXRules__onDirectoryClick(string fileOrDir)
-        {   
-            //CompileEngine_WinForms.addExtraFileReferencesToSelectedNode(directoryWithLocalXRules.getTreeView(), fileOrDir);
+        {
+			if (cbShowCodeDependencies.Checked)			
+				CompileEngine_WinForms.addExtraFileReferencesToSelectedNode(directoryWithLocalXRules.getTreeView(), fileOrDir);
                 
         }
 
         private void directoryWithXRulesDatabase__onDirectoryClick(string fileOrDir)
         {
-            //CompileEngine_WinForms.addExtraFileReferencesToSelectedNode(directoryWithXRulesDatabase.getTreeView(), fileOrDir);            
+			if (cbShowCodeDependencies.Checked)
+					CompileEngine_WinForms.addExtraFileReferencesToSelectedNode(directoryWithXRulesDatabase.getTreeView(), fileOrDir);            
         }
 
-        private void cbShowFileContentsOnMouseOver_CheckedChanged(object sender, EventArgs e)
+/*        private void cbShowFileContentsOnMouseOver_CheckedChanged(object sender, EventArgs e)
         {
             directoryWithLocalXRules._ShowFileContentsOnTopTip = cbShowFileContentsOnMouseOver.Checked;
             directoryWithXRulesDatabase._ShowFileContentsOnTopTip = cbShowFileContentsOnMouseOver.Checked;
-        }
+        }*/
        
         private void llReloadXRules_Click(object sender, EventArgs e)
         {
