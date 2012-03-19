@@ -23,7 +23,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\</OutputPath>
+    <OutputPath>..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -98,6 +98,7 @@
     <Compile Include="Wrapper\O2BrowserIE_Screenshot.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="_External_Dlls\Microsoft.mshtml.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">

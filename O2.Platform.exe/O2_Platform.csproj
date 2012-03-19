@@ -45,7 +45,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\O2.Platform.Exe\</OutputPath>
+    <OutputPath>..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -66,117 +66,33 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_ExternalDlls\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="NGit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_ExternalDlls\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="NSch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_ExternalDlls\NSch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_ExternalDlls\Sharpen.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="O2_Setup.cs" />
-    <Content Include="..\..\O2.FluentSharp\binaries\Ionic.Zip.dll">
-      <Link>O2_Reference_Dlls\Ionic.Zip.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.FluentSharp\binaries\Merlin.dll">
-      <Link>O2_Reference_Dlls\Merlin.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_BCL.dll">
-      <Link>O2_Reference_Dlls\O2_FluentSharp_BCL.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_CoreLib.dll">
-      <Link>O2_Reference_Dlls\O2_FluentSharp_CoreLib.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\log4net.dll">
-      <Link>O2_Reference_Dlls\log4net.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Mono.Cecil.dll">
-      <Link>O2_Reference_Dlls\Mono.Cecil.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Mono.Security.dll">
-      <Link>O2_Reference_Dlls\Mono.Security.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\NGit.dll">
-      <Link>O2_Reference_Dlls\NGit.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\NSch.dll">
-      <Link>O2_Reference_Dlls\NSch.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Sharpen.dll">
-      <Link>O2_Reference_Dlls\Sharpen.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2SharpDevelop.dll">
-      <Link>O2_Reference_Dlls\O2SharpDevelop.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2SharpDevelop.pdb">
-      <Link>O2_Reference_Dlls\O2SharpDevelop.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_API_AST.dll">
-      <Link>O2_Reference_Dlls\O2_API_AST.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_API_AST.pdb">
-      <Link>O2_Reference_Dlls\O2_API_AST.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_IE.dll">
-      <Link>O2_Reference_Dlls\O2_External_IE.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_IE.pdb">
-      <Link>O2_Reference_Dlls\O2_External_IE.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_SharpDevelop.dll">
-      <Link>O2_Reference_Dlls\O2_External_SharpDevelop.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_SharpDevelop.pdb">
-      <Link>O2_Reference_Dlls\O2_External_SharpDevelop.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_WinFormsUI.dll">
-      <Link>O2_Reference_Dlls\O2_External_WinFormsUI.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_WinFormsUI.pdb">
-      <Link>O2_Reference_Dlls\O2_External_WinFormsUI.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_FluentSharp_BCL.pdb">
-      <Link>O2_Reference_Dlls\O2_FluentSharp_BCL.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_FluentSharp_CoreLib.pdb">
-      <Link>O2_Reference_Dlls\O2_FluentSharp_CoreLib.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Misc_Microsoft_MPL_Libs.dll">
-      <Link>O2_Reference_Dlls\O2_Misc_Microsoft_MPL_Libs.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Misc_Microsoft_MPL_Libs.pdb">
-      <Link>O2_Reference_Dlls\O2_Misc_Microsoft_MPL_Libs.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Platform_BCL.dll">
-      <Link>O2_Reference_Dlls\O2_Platform_BCL.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Platform_BCL.pdb">
-      <Link>O2_Reference_Dlls\O2_Platform_BCL.pdb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="_ExternalDlls\Mono.Security.dll" />
+    <Content Include="_ExternalDlls\NGit.dll" />
+    <Content Include="_ExternalDlls\NSch.dll" />
+    <Content Include="_ExternalDlls\Sharpen.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

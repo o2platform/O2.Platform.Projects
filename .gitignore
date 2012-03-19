@@ -1,4 +1,3 @@
-
 _UpgradeReport_Files
 _ReSharper.*
 bin
@@ -9,3 +8,4 @@ UpgradeLog.xml
 *.suo
 *.pidb
 *.userprefs
+binaries

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.VisualStudio.AddIn", "..\O2.VisualStudio.AddIn\O2.VisualStudio.AddIn.csproj", "{B7428492-91D8-4B25-936C-7EA58DB0F01B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp", "..\..\O2.FluentSharp\O2.FluentSharp.csproj", "{38668C2E-A66E-4B3C-8CE9-2740FB1CB2BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.BCL", "..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj", "{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Platform.BCL", "..\O2.Platform.Projects\O2.Platform.BCL\O2.Platform.BCL.csproj", "{D720148A-1AAD-47BD-9B4F-D5F4960E7AC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.CoreLib", "..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj", "{0A7CE0E0-B092-43B5-AB80-99BA909019C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +17,14 @@ Global
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38668C2E-A66E-4B3C-8CE9-2740FB1CB2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38668C2E-A66E-4B3C-8CE9-2740FB1CB2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38668C2E-A66E-4B3C-8CE9-2740FB1CB2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38668C2E-A66E-4B3C-8CE9-2740FB1CB2BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D720148A-1AAD-47BD-9B4F-D5F4960E7AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D720148A-1AAD-47BD-9B4F-D5F4960E7AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D720148A-1AAD-47BD-9B4F-D5F4960E7AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D720148A-1AAD-47BD-9B4F-D5F4960E7AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
