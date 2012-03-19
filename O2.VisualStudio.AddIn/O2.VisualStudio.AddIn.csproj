@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>.\bin\Debug\</OutputPath>
+    <OutputPath>..\binaries\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
@@ -49,6 +49,14 @@
     </Reference>
     <Reference Include="NSch">
       <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\NSch.dll</HintPath>
+    </Reference>
+    <Reference Include="O2_FluentSharp_BCL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\binaries\O2_FluentSharp_BCL.dll</HintPath>
+    </Reference>
+    <Reference Include="O2_FluentSharp_CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\binaries\O2_FluentSharp_CoreLib.dll</HintPath>
     </Reference>
     <Reference Include="Sharpen">
       <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Sharpen.dll</HintPath>
@@ -134,48 +142,59 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\Users\o2\Documents\Visual Studio 2010\Addins\O2_Platform_VisualStudio_AddIn - For Testing.AddIn">
-      <Link>O2_Platform_VisualStudio_AddIn - For Testing.AddIn</Link>
+    <Content Include="..\binaries\Ionic.Zip.dll">
+      <Link>_External_Dlls\Ionic.Zip.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\log4net.dll">
-      <Link>log4net.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\log4net.dll">
+      <Link>_External_Dlls\log4net.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\Mono.Cecil.dll">
-      <Link>Mono.Cecil.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\Merlin.dll">
+      <Link>_External_Dlls\Merlin.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2SharpDevelop.dll">
-      <Link>O2SharpDevelop.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\Mono.Cecil.dll">
+      <Link>_External_Dlls\Mono.Cecil.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_API_AST.dll">
-      <Link>O2_API_AST.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\Mono.Security.dll">
+      <Link>_External_Dlls\Mono.Security.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_IE.dll">
-      <Link>O2_External_IE.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\NGit.dll">
+      <Link>_External_Dlls\NGit.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_SharpDevelop.dll">
-      <Link>O2_External_SharpDevelop.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\NSch.dll">
+      <Link>_External_Dlls\NSch.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_External_WinFormsUI.dll">
-      <Link>O2_External_WinFormsUI.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\O2SharpDevelop.dll">
+      <Link>_External_Dlls\O2SharpDevelop.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Misc_Microsoft_MPL_Libs.dll">
-      <Link>O2_Misc_Microsoft_MPL_Libs.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\O2_API_AST.dll">
+      <Link>_External_Dlls\O2_API_AST.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\O2_Platform_BCL.dll">
-      <Link>O2_Platform_BCL.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\O2_External_IE.dll">
+      <Link>_External_Dlls\O2_External_IE.dll</Link>
     </Content>
-    <Content Include="..\..\O2.Platform.ReferenceAssemblies\O2_Assemblies\QuickGraph.dll">
-      <Link>QuickGraph.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="..\binaries\O2_External_SharpDevelop.dll">
+      <Link>_External_Dlls\O2_External_SharpDevelop.dll</Link>
+    </Content>
+    <Content Include="..\binaries\O2_External_WinFormsUI.dll">
+      <Link>_External_Dlls\O2_External_WinFormsUI.dll</Link>
+    </Content>
+    <Content Include="..\binaries\O2_FluentSharp_BCL.dll">
+      <Link>_External_Dlls\O2_FluentSharp_BCL.dll</Link>
+    </Content>
+    <Content Include="..\binaries\O2_FluentSharp_CoreLib.dll">
+      <Link>_External_Dlls\O2_FluentSharp_CoreLib.dll</Link>
+    </Content>
+    <Content Include="..\binaries\O2_Misc_Microsoft_MPL_Libs.dll">
+      <Link>_External_Dlls\O2_Misc_Microsoft_MPL_Libs.dll</Link>
+    </Content>
+    <Content Include="..\binaries\QuickGraph.dll">
+      <Link>_External_Dlls\QuickGraph.dll</Link>
+    </Content>
+    <Content Include="..\binaries\Sharpen.dll">
+      <Link>_External_Dlls\Sharpen.dll</Link>
+    </Content>
+    <Content Include="..\binaries\WeifenLuo.WinFormsUI.Docking.dll">
+      <Link>_External_Dlls\WeifenLuo.WinFormsUI.Docking.dll</Link>
     </Content>
     <Content Include="O2_Platform_VisualStudio_AddIn.AddIn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -183,16 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
-      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
-      <Name>O2.FluentSharp.BCL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
-      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
-      <Name>O2.FluentSharp.CoreLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
