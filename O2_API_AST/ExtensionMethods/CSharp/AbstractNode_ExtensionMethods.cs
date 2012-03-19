@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ICSharpCode.NRefactory.Ast;
+using O2.Kernel.ExtensionMethods;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace O2.API.AST.ExtensionMethods.CSharp
 {
@@ -10,7 +12,7 @@ namespace O2.API.AST.ExtensionMethods.CSharp
     {
         public static bool hasReturnStatement(this AbstractNode abstractNode)
         {
-            return abstractNode.isLastChild(typeof(ReturnStatement));
+			return abstractNode.iNodes<ReturnStatement>().size() > 0;
         }
 
         public static INode lastChild(this AbstractNode abstractNode)
@@ -32,9 +34,10 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
         public static object getLastReturnValue(this AbstractNode abstractNode)
         {
-            if (abstractNode.hasReturnStatement())
+			var returnStatements = abstractNode.iNodes<ReturnStatement>();
+			if (returnStatements.size() > 0)
             {
-                var returnStatement = (ReturnStatement)abstractNode.lastChild();
+				var returnStatement = returnStatements.Last();
                 if (returnStatement.Expression is PrimitiveExpression)
                 {
                     var primitiveExpression = (PrimitiveExpression)returnStatement.Expression;

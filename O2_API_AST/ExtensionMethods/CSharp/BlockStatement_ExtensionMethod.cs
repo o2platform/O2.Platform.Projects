@@ -28,17 +28,18 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
         public static BlockStatement add_Return(this BlockStatement blockStatement, object returnData)
         {
-            if (returnData.notNull())
-            {
-                Expression returnStatement;
-                //if (returnData is ExpressionStatement)
-                //returnStatement = returnData as ExpressionStatement;
-                if (returnData is Expression)
-                    returnStatement = (returnData as Expression);
-                else
-                    returnStatement = new PrimitiveExpression(returnData, returnData.str());
-                blockStatement.append(new ReturnStatement(returnStatement));
-            }
+			Expression returnStatement;
+			if (returnData.isNull())
+				returnStatement = new PrimitiveExpression(null);
+			else
+			{
+				if (returnData is Expression)
+					returnStatement = (returnData as Expression);
+				else
+					returnStatement = new PrimitiveExpression(returnData, returnData.str());
+
+			}
+			blockStatement.append(new ReturnStatement(returnStatement));
             return blockStatement;
         }
  

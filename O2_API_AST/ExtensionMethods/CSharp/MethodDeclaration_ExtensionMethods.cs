@@ -85,6 +85,12 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                 methodDeclaration.TypeReference = new TypeReference("void", true);
             else
             {
+				methodDeclaration.TypeReference = new TypeReference("System.Object", true);
+
+				blockStatement.add_Return(null); // add an extra default return value;
+
+				//trying to set the return type was creating problems like  the error caused by not have a final return statement
+				/*
                 if (methodDeclaration.iNodes<ReturnStatement>().size() > 1) // if there are more than one return statement default to return object
                 {
                     methodDeclaration.TypeReference = new TypeReference("System.Object", true);
@@ -93,7 +99,10 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                 {
                     var returnValue = blockStatement.getLastReturnValue() ?? new object();  // see if we can resolve it to a known type (or default to object)
                     methodDeclaration.TypeReference = new TypeReference(returnValue.typeFullName(), true);
+
                 }
+				*/
+				
             }
             return methodDeclaration.TypeReference;
         }
