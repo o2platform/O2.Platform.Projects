@@ -69,15 +69,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\O2 Installer\Install Files\GitHub_Actions.cs">
-      <Link>classes\GitHub_Actions.cs</Link>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="classes\Connect.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="classes\GitHub_Actions.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\O2_ScriptWithPanel.cs" />
     <Compile Include="Commands\O2_ScriptGui.cs" />
