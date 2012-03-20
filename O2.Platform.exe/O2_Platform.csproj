@@ -83,6 +83,7 @@
       <HintPath>_ExternalDlls\Sharpen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="O2_Setup.cs" />

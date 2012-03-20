@@ -6,6 +6,7 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace O2.Platform
 {
@@ -54,6 +55,11 @@ namespace O2.Platform
 			var compileScript = startO2.GetType().GetMethod("compileScript");
 			var assembly = (Assembly)compileScript.Invoke(startO2, new object[] { "ascx_Execute_Scripts.cs" });
 
+			if (assembly == null)
+			{
+				MessageBox.Show("There was a problem compiling the ascx_Execute_Scripts.cs script file","O2 Start error");
+				return;
+			}
 
 			var types = assembly.GetTypes();
 			var ascx_Execute_Scripts = assembly.GetType("O2.XRules.Database.ascx_Execute_Scripts");
