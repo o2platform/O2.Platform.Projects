@@ -47,7 +47,8 @@ namespace O2.VisualStudio
 
 				PublicDI.config.setLocalScriptsFolder(PublicDI.config.CurrentExecutableDirectory.pathCombine("O2.Platform.Scripts"));
 				openO2LogViewer();
-				syncO2Repositories();
+
+				//syncO2Repositories();
 
 				
 				this.add_TopMenu("O2 Platform");
