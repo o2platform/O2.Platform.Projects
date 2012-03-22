@@ -4,13 +4,13 @@ using System;
 using System.Collections;
 using System.Text;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
+//using Microsoft.Build.Utilities;
 using System.IO;
 using System.Collections.Specialized;
 
 namespace Xml.Schema.Linq.VS
 {
-    public class LinqToXsdTask : ToolTask
+    /*public class LinqToXsdTask : ToolTask
     {
         ITaskItem[] _sources;
         string _filename;
@@ -93,5 +93,5 @@ namespace Xml.Schema.Linq.VS
             return builder.ToString();
         }
         #endregion
-    }
+    }*/
 }

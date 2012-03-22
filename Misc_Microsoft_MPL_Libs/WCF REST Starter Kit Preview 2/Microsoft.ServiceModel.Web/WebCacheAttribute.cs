@@ -75,10 +75,11 @@ namespace Microsoft.ServiceModel.Web
 
         public void Validate(OperationDescription operationDescription)
         {
-            if (!ServiceHostingEnvironment.AspNetCompatibilityEnabled)
+/*            if (!ServiceHostingEnvironment.AspNetCompatibilityEnabled)
             {
                 throw new NotSupportedException("WebCacheAttribute is supported only in AspNetCompatibility mode.");
             }
+*/            
             if (operationDescription.Behaviors.Find<WebGetAttribute>() == null)
             {
                 throw new InvalidOperationException("The WebCacheAttribute can only be used with GET operations.");
