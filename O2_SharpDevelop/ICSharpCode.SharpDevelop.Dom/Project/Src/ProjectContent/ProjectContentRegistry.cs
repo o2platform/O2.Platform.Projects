@@ -199,6 +199,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 					pc = LoadProjectContent(itemInclude, itemFileName);
 				} catch (Exception ex) {
 					HostCallback.ShowAssemblyLoadErrorInternal(itemFileName, itemInclude, "Error loading assembly:\n" + ex.ToString());
+					O2.Kernel.PublicDI.log.ex(ex);
 				} finally {
 					#if DEBUG
 					LoggingService.Debug(string.Format("Loaded {0} in {1}ms", itemInclude, Environment.TickCount - time));
@@ -227,7 +228,11 @@ namespace ICSharpCode.SharpDevelop.Dom
 			if (pos > 0)
 				shortName = shortName.Substring(0, pos);
 			
-			Assembly assembly = GetDefaultAssembly(shortName);
+			
+
+			Assembly assembly = File.Exists(shortName)
+									? Assembly.LoadFrom(shortName)
+									: GetDefaultAssembly(shortName);
 			ReflectionProjectContent pc = null;
 			if (assembly != null) {
 				if (persistence != null) {

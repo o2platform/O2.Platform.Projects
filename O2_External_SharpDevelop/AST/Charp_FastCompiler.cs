@@ -419,9 +419,9 @@ namespace O2.External.SharpDevelop.AST
         public void mapCodeO2References(Ast_CSharp astCSharp)
         {            
             bool onlyAddReferencedAssemblies = false;
+			bool addExtraLocalO2ScriptFiles = true;
 //            generateDebugSymbols = false; // default to not generating debug symbols and creating the assembly only in memory
-            ExtraSourceCodeFilesToCompile = new List<string>();                    
-            ExtraSourceCodeFilesToCompile.Add(EXTRA_EXTENSION_METHODS_FILE); // add this one by default to make it easy to add new extension methods to the O2 Scripts
+            ExtraSourceCodeFilesToCompile = new List<string>();                                
         	var compilationUnit = astCSharp.CompilationUnit;
             ReferencedAssemblies = new List<string>();
             var FilesToDownload = new List<string>();
@@ -433,7 +433,8 @@ namespace O2.External.SharpDevelop.AST
         	
             foreach (var comment in astCSharp.AstDetails.Comments)
             {
-                comment.Text.eq("O2Tag_OnlyAddReferencedAssemblies", () => onlyAddReferencedAssemblies = true);                
+                comment.Text.eq("O2Tag_OnlyAddReferencedAssemblies", () => onlyAddReferencedAssemblies = true);
+				comment.Text.eq("O2Tag_DontAddExtraO2Files", () => addExtraLocalO2ScriptFiles = false);
                 comment.Text.starts("using ", false, value => astCSharp.CompilationUnit.add_Using(value));
                 comment.Text.starts(new [] {"ref ", "O2Ref:"}, false,  value => ReferencedAssemblies.Add(value));
                 comment.Text.starts(new[] { "Download:","download:", "O2Download:" }, false, value => FilesToDownload.Add(value));
@@ -449,6 +450,8 @@ namespace O2.External.SharpDevelop.AST
                 comment.Text.eq("ClearAssembliesCheckedIfExists", () => { O2.Kernel.CodeUtils.O2Svn.clear_AssembliesCheckedIfExists(); });  
             }
 
+			if (addExtraLocalO2ScriptFiles)
+				ExtraSourceCodeFilesToCompile.Add(EXTRA_EXTENSION_METHODS_FILE); // add this one by default to make it easy to add new extension methods to the O2 Scripts
             //resolve location of ExtraSourceCodeFilesToCompile
 
             resolveFileLocationsOfExtraSourceCodeFilesToCompile();                        

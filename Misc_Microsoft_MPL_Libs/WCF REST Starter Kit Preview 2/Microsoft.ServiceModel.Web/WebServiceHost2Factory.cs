@@ -16,11 +16,11 @@ namespace Microsoft.ServiceModel.Web
     using System.ServiceModel;
     using System.Collections.ObjectModel;
 
-    public class WebServiceHost2Factory : ServiceHostFactory
+    /*public class WebServiceHost2Factory : ServiceHostFactory
     {
         protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
         {
             return new WebServiceHost2(serviceType, true, baseAddresses);
         }
-    }
+    }*/
 }
