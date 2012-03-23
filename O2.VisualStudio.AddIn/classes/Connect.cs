@@ -2,33 +2,130 @@ using System;
 using Extensibility;
 using EnvDTE;
 using EnvDTE80;
-using O2.Kernel.ExtensionMethods;
-using O2.VisualStudio.ExtensionMethods;
+using System.Windows.Forms;
+using System.Reflection;
 using System.Diagnostics;
+using System.IO;
 
 namespace O2.VisualStudio
 {
-	/// <summary>The object for implementing an Add-in.</summary>
-	/// <seealso class='IDTExtensibility2' />
+    public class Connect_Helpers
+    {
+        static Connect_Helpers()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        public static string path_to_O2Assemblies = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        public static void showMessage(string message)
+        { 
+             MessageBox.Show(message, "O2 VisualStudio Addin");
+        }
+
+        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if(args.Name.Contains("O2"))
+            {
+                string simpleName = new AssemblyName (args.Name).Name;
+                return loadO2Assembly(simpleName,false);
+            }
+            return null;
+        }
+
+        
+        public static Assembly loadO2Assembly(string assemblyName, bool loadAsBinaryStream)
+        {
+            try
+            {
+                if(Path.GetExtension(assemblyName) == "")
+                    assemblyName += ".dll";
+                var assemblyPath = Path.Combine(path_to_O2Assemblies,assemblyName);
+                if (File.Exists(assemblyPath) == false)
+                {
+                    if (assemblyName.Contains("XmlSerializers") == false && assemblyName.Contains(".resources") == false)
+                        showMessage("[O2.VisualStudio.Connect_Helpers] Error: Could not find file: " + assemblyPath);
+                }
+                else
+                {
+                    if (loadAsBinaryStream)
+                    {
+                        using (var fileStream = new FileStream(assemblyPath, FileMode.Open))
+                        {
+
+                            byte[] data = new BinaryReader(fileStream).ReadBytes((int)fileStream.Length);
+                            var assembly = Assembly.Load(data);
+                            if (assembly == null)
+                                showMessage("[O2.VisualStudio.Connect_Helpers] Error: Assembly failed to load: " + assemblyPath);
+                            else
+                                return assembly;
+                        }
+                    }
+                    else
+                        return Assembly.LoadFrom(assemblyPath);
+
+                }
+            }
+            catch (Exception ex)
+            { 
+                if (ex.Message.Contains("is being used by another process") == false) 
+                    showMessage("[O2.VisualStudio.Connect_Helpers] Error: " + ex.Message);                
+            }
+            return null;
+        }
+
+    }
 	public class Connect : IDTExtensibility2, IDTCommandTarget
 	{
+        public bool AskQuestion = true;
+        public Type type;
+        public Object connect;
+        public MethodInfo onConnection;
+        public MethodInfo onDisconnection;
+        public MethodInfo queryStatus;
+        public MethodInfo exec;
 
-		public static O2_VS_AddIn VS_AddIn	{ get; set; }
-		
-		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
-		/// <param term='application'>Root object of the host application.</param>
-		/// <param term='connectMode'>Describes how the Add-in is being loaded.</param>
-		/// <param term='addInInst'>Object representing this Add-in.</param>
-		/// <seealso class='IDTExtensibility2' />
+        public Connect()
+        { 
+            try
+            {
+                var fluentSharp_CoreLib      = Connect_Helpers.loadO2Assembly("O2_FluentSharp_CoreLib.dll"  , true);
+                var fluentSharp_Bcl          = Connect_Helpers.loadO2Assembly("O2_FluentSharp_BCL.dll"      , true);
+                //var fluentSharp_VisualStudio = Connect_Helpers.loadO2Assembly(@"..\..\O2.FluentSharp\binaries\O2_FluentSharp_VisualStudio.dll", true);   
+                var fluentSharp_VisualStudio = Connect_Helpers.loadO2Assembly(@"O2_FluentSharp_VisualStudio.dll", false);   
+
+                type            = fluentSharp_VisualStudio.GetType("O2.FluentSharp.VisualStudio.Connect");
+                connect         = Activator.CreateInstance(type);
+                onConnection    = connect.GetType().GetMethod("OnConnection");
+                onDisconnection = connect.GetType().GetMethod("OnDisconnection");
+                queryStatus     = connect.GetType().GetMethod("QueryStatus");
+                exec            = connect.GetType().GetMethod("Exec");
+            }
+            catch (Exception ex)
+            { 
+                Connect_Helpers.showMessage("[O2.VisualStudio.Connect] " + ex.Message);
+            }
+        }
+
 		public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
 		{			
+            if(AskQuestion)
+            {
+                /*var result = MessageBox.Show("Do you want to load up the O2 VisualStudio AddIn", "O2 Platform",MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                { 
+                    MessageBox.Show("Loading up O2...");
+                }*/
+                try
+                {
+                    onConnection.Invoke(connect, new object[] { application, connectMode, addInInst , custom });                    
+                }
+                catch (Exception ex)
+                { 
+                    Connect_Helpers.showMessage("[O2.VisualStudio.Connect] OnConnection: " + ex.Message);
+                }
 
-            if (connectMode.uiSetUp())			
-			{
-				VS_AddIn = new O2_VS_AddIn().setup((DTE2)application, (AddIn)addInInst, this.typeFullName());
-				if (VS_AddIn.isNull())
-					"VS_AddIn was null, something is wrong".error();
-			}
+            }
 		}
 
 		#region not_implemented_methods
@@ -38,6 +135,14 @@ namespace O2.VisualStudio
 		/// <seealso class='IDTExtensibility2' />
 		public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
 		{
+            try
+            {
+                onDisconnection.Invoke(connect, new object[] { disconnectMode , custom });                    
+            }
+            catch (Exception ex)
+            { 
+                Connect_Helpers.showMessage("[O2.VisualStudio.Connect] onDisconnection: " + ex.Message);
+            }
 		}
 
 		/// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
@@ -68,17 +173,21 @@ namespace O2.VisualStudio
 		/// <param term='status'>The state of the command in the user interface.</param>
 		/// <param term='commandText'>Text requested by the neededText parameter.</param>
 		/// <seealso class='Exec' />
+        /// 
+         
 		public void QueryStatus(string commandName, vsCommandStatusTextWanted neededText, ref vsCommandStatus status, ref object commandText)
 		{			
-			if (VS_AddIn.notNull())
-				if(neededText == vsCommandStatusTextWanted.vsCommandStatusTextWantedNone)
-				{				
-					if (VS_AddIn.showCommand(commandName))
-					{
-						status = (vsCommandStatus)vsCommandStatus.vsCommandStatusSupported|vsCommandStatus.vsCommandStatusEnabled;
-						return;
-					}
-				}
+			try
+            {
+                object[] args  = new object[] { commandName , neededText, status, commandText };
+                queryStatus.Invoke(connect, args);
+                status = (vsCommandStatus)args[2];
+                commandText = (object)args[3];                
+            }
+            catch (Exception ex)
+            { 
+                Connect_Helpers.showMessage("[O2.VisualStudio.Connect] queryStatus: " + ex.Message);
+            }
 		}
 
 		/// <summary>Implements the Exec method of the IDTCommandTarget interface. This is called when the command is invoked.</summary>
@@ -89,13 +198,19 @@ namespace O2.VisualStudio
 		/// <param term='handled'>Informs the caller if the command was handled or not.</param>
 		/// <seealso class='Exec' />
 		public void Exec(string commandName, vsCommandExecOption executeOption, ref object varIn, ref object varOut, ref bool handled)
-		{			
-			handled = false;
-			if (VS_AddIn.notNull())
-				if(executeOption == vsCommandExecOption.vsCommandExecOptionDoDefault)
-				{
-					handled = VS_AddIn.executeCommand(commandName);
-				}
+		{	
+			try
+            {
+                var args = new object[] { commandName , executeOption, varIn, varOut , handled };
+                exec.Invoke(connect, args); 
+                varIn   = args[2];
+                varOut  = args[3];
+                handled = (bool)args[4];
+            }
+            catch (Exception ex)
+            { 
+                Connect_Helpers.showMessage("[O2.VisualStudio.Connect] exec: " + ex.Message);
+            }		
 		}
 		
 	}

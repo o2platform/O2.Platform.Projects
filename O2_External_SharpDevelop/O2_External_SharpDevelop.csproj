@@ -153,10 +153,6 @@
       <Project>{0E18EDC8-718D-4E77-BFC4-4F930741B2FD}</Project>
       <Name>O2_API_AST</Name>
     </ProjectReference>
-    <ProjectReference Include="..\O2_External_WinFormsUI\O2_External_WinFormsUI.csproj">
-      <Project>{EED5F98D-00BA-4D9B-A9E7-A7794AD50132}</Project>
-      <Name>O2_External_WinFormsUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\O2_SharpDevelop\O2_SharpDevelop.csproj">
       <Project>{2483564D-4343-4624-A0C6-63ABC932544A}</Project>
       <Name>O2_SharpDevelop</Name>

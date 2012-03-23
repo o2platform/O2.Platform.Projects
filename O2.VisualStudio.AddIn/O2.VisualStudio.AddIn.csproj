@@ -41,26 +41,6 @@
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="NGit">
-      <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch">
-      <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="O2_FluentSharp_BCL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\binaries\O2_FluentSharp_BCL.dll</HintPath>
-    </Reference>
-    <Reference Include="O2_FluentSharp_CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\binaries\O2_FluentSharp_CoreLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen">
-      <HintPath>..\..\O2.Platform.ReferenceAssemblies\3rdParty_Assemblies_withCode\Sharpen.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -75,13 +55,6 @@
     <Compile Include="classes\Connect.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="classes\GitHub_Actions.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\O2_ScriptWithPanel.cs" />
-    <Compile Include="Commands\O2_ScriptGui.cs" />
-    <Compile Include="Commands\O2_LogViewer.cs" />
-    <Compile Include="ExtensionMethods\Microsoft_VisualStudio_ExtensionMethods.cs" />
-    <Compile Include="classes\O2_VS_AddIn.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -140,67 +113,11 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\binaries\Ionic.Zip.dll">
-      <Link>_External_Dlls\Ionic.Zip.dll</Link>
-    </Content>
-    <Content Include="..\binaries\log4net.dll">
-      <Link>_External_Dlls\log4net.dll</Link>
-    </Content>
-    <Content Include="..\binaries\Merlin.dll">
-      <Link>_External_Dlls\Merlin.dll</Link>
-    </Content>
-    <Content Include="..\binaries\Mono.Cecil.dll">
-      <Link>_External_Dlls\Mono.Cecil.dll</Link>
-    </Content>
-    <Content Include="..\binaries\Mono.Security.dll">
-      <Link>_External_Dlls\Mono.Security.dll</Link>
-    </Content>
-    <Content Include="..\binaries\NGit.dll">
-      <Link>_External_Dlls\NGit.dll</Link>
-    </Content>
-    <Content Include="..\binaries\NSch.dll">
-      <Link>_External_Dlls\NSch.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2SharpDevelop.dll">
-      <Link>_External_Dlls\O2SharpDevelop.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_API_AST.dll">
-      <Link>_External_Dlls\O2_API_AST.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_External_IE.dll">
-      <Link>_External_Dlls\O2_External_IE.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_External_SharpDevelop.dll">
-      <Link>_External_Dlls\O2_External_SharpDevelop.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_External_WinFormsUI.dll">
-      <Link>_External_Dlls\O2_External_WinFormsUI.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_FluentSharp_BCL.dll">
-      <Link>_External_Dlls\O2_FluentSharp_BCL.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_FluentSharp_CoreLib.dll">
-      <Link>_External_Dlls\O2_FluentSharp_CoreLib.dll</Link>
-    </Content>
-    <Content Include="..\binaries\O2_Misc_Microsoft_MPL_Libs.dll">
-      <Link>_External_Dlls\O2_Misc_Microsoft_MPL_Libs.dll</Link>
-    </Content>
-    <Content Include="..\binaries\QuickGraph.dll">
-      <Link>_External_Dlls\QuickGraph.dll</Link>
-    </Content>
-    <Content Include="..\binaries\Sharpen.dll">
-      <Link>_External_Dlls\Sharpen.dll</Link>
-    </Content>
-    <Content Include="..\binaries\WeifenLuo.WinFormsUI.Docking.dll">
-      <Link>_External_Dlls\WeifenLuo.WinFormsUI.Docking.dll</Link>
-    </Content>
     <Content Include="O2_Platform_VisualStudio_AddIn.AddIn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
     <PreBuildEvent>
