@@ -9,3 +9,4 @@ UpgradeLog.xml
 *.pidb
 *.userprefs
 binaries
+.DS_Store

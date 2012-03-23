@@ -47,14 +47,38 @@ namespace O2.Platform
 
 		public void complileO2StartupScriptAndExecuteIt(string[] args)
 		{
-			var o2Bcl = load_O2_Assembly("O2_FluentSharp_BCL.dll");
+			/*var o2Bcl = load_O2_Assembly("O2_FluentSharp_BCL.dll");
 			var startO2_Type = o2Bcl.GetType("O2.Platform.BCL.Start_O2");
 
 			var startO2 = Activator.CreateInstance(startO2_Type);
 
 			var compileScript = startO2.GetType().GetMethod("compileScript");
 			var assembly = (Assembly)compileScript.Invoke(startO2, new object[] { "ascx_Execute_Scripts.cs" });
-
+			 */
+			
+			
+			
+			var h2Script = O2.DotNetWrappers.ExtensionMethods.CompileEngine_ExtensionMethods.local(
+				//"Util - SourceCodeViewer.h2");// fails
+				"Simple O2 Gui.h2"); //fails
+				//"Util - O2 Available scripts.h2");
+				//"Util - LogViewer.h2"); // loads ok
+				//("Dinis Cruz (Custom O2 version).h2");
+			var assembly2 =O2.External.SharpDevelop.ExtensionMethods.FastCompiler_ExtensionMethods.compile_H2Script(h2Script);
+			
+			if (assembly2 == null)
+				System.Windows.Forms.MessageBox.Show("NUll");
+			else
+			{
+				//System.Windows.Forms.MessageBox.Show("Good");			
+			 	O2.External.SharpDevelop.ExtensionMethods.FastCompiler_ExtensionMethods.executeFirstMethod(assembly2);
+			}
+			return;
+			//var assembly = new O2.Platform.BCL.Start_O2().compileScript("Dinis Cruz (Custom O2 version).h2");
+			
+			
+			var assembly = new O2.Platform.BCL.Start_O2().compileScript("ascx_Execute_Scripts.cs" );
+			
 			if (assembly == null)
 			{
 				MessageBox.Show("There was a problem compiling the ascx_Execute_Scripts.cs script file","O2 Start error");
@@ -65,9 +89,7 @@ namespace O2.Platform
 			var ascx_Execute_Scripts = assembly.GetType("O2.XRules.Database.ascx_Execute_Scripts");
 
 			var startControl_No_Args = ascx_Execute_Scripts.GetMethod("startControl_With_Args");
-			
-			Console.WriteLine("AAAAAAAAAAAA");
-			System.Diagnostics.Debug.WriteLine("BBBBBBBBB");
+						
 			startControl_No_Args.Invoke(null, new object[] { args});
 		}
 

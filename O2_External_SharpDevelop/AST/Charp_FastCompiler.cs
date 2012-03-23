@@ -267,7 +267,8 @@ namespace O2.External.SharpDevelop.AST
 
                                 CompilerResults = csharpCodeProvider.CompileAssemblyFromSource(compilerParams, sourceCode);                                
 
-                                if (CompilerResults.Errors.Count > 0 || CompilerResults.CompiledAssembly == null)
+                                //if (CompilerResults.Errors.Count > 0 || CompilerResults.CompiledAssembly == null)
+							    if (CompilerResults.CompiledAssembly == null)
                                 {
                                     CompilationErrors = "";
                                     foreach (CompilerError error in CompilerResults.Errors)
