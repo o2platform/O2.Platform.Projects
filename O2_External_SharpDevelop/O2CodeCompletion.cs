@@ -236,7 +236,7 @@ namespace O2.External.SharpDevelop.Ascx
 						while (!textEditor.IsDisposed && UseParseCodeThread)
 			                {
 			                    //this.parseSourceCode(this.textEditorToGrabCodeFrom.get_Text());
-                                this.parseSourceCode(DummyFileName, this.textEditor.get_Text());
+                                this.parseSourceCode(DummyFileName, this.textEditor.getText());
                                 foreach (var codeOrFile in extraSourceCodeToProcess)
                                     if (codeOrFile.isFile())
                                         this.parseSourceCode(codeOrFile,codeOrFile.contents());
@@ -262,7 +262,7 @@ namespace O2.External.SharpDevelop.Ascx
 
         public void parseSourceCode(string file, string code)
         {
-            var text = textEditor.get_Text();
+            var text = textEditor.getText();
             //textEditor.set(")
             if (false == code.valid())
                 return;
@@ -461,7 +461,7 @@ namespace O2.External.SharpDevelop.Ascx
             var targetOffset = 0;
             if (CodeCompleteCaretLocationOffset.Line == 0)
             {
-                targetText = textEditor.get_Text();//.Text;
+                targetText = textEditor.getText();//.Text;
                 targetOffset = textEditor.Document.PositionToOffset(logicalPosition);
             }
             else
@@ -616,7 +616,7 @@ namespace O2.External.SharpDevelop.Ascx
             if (CodeCompleteCaretLocationOffset.Line == 0)
             {
 
-                targetText = textArea.get_Text(); // textArea.MotherTextEditorControl.Text;                
+                targetText = textArea.getText(); // textArea.MotherTextEditorControl.Text;                
             }
             else
             {
@@ -701,7 +701,7 @@ namespace O2.External.SharpDevelop.Ascx
 
         public string getAdjustedSnippetText(TextArea textArea, int firstMethodOffset)
         {
-            var currentText = textArea.get_Text(); ;
+            var currentText = textArea.getText(); ;
             var size = CodeCompleteTargetText.size();
             if (firstMethodOffset < size)
             {

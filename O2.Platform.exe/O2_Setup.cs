@@ -61,10 +61,13 @@ namespace O2.Platform
 				return;
 			}
 
-			var types = assembly.GetTypes();
+//			var types = assembly.GetTypes();
 			var ascx_Execute_Scripts = assembly.GetType("O2.XRules.Database.ascx_Execute_Scripts");
 
 			var startControl_No_Args = ascx_Execute_Scripts.GetMethod("startControl_With_Args");
+			
+			Console.WriteLine("AAAAAAAAAAAA");
+			System.Diagnostics.Debug.WriteLine("BBBBBBBBB");
 			startControl_No_Args.Invoke(null, new object[] { args});
 		}
 

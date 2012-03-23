@@ -573,8 +573,8 @@ namespace O2.External.SharpDevelop.Ascx
 
         public string getFullPathTOCurrentSourceCodeFile()
         {
-            var directory = tbSourceCode_DirectoryOfFileLoaded.get_Text();
-            var file = tbSourceCode_FileLoaded.get_Text();
+            var directory = tbSourceCode_DirectoryOfFileLoaded.getText();
+            var file = tbSourceCode_FileLoaded.getText();
             if (directory.valid() && file.valid())
             {
                 Files.checkIfDirectoryExistsAndCreateIfNot(directory);

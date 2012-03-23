@@ -79,7 +79,7 @@ namespace O2.External.SharpDevelop.AST
                 fields_TreeView.show_List(ast.AstDetails.Fields, "Text");
                 properties_TreeView.show_List(ast.AstDetails.Properties, "Text");
                 comments_TreeView.show_List(ast.AstDetails.Comments, "Text");
-                errors_TextBox.set_Text(ast.Errors);
+                errors_TextBox.setText(ast.Errors);
             }
         }
 

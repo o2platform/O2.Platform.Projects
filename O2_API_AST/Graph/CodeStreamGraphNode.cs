@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using O2.Kernel.ExtensionMethods;
-using System.Windows.Controls;
+//using System.Windows.Controls;
 using System.Windows.Media;
 using ICSharpCode.NRefactory.Ast;
 using O2.API.AST.CSharp;
@@ -14,6 +14,8 @@ using O2.API.AST.CSharp;
 
 namespace O2.API.AST.Graph 
 {
+	//need to move this to a separate dll (mono doesn't support wpf
+/*	
     public class CodeStreamGraphNode : Label
     {
         public O2CodeStream CodeStream { get; set; }
@@ -40,10 +42,6 @@ namespace O2.API.AST.Graph
 
         }
 
-        /*public override string ToString()
-        {
-            return NodeText ?? "[null]";
-        }*/
         public void setColorBasedOnObjectType()
         {
             switch (CodeStreamNode.typeName())
@@ -77,4 +75,5 @@ namespace O2.API.AST.Graph
         }
 
     }
+    */
 }

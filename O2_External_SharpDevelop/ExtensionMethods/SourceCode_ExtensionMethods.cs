@@ -382,7 +382,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 
         public static ascx_SourceCodeEditor set_Text(this ascx_SourceCodeEditor codeEditor, string text, string highlightForExtension)
         {
-            codeEditor.set_Text(text);
+            codeEditor.setText(text);
             codeEditor.setDocumentHighlightingStrategy(highlightForExtension);
             return codeEditor;
         }
@@ -599,7 +599,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
                     if (fileOrText.fileExists())
                         sourceViewer.open(fileOrText);
                     else
-                        sourceViewer.editor().set_Text(fileOrText);
+                        sourceViewer.editor().setText(fileOrText);
                 });
             return sourceViewer;
         }

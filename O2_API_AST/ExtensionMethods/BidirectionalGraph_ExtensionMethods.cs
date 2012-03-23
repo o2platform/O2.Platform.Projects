@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickGraph;
+//using QuickGraph;
 using O2.Kernel.ExtensionMethods;
 
 namespace O2.API.AST.ExtensionMethods
 {
-    public static class BidirectionalGraph_ExtensionMethods
+/*    public static class BidirectionalGraph_ExtensionMethods
     {
         public static BidirectionalGraph<object, IEdge<object>> vertex(this BidirectionalGraph<object, IEdge<object>> graph, object vertexToAdd)
         {
@@ -83,4 +83,5 @@ namespace O2.API.AST.ExtensionMethods
         }
         #endregion
     }
+    */
 }
