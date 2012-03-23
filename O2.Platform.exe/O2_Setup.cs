@@ -60,10 +60,12 @@ namespace O2.Platform
 			
 			var h2Script = O2.DotNetWrappers.ExtensionMethods.CompileEngine_ExtensionMethods.local(
 				//"Util - SourceCodeViewer.h2");// fails
-				"Simple O2 Gui.h2"); //fails
-				//"Util - O2 Available scripts.h2");
-				//"Util - LogViewer.h2"); // loads ok
-				//("Dinis Cruz (Custom O2 version).h2");
+				"Simple O2 Gui.h2");   // works :)
+				//"Util - View Jar File Entries.h2"); // fails
+				
+				//"Util - O2 Available scripts.h2");  // works :)
+				//"Util - LogViewer.h2");  // works :)
+			
 			var assembly2 =O2.External.SharpDevelop.ExtensionMethods.FastCompiler_ExtensionMethods.compile_H2Script(h2Script);
 			
 			if (assembly2 == null)
