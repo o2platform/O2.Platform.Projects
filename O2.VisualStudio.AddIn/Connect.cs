@@ -75,6 +75,7 @@ namespace O2.VisualStudio
         }
 
     }
+
 	public class Connect : IDTExtensibility2, IDTCommandTarget
 	{
         public bool AskQuestion = true;
@@ -89,12 +90,26 @@ namespace O2.VisualStudio
         { 
             try
             {
-                var fluentSharp_CoreLib      = Connect_Helpers.loadO2Assembly("O2_FluentSharp_CoreLib.dll"  , true);
-                var fluentSharp_Bcl          = Connect_Helpers.loadO2Assembly("O2_FluentSharp_BCL.dll"      , true);
+                var fluentSharp_CoreLib      = Connect_Helpers.loadO2Assembly("O2_FluentSharp_CoreLib.dll"  , false);
+                var fluentSharp_Bcl          = Connect_Helpers.loadO2Assembly("O2_FluentSharp_BCL.dll"      , false);
                 //var fluentSharp_VisualStudio = Connect_Helpers.loadO2Assembly(@"..\..\O2.FluentSharp\binaries\O2_FluentSharp_VisualStudio.dll", true);   
-                var fluentSharp_VisualStudio = Connect_Helpers.loadO2Assembly(@"O2_FluentSharp_VisualStudio.dll", false);   
+                //var fluentSharp_VisualStudio = Connect_Helpers.loadO2Assembly(@"O2_FluentSharp_VisualStudio.dll", false);   
 
-                type            = fluentSharp_VisualStudio.GetType("O2.FluentSharp.VisualStudio.Connect");
+
+                //Compile VisualStudio_Connect.cs
+			
+			    var startO2_Type = fluentSharp_Bcl.GetType("O2.Platform.BCL.Start_O2");
+			    var startO2 = Activator.CreateInstance(startO2_Type);
+			    var compileScript = startO2.GetType().GetMethod("compileScript");
+
+                var startScript = "VisualStudio_Connect.cs";
+			    var VisualStudio_Connect = (Assembly)compileScript.Invoke(startO2, new object[] { startScript });
+
+                if (VisualStudio_Connect == null)
+                { 
+                    Connect_Helpers.showMessage("[O2.VisualStudio.Connect] failed to compile script: " + startScript);
+                }
+                type            = VisualStudio_Connect.GetType("O2.FluentSharp.VisualStudio.Connect");
                 connect         = Activator.CreateInstance(type);
                 onConnection    = connect.GetType().GetMethod("OnConnection");
                 onDisconnection = connect.GetType().GetMethod("OnDisconnection");
@@ -108,16 +123,20 @@ namespace O2.VisualStudio
         }
 
 		public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
-		{			
-            if(AskQuestion)
+		{	
+		    if (onConnection == null)
+                return;
+
+            /*if(AskQuestion)
             {
                 /*var result = MessageBox.Show("Do you want to load up the O2 VisualStudio AddIn", "O2 Platform",MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 { 
                     MessageBox.Show("Loading up O2...");
-                }*/
+                }
+             */
                 try
-                {
+                {                    
                     onConnection.Invoke(connect, new object[] { application, connectMode, addInInst , custom });                    
                 }
                 catch (Exception ex)
@@ -125,7 +144,7 @@ namespace O2.VisualStudio
                     Connect_Helpers.showMessage("[O2.VisualStudio.Connect] OnConnection: " + ex.Message);
                 }
 
-            }
+            //}
 		}
 
 		#region not_implemented_methods
@@ -176,9 +195,11 @@ namespace O2.VisualStudio
         /// 
          
 		public void QueryStatus(string commandName, vsCommandStatusTextWanted neededText, ref vsCommandStatus status, ref object commandText)
-		{			
+		{	
+		    if (queryStatus == null)
+                return;
 			try
-            {
+            {                
                 object[] args  = new object[] { commandName , neededText, status, commandText };
                 queryStatus.Invoke(connect, args);
                 status = (vsCommandStatus)args[2];
@@ -199,6 +220,8 @@ namespace O2.VisualStudio
 		/// <seealso class='Exec' />
 		public void Exec(string commandName, vsCommandExecOption executeOption, ref object varIn, ref object varOut, ref bool handled)
 		{	
+            if (exec == null)
+                return;
 			try
             {
                 var args = new object[] { commandName , executeOption, varIn, varOut , handled };
