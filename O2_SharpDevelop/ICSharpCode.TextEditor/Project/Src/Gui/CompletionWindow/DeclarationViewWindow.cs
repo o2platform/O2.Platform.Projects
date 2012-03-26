@@ -63,7 +63,10 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		}
 		
 		public bool HideOnClick;
-		
+
+        public DeclarationViewWindow() : this(null)
+        { }
+
 		public DeclarationViewWindow(Form parent)
 		{
 			SetStyle(ControlStyles.Selectable, false);

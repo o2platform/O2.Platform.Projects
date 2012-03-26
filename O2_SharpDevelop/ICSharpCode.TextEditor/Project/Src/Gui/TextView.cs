@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using ICSharpCode.TextEditor.Document;
-using O2.Kernel.ExtensionMethods; 
+using O2.DotNetWrappers.ExtensionMethods; 
 
 namespace ICSharpCode.TextEditor
 {

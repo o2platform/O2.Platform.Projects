@@ -7,6 +7,8 @@ using O2.DotNetWrappers.DotNet;
 using System;
 using O2.DotNetWrappers.H2Scripts;
 using O2.Kernel;
+using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace O2.External.SharpDevelop.ExtensionMethods
 {
@@ -16,7 +18,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         {
             return pathToFileToCompile.compile(false);
         }
-
         public static Assembly compile(this string pathToFileToCompile, bool generateDebugSymbols)
         {
             PublicDI.CurrentScript = pathToFileToCompile;
@@ -36,7 +37,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         {
             return codeSnipptet.compile_CodeSnippet(false);
         }
-
         public static Assembly compile_CodeSnippet(this string codeSnipptet, bool generateDebugSymbols)
         {   
             //Note we can't use the precompiled engines here since there is an issue of the resolution of this code dependencies
@@ -52,7 +52,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             var assembly = csharpCompiler.assembly();
             return assembly;
         }
-
         public static Assembly compile_H2Script(this string h2Script)
         {
             try
@@ -74,7 +73,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             }
             return null;
         }
-
         public static Assembly assembly(this CSharp_FastCompiler csharpCompiler)
         {
 			if (csharpCompiler != null)
@@ -92,14 +90,12 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 			}
             return null;
         }
-
         public static Assembly compile(this string pathToFileToCompile, string targetAssembly)
         {
             var assembly = pathToFileToCompile.compile(true);
             Files.Copy(assembly.Location, targetAssembly);
             return assembly;
         }
-
         /*public static Assembly compile(this string pathToFileToCompile, bool compileToFileAndWithDebugSymbols)
         {
             string generateDebugSymbolsTag = @"//debugSymbols".line();
@@ -108,7 +104,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             return pathToFileToCompile.compile();
 
         } */       
-
         public static object executeFirstMethod(this string pathToFileToCompileAndExecute)
         {
             try
@@ -121,7 +116,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
                 return null;
             }
         }
-
         public static object executeFirstMethod(this string pathToFileToCompileAndExecute, object[] parameters)
         {
             PublicDI.CurrentScript = pathToFileToCompileAndExecute;
@@ -138,17 +132,14 @@ namespace O2.External.SharpDevelop.ExtensionMethods
                 return assembly.executeFirstMethod(parameters);
             }
         }
-
         public static object executeFirstMethod(this Assembly assembly)
         {
             return assembly.executeFirstMethod(false, false, new object[] {});
         }
-
         public static object executeFirstMethod(this Assembly assembly ,  object[] parameters)
         {
             return assembly.executeFirstMethod(false, false, parameters);
         }
-
         public static object executeFirstMethod(this Assembly assembly ,  bool executeInStaThread, bool executeInMtaThread, object[] parameters)
         {            
             if (assembly != null)
@@ -169,7 +160,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             }
             return null;
         }
-
         public static object executeMethod(this MethodInfo method, params object[] parameters)
         {
             try
@@ -201,6 +191,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
                 return null;
             }            
         }
+
         public static object executeH2Script(this string h2ScriptFile)
         {
             try
@@ -220,7 +211,6 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             }
             return null;
         }
-
         public static object execute(this H2 h2Script)
         {
             try
@@ -234,5 +224,72 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             }
             return null;
         }
+
+        //add links (which execute o2 scripts		
+		public static LinkLabel add_Link(this Control control, string label, string script)
+		{
+			return control.add_Link(label, ()=> script.executeH2Script());
+		}		
+		public static LinkLabel append_Link(this Control control, string label, string script)
+		{
+			return control.append_Link(label, ()=> script.executeH2Script());
+		}		
+		public static LinkLabel append_Below_Link(this Control control, string label, string script)
+		{
+			return control.append_Below_Link(label, ()=> script.executeH2Script());
+		}		
+
+
+        //ComboBox execution
+        public static ComboBox add_ExecutionComboBox(this Control control, string labelText, int top, int left, Items scriptMappings)
+		{
+			return control.add_ExecutionComboBox(labelText, top, left, scriptMappings, scriptMappings.keys());
+		}		
+		public static ComboBox add_ExecutionComboBox(this Control control, string labelText, int top, int left, Items scriptMappings, List<string> comboBoxItems)
+		{						
+			return control.add_Label(labelText, top, left)
+		 				  .append_Control<ComboBox>().top(top-3).dropDownList() // .width(100)		 				  
+ 						  .add_Items(comboBoxItems.insert("... select one...").ToArray())
+ 						  .executeScriptOnSelection(scriptMappings)		 							
+ 						  .selectFirst(); 
+		}		
+        public static ComboBox executeScriptOnSelection(this ComboBox comboBox, Items mappings)
+		{			
+			comboBox.onSelection<string>(
+						(key)=>{
+									if (mappings.hasKey(key))
+									{										
+										"executing script mapped to '{0}: {1}".info(key, mappings[key]);
+										var itemToExecute = mappings[key];
+										if (itemToExecute.isUri())
+											Processes.startProcess(itemToExecute);
+											//itemToExecute.startProcess();
+										else
+										{
+											if(itemToExecute.fileExists().isFalse() && itemToExecute.local().fileExists().isFalse())																							
+												CompileEngine.clearLocalScriptFileMappings();											
+											"itemToExecute: {0}".debug(itemToExecute);	
+											"itemToExecuteextension: {0}".debug(itemToExecute.extension(".o2"));
+											if (itemToExecute.extension(".h2") || itemToExecute.extension(".o2"))											
+												if (Control.ModifierKeys == Keys.Shift)
+												{
+													"Shift Key pressed, so launching in new process: {0}".info(itemToExecute);
+													itemToExecute.executeH2_or_O2_in_new_Process();
+													return;
+												}
+												
+/*												else
+												{
+													"Shift Key was pressed, so running script in current process".debug(itemToExecute);													
+													O2Thread.mtaThread(()=>itemToExecute.executeFirstMethod());
+												}
+											else*/
+											O2Thread.mtaThread(()=>itemToExecute.executeFirstMethod());
+										}
+											
+									}
+								});		
+			return comboBox;			
+		}	
     }
 }

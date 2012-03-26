@@ -45,35 +45,42 @@ namespace O2.Platform
 			load_O2_Assembly("O2_FluentSharp_BCL.dll");
 		}
 
-		public void complileO2StartupScriptAndExecuteIt(string[] args)
+		public bool complileO2StartupScriptAndExecuteIt(string[] args)
 		{
-			var o2Bcl = load_O2_Assembly("O2_FluentSharp_BCL.dll");
-			var startO2_Type = o2Bcl.GetType("O2.Platform.BCL.Start_O2");
+            try
+            {
+                var o2Bcl = load_O2_Assembly("O2_FluentSharp_BCL.dll");
+                var startO2_Type = o2Bcl.GetType("O2.Platform.BCL.Start_O2");
 
-			var startO2 = Activator.CreateInstance(startO2_Type);
+                var startO2 = Activator.CreateInstance(startO2_Type);
 
-			var compileScript = startO2.GetType().GetMethod("compileScript");
-			var assembly = (Assembly)compileScript.Invoke(startO2, new object[] { "ascx_Execute_Scripts.cs" });
+                var compileScript = startO2.GetType().GetMethod("compileScript");
+                var assembly = (Assembly)compileScript.Invoke(startO2, new object[] { "ascx_Execute_Scripts.cs" });
 
-			if (assembly == null)
-			{
-				MessageBox.Show("There was a problem compiling the ascx_Execute_Scripts.cs script file","O2 Start error");
-				return;
-			}
+                if (assembly == null)
+                {
+                    MessageBox.Show("There was a problem compiling the ascx_Execute_Scripts.cs script file", "O2 Start error");
+                    return false;
+                }
 
-			var types = assembly.GetTypes();
-			var ascx_Execute_Scripts = assembly.GetType("O2.XRules.Database.ascx_Execute_Scripts");
+                var types = assembly.GetTypes();
+                var ascx_Execute_Scripts = assembly.GetType("O2.XRules.Database.ascx_Execute_Scripts");
 
-			var startControl_No_Args = ascx_Execute_Scripts.GetMethod("startControl_With_Args");
-			startControl_No_Args.Invoke(null, new object[] { args});
+                var startControl_No_Args = ascx_Execute_Scripts.GetMethod("startControl_With_Args");
+                startControl_No_Args.Invoke(null, new object[] { args });
+                return true;
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("Error in O2 Initialization (try deleting the CachedCompiledAssembliesMappings.xml file from the temp dir): " + ex.Message, "O2 Start error");
+                return false;
+            }            
 		}
 
 		public void startO2(string[] args)
 		{			
 			loadDependencies();
-			
-			complileO2StartupScriptAndExecuteIt(args);
-			
+            complileO2StartupScriptAndExecuteIt(args);
 		}
 
 

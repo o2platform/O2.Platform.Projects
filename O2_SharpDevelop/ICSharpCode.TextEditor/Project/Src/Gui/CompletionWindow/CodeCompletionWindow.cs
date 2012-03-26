@@ -49,50 +49,58 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
                 return null;
             }
 
-                busy = true;
-                return (CodeCompletionWindow)parent.invokeOnThread(
-                    () =>
-                    {
-                        try
-                        {
-
-                            var tempCompletionData = new ICompletionData[] { };
-                            CodeCompletionWindow codeCompletionWindow = new CodeCompletionWindow(completionDataProvider, tempCompletionData, parent, control, showDeclarationWindow, fixedListViewWidth);
-                            codeCompletionWindow.CloseWhenCaretAtBeginning = firstChar == '\0';
-                            codeCompletionWindow.ShowCompletionWindow();
-
-                            O2Thread.mtaThread(         // run in on a separate thread for performance reasons
-                                () =>
-                                {
-                                    try
-                                    {
-                                        ICompletionData[] completionData = completionDataProvider.GenerateCompletionData(fileName, control.ActiveTextAreaControl.TextArea, firstChar);
-                                        if (completionData == null || completionData.Length == 0)
-                                        {
-                                            //return null;
-                                        }
-                                        else
-                                            codeCompletionWindow.setCodeCompletionData(completionData);
-                                        busy = false;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        ex.log("in CodeCompletionWindow.ShowCompletionWindow ");
-                                    }
-                                });
-
-                            return codeCompletionWindow;
-                        }
-                        catch (Exception ex)
-                        {
-                            busy = false;
-                            return null;
-                        }
-                    });
+            busy = true;
             
-		}     
+            //return (CodeCompletionWindow)parent.invokeOnThread(
+            return (CodeCompletionWindow)control.invokeOnThread(
+                        ()=>{
+                                return ShowCompletionWindow_Thread(parent, control, fileName,completionDataProvider, firstChar, showDeclarationWindow, fixedListViewWidth);
+                            });
+            
+		}
 
-		CodeCompletionWindow(ICompletionDataProvider completionDataProvider, ICompletionData[] completionData, Form parentForm, TextEditorControl control, bool showDeclarationWindow, bool fixedListViewWidth) : base(parentForm, control)
+        public static CodeCompletionWindow ShowCompletionWindow_Thread(Form parent,TextEditorControl control, string fileName, ICompletionDataProvider completionDataProvider, char firstChar, bool showDeclarationWindow, bool fixedListViewWidth)
+        { 
+            try
+                {
+
+                    var tempCompletionData = new ICompletionData[] { };
+                    CodeCompletionWindow codeCompletionWindow = new CodeCompletionWindow(completionDataProvider, tempCompletionData, parent, control, showDeclarationWindow, fixedListViewWidth);
+                    codeCompletionWindow.CloseWhenCaretAtBeginning = firstChar == '\0';
+                    codeCompletionWindow.ShowCompletionWindow();
+
+                    O2Thread.mtaThread(         // run in on a separate thread for performance reasons
+                        () =>
+                        {
+                            try
+                            {
+                                ICompletionData[] completionData = completionDataProvider.GenerateCompletionData(fileName, control.ActiveTextAreaControl.TextArea, firstChar);
+                                if (completionData == null || completionData.Length == 0)
+                                {
+                                    //return null;
+                                }
+                                else
+                                    codeCompletionWindow.setCodeCompletionData(completionData);                                
+                            }
+                            catch (Exception ex)
+                            {
+                                ex.log("in CodeCompletionWindow.ShowCompletionWindow ");
+                            }
+                            busy = false;
+                        });
+
+                    return codeCompletionWindow;
+                }
+                catch (Exception ex)
+                {
+                    busy = false;
+                    return null;
+                }
+        }
+
+		
+            
+        CodeCompletionWindow(ICompletionDataProvider completionDataProvider, ICompletionData[] completionData, Form parentForm, TextEditorControl control, bool showDeclarationWindow, bool fixedListViewWidth) : base(parentForm, control)
 		{
 			this.dataProvider = completionDataProvider;
 			this.completionData = completionData;
@@ -112,7 +120,9 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
         public void setCodeCompletionData(ICompletionData[] completionData)
         {
             this.completionData = completionData;
-            parentForm.invokeOnThread(() => loadGui());
+
+            //parentForm.invokeOnThread(() => loadGui());
+            control.invokeOnThread(() => loadGui());
         }
 
         // DC (this code was in the constructor of this method which was not working on a multithread environment
@@ -156,7 +166,8 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 
             if (declarationViewWindow == null)
             {
-                declarationViewWindow = new DeclarationViewWindow(parentForm);
+                //declarationViewWindow = new DeclarationViewWindow(parentForm);
+                declarationViewWindow = new DeclarationViewWindow();
             }
             SetDeclarationViewLocation();
             declarationViewWindow.ShowDeclarationViewWindow();
@@ -270,6 +281,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		
 		public override bool ProcessKeyEvent(char ch)
 		{
+            //"[CodeCompletionWindow] ProcessKeyEvent: {0}".info(ch);
 			switch (dataProvider.ProcessKey(ch)) {
 				case CompletionDataProviderKeyResult.BeforeStartKey:
 					// increment start+end, then process as normal char

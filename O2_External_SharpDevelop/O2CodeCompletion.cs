@@ -60,7 +60,7 @@ namespace O2.External.SharpDevelop.Ascx
 
     	public O2CodeCompletion(TextEditorControl _textEditor, Action<string> status)
     	{
-            OnlyShowCodeCompleteResulstFromO2Namespace = true;
+            OnlyShowCodeCompleteResulstFromO2Namespace = false; //true;            
             UseParseCodeThread = true;
             extraSourceCodeToProcess = new List<string>();
             mappedCompilationUnits = new Dictionary<string, ICompilationUnit>();
@@ -93,7 +93,7 @@ namespace O2.External.SharpDevelop.Ascx
                 this.pcRegistry = new ProjectContentRegistry();
                 this.myProjectContent = new DefaultProjectContent();
                 this.myProjectContent.Language = this.CurrentLanguageProperties;
-                var persistanceFolder = Path.Combine(Path.GetTempPath(), "CSharpCodeCompletion");
+                var persistanceFolder = PublicDI.config.O2TempDir.pathCombine("..//_CSharpCodeCompletion").fullPath();  // Path.Combine(Path.GetTempPath(), "CSharpCodeCompletion");
                 persistanceFolder.createFolder();
                 pcRegistry.ActivatePersistence(persistanceFolder);
                 // static parse current code thread
@@ -327,43 +327,53 @@ namespace O2.External.SharpDevelop.Ascx
                         return true;
             }
    //         "key pressed:{0}".format(key).info();
-            if (key == '.')
+            if (key == '.' || key == ' ')
             {
-                //O2Thread.mtaThread(   //I really want to run this on a separate thread but It is causing a weird problem where the codecomplete only happens after the 2nd char
-                //() =>
-                //{
-                currentExpression = FindExpression();
-                //var o2Timer = new O2Timer("Code Completion").start();
-                    //textEditor.invokeOnThread(()=> textEditor.textArea().Caret.Column ++ );
-                    try
-                    {
-                        //startOffset = textEditor.currentOffset() + 1;   // it was +1 before we made this run on an mta thread
-                        ICompletionDataProvider completionDataProvider = this;//new CodeCompletionProvider(this);
-
-                        codeCompletionWindow = CodeCompletionWindow.ShowCompletionWindow(
-                            textEditor.ParentForm,					// The parent window for the completion window
-                            textEditor, 							// The text editor to show the window for
-                            DummyFileName,							// Filename - will be passed back to the provider
-                            completionDataProvider,					// Provider to get the list of possible completions
-                            key										// Key pressed - will be passed to the provider
-                        );
-                        
-                        if (codeCompletionWindow != null)
-                        {
-                            // ShowCompletionWindow can return null when the provider returns an empty list
-                            codeCompletionWindow.Closed += new EventHandler(CloseCodeCompletionWindow);
-                        }
-                        //textEditor.insertTextAtCurrentCaretLocation(".");
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.log("in O2CodeCompletion.TextAreaKeyEventHandler");
-                    }
-                  //  o2Timer.stop();
+                onDot_showCodeCompleteWindow();
+                 
                 //});
 //                return true;
             }
             return false;
+        }
+
+        public void onDot_showCodeCompleteWindow()
+        { 
+//            CodeCompleteTargetText = textEditor.get_Text(); // update this text so that we are working with the latest version of the code/snippet
+            var key = '.';
+            //O2Thread.mtaThread(   //I really want to run this on a separate thread but It is causing a weird problem where the codecomplete only happens after the 2nd char
+                //() =>
+                //{
+
+            currentExpression = FindExpression();
+            "[O2CodeComplete] Current Expression: {0}".info(currentExpression);
+            var o2Timer = new O2Timer("Code Completion").start();
+            //textEditor.invokeOnThread(()=> textEditor.textArea().Caret.Column ++ );
+            try
+            {
+                //startOffset = textEditor.currentOffset() + 1;   // it was +1 before we made this run on an mta thread
+                ICompletionDataProvider completionDataProvider = this;//new CodeCompletionProvider(this);
+
+                codeCompletionWindow = CodeCompletionWindow.ShowCompletionWindow(
+                    textEditor.ParentForm,					// The parent window for the completion window
+                    textEditor, 							// The text editor to show the window for
+                    DummyFileName,							// Filename - will be passed back to the provider
+                    completionDataProvider,					// Provider to get the list of possible completions
+                    key										// Key pressed - will be passed to the provider
+                );
+                        
+                if (codeCompletionWindow != null)
+                {
+                    // ShowCompletionWindow can return null when the provider returns an empty list
+                    codeCompletionWindow.Closed += new EventHandler(CloseCodeCompletionWindow);
+                }
+                //textEditor.insertTextAtCurrentCaretLocation(".");
+            }
+            catch (Exception ex)
+            {
+                ex.log("in O2CodeCompletion.TextAreaKeyEventHandler");
+            }
+            o2Timer.stop();
         }
 		
 		void CloseCodeCompletionWindow(object sender, EventArgs e)
@@ -686,9 +696,10 @@ namespace O2.External.SharpDevelop.Ascx
         }
 
         public int calculateFirstMethodOffset()
-        {
-            //var offset = 0;            
+        {            
+            //var offset = 0;                              
             var lines = CodeCompleteTargetText.lines();
+             //"CodeCompleteTargetText:\n\n{0}".info(CodeCompleteTargetText);
             var linesToRemove = lines.size() - CodeCompleteCaretLocationOffset.Line +1;
             lines.RemoveRange(CodeCompleteCaretLocationOffset.Line -1, linesToRemove);            
             var topText = StringsAndLists.fromStringList_getText(lines);

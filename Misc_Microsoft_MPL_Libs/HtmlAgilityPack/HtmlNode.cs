@@ -4,6 +4,7 @@ using System.Collections;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace HtmlAgilityPack
 {
@@ -452,7 +453,7 @@ namespace HtmlAgilityPack
             }
             catch (Exception ex)
             {
-                O2.Kernel.ExtensionMethods.Logging_ExtensionMethods.log(ex, "in HtmlNodeCollection SelectNodes");
+                ex.log("in HtmlNodeCollection SelectNodes");
             }
             //DC removed this so that we get an empty list when there are no matching nodes
 			//if (list.Count == 0)

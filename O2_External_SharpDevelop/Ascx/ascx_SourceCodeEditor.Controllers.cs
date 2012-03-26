@@ -31,6 +31,7 @@ using ICSharpCode.NRefactory;
 using O2.API.AST.CSharp;
 using O2.API.AST.ExtensionMethods;
 using ICSharpCode.NRefactory.Ast;
+using ICSharpCode.TextEditor.Gui.CompletionWindow;
 
 namespace O2.External.SharpDevelop.Ascx
 {
@@ -1408,14 +1409,15 @@ namespace O2.External.SharpDevelop.Ascx
             PublicDI.log.debug(StringsAndLists.fromStringList_getText(new CompileEngine().getListOfReferencedAssembliesToUse()));
         }
         
-        public O2CodeCompletion enableCodeComplete()
+        public ICompletionDataProvider enableCodeComplete()
         {
             if (o2CodeCompletion == null)
             {
+                //o2CodeCompletion = (ICompletionDataProvider)"O2CodeCompletion".local().compile().ctor(tecSourceCode);
                 o2CodeCompletion = new O2CodeCompletion(tecSourceCode);
             //else
             //{
-                o2CodeCompletion.OnlyShowCodeCompleteResulstFromO2Namespace = false;
+               // o2CodeCompletion.OnlyShowCodeCompleteResulstFromO2Namespace = false;
                 compile_Click(null, null);
             }
             return o2CodeCompletion;

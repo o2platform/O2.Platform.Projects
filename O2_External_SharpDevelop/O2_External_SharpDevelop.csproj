@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -68,13 +68,12 @@
     <Compile Include="Ascx\ascx_XRules_Editor.Designer.cs">
       <DependentUpon>ascx_XRules_Editor.cs</DependentUpon>
     </Compile>
-    <None Include="ExtensionMethods\_SourceCode_ExtensionMethods.cs" />
     <Compile Include="O2CodeCompletion.cs" />
     <Compile Include="AST\Charp_FastCompiler.cs" />
     <Compile Include="AST\TextToCodeMappings.cs" />
     <Compile Include="ExtensionMethods\FastCompiler_ExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\Linq_ExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\SourceCode_ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\SourceCodeEditor_ExtensionMethods.cs" />
     <Compile Include="Ascx\ascx_SourceCodeViewer.Controllers.cs">
       <SubType>UserControl</SubType>
     </Compile>
