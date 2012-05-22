@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v3.5">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="O2_FluentSharp_CoreLib, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\FluentSharp.CoreLib.4.0.0.1\lib\net40\O2_FluentSharp_CoreLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -378,14 +381,6 @@
     <Compile Include="XObjects\XOTask\LinqToXsdTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Irony_Parser\Parsing\Construction\_about_parser_construction.txt" />
-    <Content Include="XObjects\Cmdline\Cmdline.csproj" />
-    <Content Include="XObjects\XObjects.csproj" />
-    <Content Include="XObjects\XObjects.sln" />
-    <Content Include="XObjects\XOTask\XOTask.csproj" />
-    <Content Include="XObjects\XOTask\XOTask.sln" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Irony_Parser\Microsoft\MathResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MathResources.Designer.cs</LastGenOutput>
@@ -416,14 +411,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
-      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
-      <Name>O2.FluentSharp.BCL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
-      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
-      <Name>O2.FluentSharp.CoreLib</Name>
-    </ProjectReference>
+    <None Include="O2_Misc_Microsoft_MPL_Libs.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Irony_Parser\Parsing\Construction\_about_parser_construction.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

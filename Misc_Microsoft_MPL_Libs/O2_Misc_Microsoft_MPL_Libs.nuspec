@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>O2.Platform.Misc_Microsoft_MPL_Libs</id>
+    <version>4.0.0.1</version>
+    <title>O2.Platform - Misc Microsoft MPL Libraries</title>
+    <authors>O2 Platform</authors>
+    <owners>O2 Platform</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>http://o2platform.com</projectUrl>
+    <iconUrl>https://www.owasp.org/images/f/f5/O2_Logo_no_Shadow.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>    
+    <description>Misc MPL Libraries from CodePlex: HttpAgilityPack, InputSimulator, Irony Parser, WCF Rest Start Kit, XObjects</description>
+    <releaseNotes>Removed *.txt file</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>OWASP O2Platform Security FluentSharp</tags>
+    <dependencies>
+      <dependency id="FluentSharp.CoreLib" />
+    </dependencies>
+  </metadata>
+</package>
