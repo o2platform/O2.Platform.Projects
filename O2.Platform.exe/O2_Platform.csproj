@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -64,28 +64,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Mono.Security">
-      <HintPath>_ExternalDlls\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="NGit">
-      <HintPath>_ExternalDlls\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch">
-      <HintPath>_ExternalDlls\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen">
-      <HintPath>_ExternalDlls\Sharpen.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="O2_Setup.cs" />
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="_ExternalDlls\Mono.Security.dll" />
-    <Content Include="_ExternalDlls\NGit.dll" />
-    <Content Include="_ExternalDlls\NSch.dll" />
-    <Content Include="_ExternalDlls\Sharpen.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

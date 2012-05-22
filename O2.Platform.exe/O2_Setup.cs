@@ -81,10 +81,7 @@ namespace O2.Platform
 		{			
 			loadDependencies();
             complileO2StartupScriptAndExecuteIt(args);
-		}
-
-
-		
+		}	
 	}
 }
  
