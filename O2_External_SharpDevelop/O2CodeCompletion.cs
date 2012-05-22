@@ -640,12 +640,19 @@ namespace O2.External.SharpDevelop.Ascx
 			                                        this.parseInformation,
                                                     targetText);
 			List<ICompletionData> resultList = new List<ICompletionData>();
-			if (rr != null) {
+			if (rr.notNull() && rr.ResolvedType.notNull()) 
+            {                
 				ArrayList completionData = rr.GetCompletionData(this.myProjectContent);
+                "[CodeComplete] expression '{0}' was resolved into type: {1} with {2} results".info(currentExpression.Expression, 
+                                                                                                    rr.ResolvedType.FullyQualifiedName,
+                                                                                                    completionData.isNull() ? -1 
+                                                                                                                            : completionData.Count);
 				if (completionData != null) {
 					AddCompletionData(resultList, completionData);
 				}
 			}
+            else
+                "[CodeComplete] expression '{0}' could not be resolved".error(currentExpression.Expression);
            // "In generate completion Data, There were {0} results found".format(resultList.Count).debug();
 			return resultList.ToArray();
 		}

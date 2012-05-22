@@ -17,6 +17,8 @@ using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory.Visitors;
 using NR = ICSharpCode.NRefactory;
 
+using O2.DotNetWrappers.ExtensionMethods;
+
 namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 {
 	/// <summary>
@@ -201,7 +203,16 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 			this.ProjectContent = cu.ProjectContent;
 			
 			callingClass = cu.GetInnermostClass(caretLine, caretColumn);
+            if (callingClass.isNull() && cu.Classes.size()==1)              // handles the cases where the last line is a return
+                callingClass = cu.Classes[0];
+
 		    callingMember = GetCallingMember();
+            if (callingMember == null)
+            {
+                "[CodeComplete] Could not resolved callingMember".error();
+                return false;
+            }
+
 			return true;
 		}
 		
@@ -1067,6 +1078,8 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 					return v;
 				}
 			}
+            if (variables.Count ==1)
+                return variables[0]; // hack to deal with cases where the variable is not exactly found
 			return null;
 		}
 		#endregion

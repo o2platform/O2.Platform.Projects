@@ -124,7 +124,7 @@ namespace O2.VisualStudio
 
 		public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
 		{	
-		    if (onConnection == null)
+		        if (onConnection == null)
                 return;
 
             /*if(AskQuestion)

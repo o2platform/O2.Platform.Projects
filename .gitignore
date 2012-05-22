@@ -9,3 +9,5 @@ UpgradeLog.xml
 *.pidb
 *.userprefs
 binaries
+/Misc_Microsoft_MPL_Libs/packages
+*.nupkg

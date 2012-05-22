@@ -77,6 +77,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
                                 ICompletionData[] completionData = completionDataProvider.GenerateCompletionData(fileName, control.ActiveTextAreaControl.TextArea, firstChar);
                                 if (completionData == null || completionData.Length == 0)
                                 {
+                                    //"There was no CompleteData".error();
                                     //return null;
                                 }
                                 else

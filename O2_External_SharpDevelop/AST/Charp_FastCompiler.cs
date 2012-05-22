@@ -368,6 +368,8 @@ namespace O2.External.SharpDevelop.AST
                         CompilationUnit.add_Type(default_TypeName)
                             .add_Method(default_MethodName, InvocationParameters, blockStatement);
 
+                        snippetParser.Specials.Clear(); // remove comments from parsed code
+
                         astCSharp = new Ast_CSharp(CompilationUnit, snippetParser.Specials);
                         //astCSharp.AstDetails.mapSpecials();
 

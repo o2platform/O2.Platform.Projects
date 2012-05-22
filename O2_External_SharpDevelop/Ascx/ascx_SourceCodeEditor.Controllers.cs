@@ -60,8 +60,7 @@ namespace O2.External.SharpDevelop.Ascx
         public Assembly compiledAssembly;
         Thread autoCompileThread;
         public bool allowCodeCompilation = true;
-        public O2CodeCompletion o2CodeCompletion;
-        public string AutoBackupSaveDir = PublicDI.config.O2TempDir.pathCombine("_AutoSavedScripts");
+        public O2CodeCompletion o2CodeCompletion;          
         public bool AutoBackUpOnCompileSuccess = true;
         public bool checkForDebugger = false;
         public O2MappedAstData compiledFileAstData = null;
@@ -985,11 +984,11 @@ namespace O2.External.SharpDevelop.Ascx
             if (AutoBackUpOnCompileSuccess)
             {
                 var code = getSourceCode();
-                AutoBackupSaveDir.createDir();    // make sure it exits
+                PublicDI.config.AutoSavedScripts.createDir();    // make sure it exits
                 var extension = sPathToFileLoaded.extension();
                 if (extension.valid().isFalse())
                     extension = ".cs";
-                var targetFile = AutoBackupSaveDir.pathCombine("code_Editor_" + Files.getFileSaveDateTime_Now().trim() + extension);
+                var targetFile = PublicDI.config.AutoSavedScripts.pathCombine("code_Editor_" + Files.getFileSaveDateTime_Now().trim() + extension);
                 if (extension == ".h2")
                     new H2(code).save(targetFile);
                 else
