@@ -289,6 +289,7 @@ namespace O2.External.SharpDevelop.AST
 									{
 										var codeMd5 = sourceCode.md5Hash();
 										CompileEngine.CachedCompiledAssemblies.add(codeMd5, CompiledAssembly.Location);
+                                            CompileEngine.CachedCompiledAssemblies.add(CompiledAssembly.GetName().Name, CompiledAssembly.Location);
 									}
                                     DebugMode.ifDebug("Compilation was OK");
                                     this.invoke(onCompileOK);
