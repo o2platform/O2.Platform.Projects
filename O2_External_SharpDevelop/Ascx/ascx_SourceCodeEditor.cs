@@ -154,11 +154,14 @@ namespace O2.External.SharpDevelop.Ascx
 
         private void processDragAndDropFile(DragEventArgs e)
         {
-            var droppedObject = (O2.DotNetWrappers.Filters.FilteredSignature)Dnd.tryToGetObjectFromDroppedObject(e, typeof(O2.DotNetWrappers.Filters.FilteredSignature));
-            if (droppedObject != null)
-                tbTextSearch.Text = (droppedObject.sSignature);
-            else
-                loadSourceCodeFile(Dnd.tryToGetFileOrDirectoryFromDroppedObject(e));
+            O2Thread.mtaThread(() =>
+                {
+                    var droppedObject = (O2.DotNetWrappers.Filters.FilteredSignature)Dnd.tryToGetObjectFromDroppedObject(e, typeof(O2.DotNetWrappers.Filters.FilteredSignature));
+                    if (droppedObject != null)
+                        tbTextSearch.set_Text(droppedObject.sSignature);
+                    else
+                        loadSourceCodeFile(Dnd.tryToGetFileOrDirectoryFromDroppedObject(e));
+                });
         }
 
         /*  private void pbSourceCode_MouseDown(object sender, MouseEventArgs e)
