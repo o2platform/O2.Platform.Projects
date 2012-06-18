@@ -15,7 +15,7 @@ namespace ICSharpCode.TextEditor
 	/// <summary>
 	/// Used internally, not for own use.
 	/// </summary>
-	internal class Ime
+	public class Ime
 	{
 		public Ime(IntPtr hWnd, Font font)
 		{

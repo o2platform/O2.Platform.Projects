@@ -35,17 +35,20 @@ namespace ICSharpCode.TextEditor
 	
 	public class Caret : System.IDisposable
 	{
-		int       line          = 0;
-		int       column        = 0;
-		int       desiredXPos   = 0;
-		CaretMode caretMode;
+        public int line = 0;
+        public int column = 0;
+        public int desiredXPos = 0;
+        public CaretMode caretMode;
 		
-		static bool     caretCreated = false;
-		bool     hidden       = true;
-		TextArea textArea;
-		Point    currentPos   = new Point(-1, -1);
-		Ime      ime          = null;
-		CaretImplementation caretImplementation;
+		public static   bool     caretCreated = false;
+        public static   bool LogCaretCalls { get; set; } //DC
+        public          bool hidden = true;
+        public          TextArea textArea;
+        public          Point currentPos = new Point(-1, -1);
+        public          Ime ime = null;
+        public          CaretImplementation caretImplementation;
+
+        
 		
 		/// <value>
 		/// The 'prefered' xPos in which the caret moves, when it is moved
@@ -308,6 +311,8 @@ namespace ICSharpCode.TextEditor
 		[Conditional("DEBUG")]
 		static void Log(string text)
 		{
+            if (LogCaretCalls)
+                O2.Kernel.PublicDI.log.info("[Caret Log] {0}", text);
 			//Console.WriteLine(text);
 		}
 		
@@ -318,7 +323,7 @@ namespace ICSharpCode.TextEditor
 			PaintCaretLine(g);
 		}
 		
-		abstract class CaretImplementation : IDisposable
+		public abstract class CaretImplementation : IDisposable
 		{
 			public bool RequireRedrawOnPositionChange;
 			
@@ -424,18 +429,22 @@ namespace ICSharpCode.TextEditor
 			
 			public override bool Create(int width, int height)
 			{
+                Log("IN CREATE");
 				return CreateCaret(textArea.Handle, 0, width, height);
 			}
 			public override void Hide()
 			{
+                Log("HIDE");
 				HideCaret(textArea.Handle);
 			}
 			public override void Show()
 			{
+                Log("SHOW");
 				ShowCaret(textArea.Handle);
 			}
 			public override bool SetPosition(int x, int y)
 			{
+                Log("SETPOSITION");
 				return SetCaretPos(x, y);
 			}
 			public override void PaintCaret(Graphics g)
@@ -506,5 +515,6 @@ namespace ICSharpCode.TextEditor
 		/// Is called each time the CaretMode has changed.
 		/// </remarks>
 		public event EventHandler CaretModeChanged;
-	}
+        
+    }
 }

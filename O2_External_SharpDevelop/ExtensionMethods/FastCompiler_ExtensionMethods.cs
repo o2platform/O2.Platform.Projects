@@ -44,10 +44,12 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             var csharpCompiler = new CSharp_FastCompiler();
             csharpCompiler.generateDebugSymbols= generateDebugSymbols;
             var compileProcess = new System.Threading.AutoResetEvent(false);
-            //csharpCompiler.compileSourceCode(pathToFileToCompile.contents());
-            csharpCompiler.compileSnippet(codeSnipptet);
+            //csharpCompiler.compileSourceCode(pathToFileToCompile.contents());            
+            csharpCompiler.onAstFail = () => compileProcess.Set();
+            //csharpCompiler.onAstOK = () => compileProcess.Set();
             csharpCompiler.onCompileFail = () => compileProcess.Set();
             csharpCompiler.onCompileOK = () => compileProcess.Set();
+            csharpCompiler.compileSnippet(codeSnipptet);
             compileProcess.WaitOne();
             var assembly = csharpCompiler.assembly();
             return assembly;
@@ -269,7 +271,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 											if(itemToExecute.fileExists().isFalse() && itemToExecute.local().fileExists().isFalse())																							
 												CompileEngine.clearLocalScriptFileMappings();											
 											"itemToExecute: {0}".debug(itemToExecute);	
-											"itemToExecuteextension: {0}".debug(itemToExecute.extension(".o2"));
+											//"itemToExecuteextension: {0}".debug(itemToExecute.extension(".o2"));
 											if (itemToExecute.extension(".h2") || itemToExecute.extension(".o2"))											
 												if (Control.ModifierKeys == Keys.Shift)
 												{

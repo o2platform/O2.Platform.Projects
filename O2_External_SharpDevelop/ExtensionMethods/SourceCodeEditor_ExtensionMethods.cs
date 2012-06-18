@@ -17,6 +17,7 @@ using O2.API.AST.CSharp;
 using System.CodeDom;
 using ICSharpCode.SharpDevelop.Dom;
 using O2.DotNetWrappers.H2Scripts;
+using System.Reflection;
 
 //O2Ref:O2_API_AST.dll
 
@@ -108,11 +109,31 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             codeEditor.invokeOnThread(() => codeEditor.textArea().MouseClick += (sender, e) => callback());
             return codeEditor;
         }
-        public static ascx_SourceCodeViewer     onTextChanged(this ascx_SourceCodeViewer sourceCodeViewer, Action<string> textChanged)
+
+        public static ascx_SourceCodeViewer onTextChanged(this ascx_SourceCodeViewer sourceCodeViewer, Action<string> textChanged)
         {
-            sourceCodeViewer.editor().eDocumentDataChanged += textChanged;
+            sourceCodeViewer.editor().onTextChanged(textChanged);
             return sourceCodeViewer;
-        }		
+        }
+
+        public static ascx_SourceCodeEditor onTextChanged(this ascx_SourceCodeEditor sourceCodeEditor, Action<string> textChanged)
+        {
+            sourceCodeEditor.eDocumentDataChanged += textChanged;
+            return sourceCodeEditor;
+        }
+
+        public static ascx_SourceCodeEditor onCompile(this ascx_SourceCodeEditor sourceCodeEditor, Action<Assembly> onCompile)
+        {
+            sourceCodeEditor.editor().eCompile += onCompile;
+            return sourceCodeEditor;
+        }
+
+        public static ascx_SourceCodeEditor onFileOpen(this ascx_SourceCodeEditor sourceCodeEditor, Action<string> onFileOpen)
+        {
+            sourceCodeEditor.editor().eFileOpen += onFileOpen;
+            return sourceCodeEditor;
+        }
+
         public static ascx_SourceCodeEditor     editor(this ascx_SourceCodeEditor sourceCodeEditor)
         {
             return sourceCodeEditor;
@@ -121,19 +142,31 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         {
             return sourceCodeViewer.getSourceCodeEditor();
         }
-        public static ascx_SourceCodeViewer     allowCompile(this ascx_SourceCodeViewer sourceCodeViewer, bool value)
+
+        public static ascx_SourceCodeViewer allowCompile(this ascx_SourceCodeViewer sourceCodeViewer, bool value)
         {
-            sourceCodeViewer.editor().allowCodeCompilation = value;
+            sourceCodeViewer.editor().allowCompile(value);
             return sourceCodeViewer;
         }
-        public static ascx_SourceCodeViewer     astDetails(this ascx_SourceCodeViewer sourceCodeViewer, bool value)
+        public static ascx_SourceCodeEditor     allowCompile(this ascx_SourceCodeEditor sourceCodeEditor, bool value)
         {
-            sourceCodeViewer.invokeOnThread(() =>
+            sourceCodeEditor.allowCodeCompilation = value;
+            return sourceCodeEditor;
+        }
+        public static ascx_SourceCodeViewer astDetails(this ascx_SourceCodeViewer sourceCodeViewer, bool value)
+        {
+            sourceCodeViewer.editor().astDetails(value);
+            return sourceCodeViewer;
+        }
+        public static ascx_SourceCodeEditor astDetails(this ascx_SourceCodeEditor sourceCodeEditor, bool value)
+        {
+            sourceCodeEditor.invokeOnThread(() =>
                 {
-                    sourceCodeViewer.editor()._ShowSearchAndAstDetails = value;
+                    sourceCodeEditor._ShowSearchAndAstDetails = value;
                 });
-            return sourceCodeViewer;
+            return sourceCodeEditor;
         }
+
         public static ascx_SourceCodeEditor     vScroolBar_Enabled(this ascx_SourceCodeEditor sourceCodeEditor, bool value)
         {
             sourceCodeEditor.invokeOnThread(() =>
@@ -497,8 +530,14 @@ namespace O2.External.SharpDevelop.ExtensionMethods
                 
         public static string                    get_Text(this ascx_SourceCodeViewer sourceCodeViewer)
         {
-            return sourceCodeViewer.editor().getSourceCode();
+            return sourceCodeViewer.editor().get_Text();
         }
+
+        public static string                    get_Text(this ascx_SourceCodeEditor sourceCodeEditor)
+        {
+            return sourceCodeEditor.getSourceCode();
+        }
+
         public static string                    hello(this string _string)
 		{
 			return _string + " world";

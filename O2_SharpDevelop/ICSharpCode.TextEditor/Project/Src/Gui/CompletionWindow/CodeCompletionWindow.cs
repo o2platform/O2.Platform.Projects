@@ -13,6 +13,7 @@ using O2.Kernel.ExtensionMethods;
 using ICSharpCode.TextEditor.Document;
 using O2.DotNetWrappers.ExtensionMethods;
 using O2.DotNetWrappers.DotNet;
+using CSharpEditor;
 
 namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 {
@@ -206,7 +207,9 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 			inScrollUpdate = true;
 			codeCompletionListView.FirstItem = vScrollBar.Value;
 			codeCompletionListView.Refresh();
-			control.ActiveTextAreaControl.TextArea.Focus();
+            //DC: 6/15/2012 this is still not working 100% since the up and down buttons down work well after the user clicks on the VSScroll bar
+            //    but before it would disaper (i.e. go into background (which was worse :)  )
+			//control.ActiveTextAreaControl.TextArea.Focus();
 			inScrollUpdate = false;
 		}
 		
@@ -271,6 +274,22 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
                 if (showDeclarationWindow && data != null && data.Description != null && data.Description.Length > 0)
                 {
                     declarationViewWindow.Description = data.Description;
+                    if (data is CodeCompletionData)
+                    {
+                        var codeCompleteData = (CodeCompletionData)data;
+                        if (codeCompleteData.member.notNull())
+                        {                  
+                            var memberSignature = codeCompleteData.member.str().remove("[DefaultMethod: ").removeLastChar();
+                            declarationViewWindow.Description = (declarationViewWindow.Description + memberSignature).trim();
+                        }
+                        if (codeCompleteData.c.notNull())
+                        {
+                            var classDescription = codeCompleteData.c.str().remove("[DefaultClass: ").removeLastChar().line();
+                            foreach (var method in codeCompleteData.c.Methods)
+                                classDescription += " - {0}".info(method.str()).line();
+                            declarationViewWindow.Description = (declarationViewWindow.Description + classDescription).trim();
+                        }
+                    }
                     SetDeclarationViewLocation();
                 }
                 else
@@ -382,7 +401,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		
 		void CodeCompletionListViewClick(object sender, EventArgs e)
 		{
-			control.ActiveTextAreaControl.TextArea.Focus();
+			//control.ActiveTextAreaControl.TextArea.Focus();
 		}
 		
 		protected override void Dispose(bool disposing)

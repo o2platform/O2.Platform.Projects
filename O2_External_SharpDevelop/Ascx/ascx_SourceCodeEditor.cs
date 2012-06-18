@@ -15,6 +15,7 @@ namespace O2.External.SharpDevelop.Ascx
 
         public ascx_SourceCodeEditor()
         {
+            setDefaultValues();
             InitializeComponent();                              
         }
 
@@ -500,12 +501,6 @@ namespace O2.External.SharpDevelop.Ascx
             "tecSourceCode_MouseClick".info();
         }
 
-        private void tstbTextSearch_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-                searchForTextInTextEditor_findNext(tstbTextSearch.Text);
-        }
-
         private void tbExecutionHistoryOrLog_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             tbExecutionHistoryOrLog.Visible = false; 
@@ -520,5 +515,20 @@ namespace O2.External.SharpDevelop.Ascx
 		{
 			CompileEngine.clearLocalScriptFileMappings();
 		}
+        
+
+        private void tstbTextSearch_KeyUp(object sender, KeyEventArgs e)
+        {            
+                
+        }
+
+        private void tstbTextSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                searchForTextInTextEditor_findNext(tstbTextSearch.Text);
+                e.SuppressKeyPress = true;
+            }
+        }
     }
 }

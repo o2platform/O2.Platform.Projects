@@ -24,10 +24,10 @@ namespace CSharpEditor
 	/// </summary>
 	class CodeCompletionData : DefaultCompletionData, ICompletionData
 	{
-		IMember member;
-		IClass c;
-		static VBNetAmbience vbAmbience = new VBNetAmbience();
-		static CSharpAmbience csharpAmbience = new CSharpAmbience();
+		public IMember member;
+        public IClass c;
+		public static VBNetAmbience vbAmbience = new VBNetAmbience();
+		public static CSharpAmbience csharpAmbience = new CSharpAmbience();
 		
 		public CodeCompletionData(IMember member)
 			: base(member.Name, null, GetMemberImageIndex(member))

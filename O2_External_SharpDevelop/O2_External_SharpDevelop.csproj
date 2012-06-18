@@ -142,6 +142,10 @@
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>O2.FluentSharp.CoreLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\O2.FluentSharp.Roslyn.csproj">
+      <Project>{1D5E7298-537E-409B-8059-2040CA60B55A}</Project>
+      <Name>O2.FluentSharp.Roslyn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Misc_Microsoft_MPL_Libs\O2_Misc_Microsoft_MPL_Libs.csproj">
       <Project>{BB1489A2-57AB-4A8D-A4DA-7C7E444512B8}</Project>
       <Name>O2_Misc_Microsoft_MPL_Libs</Name>

@@ -38,6 +38,8 @@ namespace O2.External.SharpDevelop.Ascx
     public partial class ascx_SourceCodeEditor
     {
         private bool runOnLoad = true;
+        public event Action<string> eFileOpen;
+        public event Action<Assembly> eCompile;
         public event Action<string> eDocumentDataChanged;
         public event Action<string,string> eDocumentSelectionChanged_WordAndLine;
         public event MethodInvoker eEnterInSource_Event;
@@ -65,6 +67,12 @@ namespace O2.External.SharpDevelop.Ascx
         public bool checkForDebugger = false;
         public O2MappedAstData compiledFileAstData = null;
         public INode CurrentINode = null;
+
+        public void setDefaultValues()
+        {
+            eCompile =  (assembly) => { };
+            eFileOpen = (file) => { };
+        }
 
         public void onLoad()
         {
@@ -319,6 +327,7 @@ namespace O2.External.SharpDevelop.Ascx
                                 }
                                 lbSourceCode_UnsavedChanges.Visible = false;
                                 btSaveFile.Enabled = false;
+                                eFileOpen(fileToLoad);
                             }
                         }
                         catch (Exception ex)
@@ -677,10 +686,10 @@ namespace O2.External.SharpDevelop.Ascx
                                                  tecSourceCode.ActiveTextAreaControl.TextArea.SelectionManager.
                                                      SelectedText.Length;
 
-            int iFoundPos = tecSourceCode.Text.IndexOf(sTextToSearch, iOffsetOfEndOfCurrentSelection);
+            int iFoundPos = tecSourceCode.Text.lower().IndexOf(sTextToSearch.lower(), iOffsetOfEndOfCurrentSelection);
             //start from the cursor position
             if (iFoundPos == -1) // didn't find anything
-                iFoundPos = tecSourceCode.Text.IndexOf(sTextToSearch, 0); // start from the top
+                iFoundPos = tecSourceCode.Text.lower().IndexOf(sTextToSearch.lower(), 0); // start from the top
             if (iFoundPos > -1) // if there is a match process it
             {
                 tecSourceCode.ActiveTextAreaControl.TextArea.SelectionManager.ClearSelection();
@@ -708,9 +717,9 @@ namespace O2.External.SharpDevelop.Ascx
         {
             if (iLastFoundPosition > tecSourceCode.Text.Length)
                 iLastFoundPosition = 0;
-            int iFoundPos = tecSourceCode.Text.IndexOf(sTextToSearch, iLastFoundPosition);
+            int iFoundPos = tecSourceCode.Text.lower().IndexOf(sTextToSearch.lower(), iLastFoundPosition);
             if (iFoundPos == -1) // try from the begginig
-                iFoundPos = tecSourceCode.Text.IndexOf(sTextToSearch, 0);
+                iFoundPos = tecSourceCode.Text.lower().IndexOf(sTextToSearch.lower(), 0);
             if (iFoundPos > -1)// & iLastFoundPosition != iFoundPos)
             {
                 lbSearch_textNotFound.Visible = false;
@@ -875,6 +884,8 @@ namespace O2.External.SharpDevelop.Ascx
                 csharpCompiler.waitForCompilationComplete();
                 if (csharpCompiler.CompilerResults != null && csharpCompiler.CompilerResults.Errors.Count ==0)
                     return csharpCompiler.CompilerResults.CompiledAssembly;
+                if (csharpCompiler.CompiledAssembly.notNull())
+                    return csharpCompiler.CompiledAssembly;
             }
             return null;
         }
@@ -951,11 +962,15 @@ namespace O2.External.SharpDevelop.Ascx
 								   cboxCompliledSourceCodeMethods.Enabled = true;
                                    autoBackup();
                                    var previousExecutedMethod = cboxCompliledSourceCodeMethods.Text;
+                                   eCompile(compiledAssembly);
                                    O2Messages.dotNetAssemblyAvailable(compiledAssembly.Location);
 								   //only show the first ten
-                                   foreach (var method in PublicDI.reflection.getMethods(compiledAssembly).Take(5))
-                                       if (false == method.IsAbstract && false == method.IsSpecialName)
-                                           cboxCompliledSourceCodeMethods.Items.Add(new Reflection_MethodInfo(method));
+                                   foreach (var method in PublicDI.reflection.getMethods(compiledAssembly)
+                                                                             .Where((method) => (false == method.IsAbstract && false == method.IsSpecialName))
+                                                                             .Take(5))
+                                   {
+                                       cboxCompliledSourceCodeMethods.Items.Add(new Reflection_MethodInfo(method));
+                                   }
                                    // remap the previously executed method
                                    if (cboxCompliledSourceCodeMethods.Items.Count > 0)
                                    {
@@ -1086,6 +1101,11 @@ namespace O2.External.SharpDevelop.Ascx
             var logViewer = this.add_Control<ascx_LogViewer>();
             this.insert_Right(logViewer, splitterLocation);
 			btShowLogs.visible(false);            
+        }
+
+        public void hideButton(string buttonId)
+        {
+            (this.field(buttonId) as ToolStripButton).visible(false);
         }
 
 

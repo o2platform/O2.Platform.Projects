@@ -70,10 +70,8 @@ namespace O2.External.SharpDevelop.Ascx
     		_textEditor.invokeOnThread(
     			()=>{
 			    		textEditor = _textEditor;
-                        statusMessage = status;
-				    	statusMessage("Loading Icons");
-			    		loadIcons();
-			    		statusMessage("Settinp Environment");
+                        statusMessage = status;				    	
+			    		loadIcons();			    		
 			    		setupEnvironment();
 		    		});
     	}
@@ -327,7 +325,7 @@ namespace O2.External.SharpDevelop.Ascx
                         return true;
             }
    //         "key pressed:{0}".format(key).info();
-            if (key == '.' || key == ' ')
+            if (key == '.')// || key == ' ')
             {
                 onDot_showCodeCompleteWindow();
                  
@@ -640,13 +638,20 @@ namespace O2.External.SharpDevelop.Ascx
 			                                        this.parseInformation,
                                                     targetText);
 			List<ICompletionData> resultList = new List<ICompletionData>();
-			if (rr.notNull() && rr.ResolvedType.notNull()) 
+			if (rr.notNull())// && ) 
             {                
 				ArrayList completionData = rr.GetCompletionData(this.myProjectContent);
-                "[CodeComplete] expression '{0}' was resolved into type: {1} with {2} results".info(currentExpression.Expression, 
+                /*"[CodeComplete] expression '{0}' was resolved into type: {1} with {2} results".info(currentExpression.Expression, 
                                                                                                     rr.ResolvedType.FullyQualifiedName,
                                                                                                     completionData.isNull() ? -1 
-                                                                                                                            : completionData.Count);
+                                                                                                                            : completionData.Count);*/
+                "[CodeComplete] expression '{0}' was resolved into: {1} with {2} results".info(currentExpression.Expression,
+                                                                                               rr.ResolvedType.notNull() 
+                                                                                                    ? rr.ResolvedType.FullyQualifiedName
+                                                                                                    : rr.prop("Name").str(),
+                                                                                               completionData.isNull() 
+                                                                                                    ? -1 
+                                                                                                    : completionData.Count);
 				if (completionData != null) {
 					AddCompletionData(resultList, completionData);
 				}

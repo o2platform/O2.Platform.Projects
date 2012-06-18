@@ -15,7 +15,7 @@ namespace O2.External.SharpDevelop.AST
 {
     public class CSharp_FastCompiler
     {
-        public int forceAstBuildDelay = 100;
+        public int forceAstBuildDelay = 0;
         public string SourceCode { get; set; }						// I think there is a small race condition with the use of this variable
         public string SourceCodeFile { get; set; }
         //public string OriginalCodeSnippet { get; set; }	
@@ -52,7 +52,7 @@ namespace O2.External.SharpDevelop.AST
 		bool creatingAst;
 		bool compiling;
         
-        public const string EXTRA_EXTENSION_METHODS_FILE = "_Extra_methods_To_Add_to_Main_CodeBase.cs";
+        public string EXTRA_EXTENSION_METHODS_FILE = "_Extra_methods_To_Add_to_Main_CodeBase.cs";
 
         public System.Threading.ManualResetEvent FinishedCompilingCode { get;set;} 
 		
@@ -136,8 +136,8 @@ namespace O2.External.SharpDevelop.AST
             {
                 if (codeSnippet.valid())
                 {
-					if (getCachedAssemblyForCode_and_RaiseEvents(codeSnippet))
-						return;
+			//		if (getCachedAssemblyForCode_and_RaiseEvents(codeSnippet))
+			//			return;
 					
                     FinishedCompilingCode.Reset();
                     createAstStack = new Stack<string>();
@@ -156,6 +156,8 @@ namespace O2.External.SharpDevelop.AST
 
 		public bool getCachedAssemblyForCode_and_RaiseEvents(string codeSnippet)
 		{
+            if (codeSnippet.notValid())
+                return false;
 			var filesMd5 = codeSnippet.md5Hash();
 			var cachedCompilation = CompileEngine.getCachedCompiledAssembly_MD5(filesMd5);
 			if (cachedCompilation.notNull())
@@ -191,12 +193,14 @@ namespace O2.External.SharpDevelop.AST
                         this.invoke(beforeSnippetAst);
                         DebugMode.ifInfo("Compiling Source Snippet (Size: {0})", codeSnippet.size());
                         var sourceCode = createCSharpCodeWith_Class_Method_WithMethodText(codeSnippet);
+                        if (getCachedAssemblyForCode_and_RaiseEvents(sourceCode))   // see if we have already compiled this snippet before
+                            return;
                         if (sourceCode != null)
                             compileSourceCode(sourceCode, CreatedFromSnipptet);
                         else
                             FinishedCompilingCode.Set();
                         creatingAst = false;
-                        compileSnippet();
+                        //compileSnippet();                 // this was there to try to see if the current in the editor was compiled (this should be detected in a different way)
                     }
                 });
         }
@@ -234,14 +238,13 @@ namespace O2.External.SharpDevelop.AST
        	            {
                         try
                         {
-
                             if (compiling == false && compileStack.Count > 0)
                             {								
                                 compiling = true;
 								CompiledAssembly = null;
                                 FinishedCompilingCode.Reset();
                                 compileExtraSourceCodeReferencesAndUpdateReferencedAssemblies();
-                                this.sleep(forceAstBuildDelay, DebugMode);            // wait a bit to allow more entries to be cleared from the stack
+                                //this.sleep(forceAstBuildDelay, DebugMode);            // wait a bit to allow more entries to be cleared from the stack
                                 var sourceCode = compileStack.Pop();
                                 compileStack.Clear();
                                 // remove all previous compile requests (since their source code is now out of date
@@ -259,7 +262,8 @@ namespace O2.External.SharpDevelop.AST
                                 var compilerParams = new CompilerParameters
                                                          {
                                                              GenerateInMemory = !generateDebugSymbols,
-                                                             IncludeDebugInformation = generateDebugSymbols
+                                                             IncludeDebugInformation = generateDebugSymbols,
+                                                             OutputAssembly = "_o2_Script.dll".tempFile()
                                                          };
 
                                 foreach (var referencedAssembly in ReferencedAssemblies)
@@ -285,12 +289,8 @@ namespace O2.External.SharpDevelop.AST
                                 else
                                 {
 									CompiledAssembly = CompilerResults.CompiledAssembly;
-									if (CompiledAssembly.Location.fileExists())
-									{
-										var codeMd5 = sourceCode.md5Hash();
-										CompileEngine.CachedCompiledAssemblies.add(codeMd5, CompiledAssembly.Location);
-                                            CompileEngine.CachedCompiledAssemblies.add(CompiledAssembly.GetName().Name, CompiledAssembly.Location);
-									}
+									if (CompiledAssembly.Location.fileExists())									
+                                        CompileEngine.setCachedCompiledAssembly_toMD5(sourceCode, CompiledAssembly);                                            									
                                     DebugMode.ifDebug("Compilation was OK");
                                     this.invoke(onCompileOK);
                                 }
@@ -346,12 +346,13 @@ namespace O2.External.SharpDevelop.AST
             try
             {
                 // handle special incudes in source code
-                foreach(var originalLine in code.lines())
+/*                foreach(var originalLine in code.lines())
                     originalLine.starts("//include", (includeText) => 
                         {
                             if (includeText.fileExists())
                                 code = code.Replace(originalLine, originalLine.line().add(includeText.contents()));
                         });  
+ */ 
             	var snippetParser = new SnippetParser(SupportedLanguage.CSharp);
                 
                 var parsedCode = snippetParser.Parse(code);
@@ -452,7 +453,7 @@ namespace O2.External.SharpDevelop.AST
                 comment.Text.eq("StaThread", () => { ExecuteInStaThread = true; });
                 comment.Text.eq("MtaThread", () => { ExecuteInMtaThread = true; });
                 comment.Text.eq("WorkOffline", () => { WorkOffline = true; });
-                comment.Text.eq("ClearAssembliesCheckedIfExists", () => { O2.Kernel.CodeUtils.O2Svn.clear_AssembliesCheckedIfExists(); });  
+                //comment.Text.eq("ClearAssembliesCheckedIfExists", () => { O2.Kernel.CodeUtils.O2GitHub.clear_AssembliesCheckedIfExists(); });  
             }
 
 			if (addExtraLocalO2ScriptFiles)
