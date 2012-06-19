@@ -19,14 +19,17 @@ namespace O2.External.SharpDevelop.AST
         public string SourceCode { get; set; }						// I think there is a small race condition with the use of this variable
         public string SourceCodeFile { get; set; }
         //public string OriginalCodeSnippet { get; set; }	
-        public bool CreatedFromSnipptet { get; set; }
-        public List<string> ReferencedAssemblies { get; set; }
+        public bool         CreatedFromSnipptet             { get; set; }
+        public bool         ResolveInvocationParametersType { get; set; }
+        public bool         UseCachedAssemblyIfAvailable { get; set; }
+        public List<string> ReferencedAssemblies            { get; set; }
         public Dictionary<string, object> InvocationParameters { get; set; }
         public CompilationUnit CompilationUnit { get; set; }
         public List<string> ExtraSourceCodeFilesToCompile { get; set; }
         public AstDetails AstDetails { get; set; }
         public string			AstErrors { get; set; }
         public bool				generateDebugSymbols	{ get; set; }
+        
         public string			CompilationErrors		{ get; set; }      
   		public Assembly			CompiledAssembly		{ get; set; }
         public CompilerResults	CompilerResults			{ get; set; }
@@ -59,7 +62,9 @@ namespace O2.External.SharpDevelop.AST
         public CSharp_FastCompiler()
         {        
         	DebugMode = false;				// set to true to see details about each AstCreation and Compilation stage
-            DebugMode = true;	
+            //DebugMode = true;	
+            ResolveInvocationParametersType = true;
+            UseCachedAssemblyIfAvailable = true;
         	InvocationParameters = new Dictionary<string, object>();
             ExtraSourceCodeFilesToCompile = new List<String>();
         	ReferencedAssemblies = getDefaultReferencedAssemblies();
@@ -154,6 +159,17 @@ namespace O2.External.SharpDevelop.AST
             }
         }
 
+        public bool removeCachedAssemblyForCode(string codeSnippet)
+        {
+            if (codeSnippet.notValid())
+            {
+                "in removeCachedAssemblyforCode, there was no codeSnippet passed".error();
+                return false;
+            }
+            var filesMd5 = codeSnippet.md5Hash();
+            return CompileEngine.removeCachedAssemblyForCode_MD5(filesMd5);
+        }
+
 		public bool getCachedAssemblyForCode_and_RaiseEvents(string codeSnippet)
 		{
             if (codeSnippet.notValid())
@@ -193,7 +209,7 @@ namespace O2.External.SharpDevelop.AST
                         this.invoke(beforeSnippetAst);
                         DebugMode.ifInfo("Compiling Source Snippet (Size: {0})", codeSnippet.size());
                         var sourceCode = createCSharpCodeWith_Class_Method_WithMethodText(codeSnippet);
-                        if (getCachedAssemblyForCode_and_RaiseEvents(sourceCode))   // see if we have already compiled this snippet before
+                        if (UseCachedAssemblyIfAvailable && getCachedAssemblyForCode_and_RaiseEvents(sourceCode))   // see if we have already compiled this snippet before
                             return;
                         if (sourceCode != null)
                             compileSourceCode(sourceCode, CreatedFromSnipptet);
@@ -312,8 +328,9 @@ namespace O2.External.SharpDevelop.AST
         public void compileExtraSourceCodeReferencesAndUpdateReferencedAssemblies()
         {            
             if (ExtraSourceCodeFilesToCompile.size() > 0)
-            {                        
-                var assembly = new CompileEngine().compileSourceFiles(ExtraSourceCodeFilesToCompile);                
+            {
+                "[CSharp Compiler] Compiling provided {0} external source code references".info(ExtraSourceCodeFilesToCompile.size());
+                var assembly = new CompileEngine(UseCachedAssemblyIfAvailable).compileSourceFiles(ExtraSourceCodeFilesToCompile);                
                 if (assembly != null)
                 {
                     ReferencedAssemblies.Add(assembly.Location);
@@ -368,7 +385,7 @@ namespace O2.External.SharpDevelop.AST
 
                         var blockStatement = (BlockStatement)parsedCode;
                         CompilationUnit.add_Type(default_TypeName)
-                            .add_Method(default_MethodName, InvocationParameters, blockStatement);
+                            .add_Method(default_MethodName, InvocationParameters, this.ResolveInvocationParametersType, blockStatement);
 
 //                        snippetParser.Specials.Clear(); // remove comments from parsed code
                         
@@ -450,6 +467,8 @@ namespace O2.External.SharpDevelop.AST
                 comment.Text.starts(new[] {"O2:debugSymbols",
                                         "generateDebugSymbols", 
                                         "debugSymbols"}, true, (value) => generateDebugSymbols = true);
+                comment.Text.starts(new[] {"SetInvocationParametersToDynamic"}, (value) => ResolveInvocationParametersType = false);
+                comment.Text.starts(new[] { "DontSetInvocationParametersToDynamic" }, (value) => ResolveInvocationParametersType = true);                    
                 comment.Text.eq("StaThread", () => { ExecuteInStaThread = true; });
                 comment.Text.eq("MtaThread", () => { ExecuteInMtaThread = true; });
                 comment.Text.eq("WorkOffline", () => { WorkOffline = true; });

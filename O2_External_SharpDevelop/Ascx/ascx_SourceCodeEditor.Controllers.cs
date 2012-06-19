@@ -154,8 +154,8 @@ namespace O2.External.SharpDevelop.Ascx
         }
 
         private void handlePressedKeys(KeyEventArgs e)
-        {
-            //O2.Kernel.PublicDI.log.debug("KeyUp: " + e.KeyValue.ToString()); ;                
+        {            
+            this.focus();  // hack to deal with the bug that sometimes happened where the cursor would disapear (from the currently GUI under edit)
             if (e.Modifiers == Keys.Control && e.KeyValue == 'B')           // Ctrl+B compiles code
             {
                 compileSourceCode();
@@ -478,7 +478,7 @@ namespace O2.External.SharpDevelop.Ascx
                                                      btSaveFile.Enabled = false;
 
 
-                                                     PublicDI.log.debug("Source code file loaded: {0}", pathToSourceCodeFileToLoad);
+           //                                          PublicDI.log.debug("Source code file loaded: {0}", pathToSourceCodeFileToLoad);
                                                      setCompileAndInvokeButtonsState(sPathToFileLoaded);
                                                  }
                                                  return true;

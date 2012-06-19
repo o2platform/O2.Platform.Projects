@@ -260,7 +260,8 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 			comboBox.onSelection<string>(
 						(key)=>{
 									if (mappings.hasKey(key))
-									{										
+									{
+                                        comboBox.parent().focus();// do this in order to prevent a nasty user experience that happens if the user uses the up and down arrows to navigate the comboBox	
 										"executing script mapped to '{0}: {1}".info(key, mappings[key]);
 										var itemToExecute = mappings[key];
 										if (itemToExecute.isUri())
@@ -287,8 +288,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 												}
 											else*/
 											O2Thread.mtaThread(()=>itemToExecute.executeFirstMethod());
-										}
-											
+										}                                        
 									}
 								});		
 			return comboBox;			

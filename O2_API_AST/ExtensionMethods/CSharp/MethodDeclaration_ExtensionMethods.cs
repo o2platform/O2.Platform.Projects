@@ -44,15 +44,15 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
         public static MethodDeclaration add_Method(this TypeDeclaration typeDeclaration, string methodName)
         {
-            return typeDeclaration.add_Method(methodName, null, null);
+            return typeDeclaration.add_Method(methodName, null, true,  null);
         }
 
         public static MethodDeclaration add_Method(this TypeDeclaration typeDeclaration, string methodName, BlockStatement body)
         {
-            return typeDeclaration.add_Method(methodName, null, body);
+            return typeDeclaration.add_Method(methodName, null, true, body);
         }
 
-        public static MethodDeclaration add_Method(this TypeDeclaration typeDeclaration, string methodName, Dictionary<string, object> invocationParameters, BlockStatement body)
+        public static MethodDeclaration add_Method(this TypeDeclaration typeDeclaration, string methodName, Dictionary<string, object> invocationParameters, bool resolveInvocationParametersType, BlockStatement body)
         {
             var newMethod = new MethodDeclaration
             {
@@ -66,10 +66,11 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
                 foreach (var invocationParameter in invocationParameters)
                 {
-                    var parameterType = new TypeReference(
-                        (invocationParameter.Value != null && invocationParameter.Key != "returnData")
-                        ? invocationParameter.Value.typeFullName()
-                        : "System.Object", true);
+                    var resolvedType = (resolveInvocationParametersType && invocationParameter.Value != null && invocationParameter.Key != "returnData")
+                                               ? invocationParameter.Value.typeFullName()
+                                               : "dynamic";
+                                               //: "System.Object";
+                    var parameterType = new TypeReference(resolvedType, true);
                     var parameter = new ParameterDeclarationExpression(parameterType, invocationParameter.Key);
                     newMethod.Parameters.Add(parameter);
 
@@ -85,7 +86,7 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                 methodDeclaration.TypeReference = new TypeReference("void", true);
             else
             {
-				methodDeclaration.TypeReference = new TypeReference("System.Object", true);
+				methodDeclaration.TypeReference = new TypeReference("System.Object", true);                
 
 				blockStatement.add_Return(null); // add an extra default return value;
 

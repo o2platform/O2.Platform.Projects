@@ -1,5 +1,6 @@
-
+using O2.DotNetWrappers.ExtensionMethods;
 using O2.DotNetWrappers.DotNet;
+using System.Threading;
 
 namespace O2.External.SharpDevelop.Ascx
 {
@@ -11,8 +12,13 @@ namespace O2.External.SharpDevelop.Ascx
         }
 
         public void setDocumentContents(string documentContents)
-        {
-            O2Thread.mtaThread(() => sourceCodeEditor.setDocumentContents(documentContents, "xyz.cs"));
+        {            
+         //   O2Thread.mtaThread(() =>
+           //     {
+                    sourceCodeEditor.setDocumentContents(documentContents, "xyz.cs");
+         
+             //   });
+         
         }
 
         public void setDocumentContents(string documentContents, string file)
