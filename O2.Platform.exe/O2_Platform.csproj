@@ -48,7 +48,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -133,12 +133,6 @@
       <Progid>O2.XRule.Script.o2</Progid>
       <DefaultIcon>O2Logo.ico</DefaultIcon>
     </FileAssociation>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj">
-      <Project>{E76BCE43-8511-4CE8-A965-C0150F713CE9}</Project>
-      <Name>O2_External_SharpDevelop</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
