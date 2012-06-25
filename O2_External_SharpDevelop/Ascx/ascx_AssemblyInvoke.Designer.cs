@@ -77,9 +77,9 @@ namespace O2.External.SharpDevelop.Ascx
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_SelectedMethodParameters)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_SelectedMethodParameters)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_InvocationResult)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_InvocationResult)).BeginInit();
             this.SuspendLayout();
             // 
             // scTopLevel
@@ -495,10 +495,10 @@ namespace O2.External.SharpDevelop.Ascx
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_SelectedMethodParameters)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_SelectedMethodParameters)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_InvocationResult)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.dgvSourceCode_InvocationResult)).EndInit();
             this.ResumeLayout(false);
 
         }

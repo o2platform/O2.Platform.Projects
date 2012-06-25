@@ -155,7 +155,7 @@ namespace O2.External.SharpDevelop.Ascx
 
         private void handlePressedKeys(KeyEventArgs e)
         {            
-            this.focus();  // hack to deal with the bug that sometimes happened where the cursor would disapear (from the currently GUI under edit)
+           
             if (e.Modifiers == Keys.Control && e.KeyValue == 'B')           // Ctrl+B compiles code
             {
                 compileSourceCode();
@@ -168,7 +168,9 @@ namespace O2.External.SharpDevelop.Ascx
             else if (e.KeyValue == 116)                                     // F5 (key 116) executes it
             {
                 executeMethod();
-            }            
+            }
+            else if (e.KeyValue == 32)                                   // trigger on " " (space)
+                this.focus();  // hack to deal with the bug that sometimes happened where the cursor would disapear (from the currently GUI under edit)
             /*if (e.KeyValue == 17)
             {
                 "KEY VALUe 17".debug();

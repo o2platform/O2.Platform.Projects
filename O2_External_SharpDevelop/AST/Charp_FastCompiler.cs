@@ -35,7 +35,8 @@ namespace O2.External.SharpDevelop.AST
         public CompilerResults	CompilerResults			{ get; set; }
         public bool				ExecuteInStaThread		{ get; set; }
         public bool				ExecuteInMtaThread		{ get; set; }
-        public bool				WorkOffline				{ get; set; }                
+        public bool				WorkOffline				{ get; set; }
+        public string           CompilationVersion      { get; set; }
 
         public Action onAstFail { get; set; }
         public Action onAstOK { get; set; }
@@ -74,6 +75,7 @@ namespace O2.External.SharpDevelop.AST
             //OriginalCodeSnippet = "";
             SourceCode = "";
             FinishedCompilingCode = new System.Threading.ManualResetEvent(true);
+            CompilationVersion = (Environment.Version.Major.eq(4)) ? "v4.0" : "v3.5";
             // defaults
 
         }
@@ -273,7 +275,9 @@ namespace O2.External.SharpDevelop.AST
                                 SourceCode = sourceCode;
                                 var providerOptions = new Dictionary<string, string>();
 //                                providerOptions.Add("CompilerVersion", "v3.5");
-                                providerOptions.Add("CompilerVersion", "v4.0");
+                                //providerOptions.Add("CompilerVersion", "v4.0");
+                                providerOptions.Add("CompilerVersion", CompilationVersion);
+                                
                                 var csharpCodeProvider = new Microsoft.CSharp.CSharpCodeProvider(providerOptions);
                                 var compilerParams = new CompilerParameters
                                                          {

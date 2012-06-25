@@ -124,7 +124,7 @@ namespace O2.External.SharpDevelop.Ascx
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tcSourceInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scCodeAndAst)).BeginInit();
+      //      ((System.ComponentModel.ISupportInitialize)(this.scCodeAndAst)).BeginInit();
             this.scCodeAndAst.Panel1.SuspendLayout();
             this.scCodeAndAst.Panel2.SuspendLayout();
             this.scCodeAndAst.SuspendLayout();
@@ -1040,7 +1040,7 @@ namespace O2.External.SharpDevelop.Ascx
             this.scCodeAndAst.Panel1.ResumeLayout(false);
             this.scCodeAndAst.Panel1.PerformLayout();
             this.scCodeAndAst.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.scCodeAndAst)).EndInit();
+  //          ((System.ComponentModel.ISupportInitialize)(this.scCodeAndAst)).EndInit();
             this.scCodeAndAst.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

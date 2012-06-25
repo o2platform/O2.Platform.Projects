@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Win32;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace O2.Platform
 {
@@ -23,12 +24,20 @@ namespace O2.Platform
 
 		public void loadValuesFromConfigFile()
 		{
-			var virtualPath = ConfigurationSettings.AppSettings["Local_O2_Dlls_Folder"];
-			this.O2_Execution_Folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,virtualPath);
-			if (Directory.Exists(this.O2_Execution_Folder) == false)
-				Directory.CreateDirectory(this.O2_Execution_Folder);
+            try
+            {
+                var virtualPath = ConfigurationSettings.AppSettings["Local_O2_Dlls_Folder"];
+                this.O2_Execution_Folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, virtualPath);
+                if (Directory.Exists(this.O2_Execution_Folder) == false)
+                    Directory.CreateDirectory(this.O2_Execution_Folder);
 
-			this.Dll_Download_Location = ConfigurationSettings.AppSettings["GitHub_O2_Dlls"];
+                this.Dll_Download_Location = ConfigurationSettings.AppSettings["GitHub_O2_Dlls"];
+                                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 		}
 
 		public Assembly load_O2_Assembly(string assemblyName)
@@ -57,7 +66,7 @@ namespace O2.Platform
                 var compileScript = startO2.GetType().GetMethod("compileScript");
                 var assembly = (Assembly)compileScript.Invoke(startO2, new object[] { "ascx_Execute_Scripts.cs" });
 
-                if (assembly == null)
+                if(assembly == null)
                 {
                     MessageBox.Show("There was a problem compiling the ascx_Execute_Scripts.cs script file", "O2 Start error");
                     return false;
