@@ -70,11 +70,11 @@
     <Compile Include="Ascx\ascx_XRules_Editor.Designer.cs">
       <DependentUpon>ascx_XRules_Editor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods\HtmlAgilityPack_ExtensionMethods_SourceCodeViewer.cs" />
     <Compile Include="O2CodeCompletion.cs" />
     <Compile Include="AST\Charp_FastCompiler.cs" />
     <Compile Include="AST\TextToCodeMappings.cs" />
     <Compile Include="ExtensionMethods\FastCompiler_ExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\Linq_ExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\SourceCodeEditor_ExtensionMethods.cs" />
     <Compile Include="Ascx\ascx_SourceCodeViewer.Controllers.cs">
       <SubType>UserControl</SubType>
@@ -143,6 +143,10 @@
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>O2.FluentSharp.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Misc\O2.FluentSharp.Misc.csproj">
+      <Project>{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}</Project>
+      <Name>O2.FluentSharp.Misc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Misc_Microsoft_MPL_Libs\O2_Misc_Microsoft_MPL_Libs.csproj">
       <Project>{BB1489A2-57AB-4A8D-A4DA-7C7E444512B8}</Project>

@@ -88,6 +88,8 @@
   <ItemGroup>
     <Compile Include="HtmlAgilityPack\crc32.cs" />
     <Compile Include="HtmlAgilityPack\EncodingFoundException.cs" />
+    <Compile Include="HtmlAgilityPack\ExtensionMethods\HtmlAgilityPack_ExtensionMethods.cs" />
+    <Compile Include="HtmlAgilityPack\ExtensionMethods\Linq_ExtensionMethods.cs" />
     <Compile Include="HtmlAgilityPack\HtmlAttribute.cs" />
     <Compile Include="HtmlAgilityPack\HtmlAttributeCollection.cs" />
     <Compile Include="HtmlAgilityPack\HtmlCmdLine.cs" />
@@ -416,6 +418,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Irony_Parser\Parsing\Construction\_about_parser_construction.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
+      <Name>O2.FluentSharp.BCL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using O2.External.SharpDevelop.Ascx;
 using O2.Kernel;
 using O2.Kernel.CodeUtils;
 using O2.DotNetWrappers.DotNet;
-using O2.Views.ASCX._Wizards;
+//using O2.Views.ASCX._Wizards;
 //using O2.Core.XRules._Wizards;
 //using O2.Core.XRules.Classes;
 
@@ -101,18 +101,7 @@ namespace O2.Core.XRules.Ascx
             loadXRuleDatabase();
             O2Messages.dotNetAssemblyAvailable("");  // simulate this event so that we trigger XRules recompilation (if XRules_Excution is open)
         }
-
-        private void btBackupLocalFiles_Click(object sender, EventArgs e)
-        {
-            O2Thread.mtaThread(
-                () => new Wizard_BackupFolder().runWizard(directoryWithXRulesDatabase.getCurrentDirectory()));
-        }
      
-        private void toolStripLabel1_Click(object sender, EventArgs e)
-        {
-            btBackupLocalFiles_Click(null, null);
-        }
-
         private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
         {
                 

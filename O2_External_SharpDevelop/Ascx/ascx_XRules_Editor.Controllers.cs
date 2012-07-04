@@ -45,10 +45,13 @@ namespace O2.Core.XRules.Ascx
                 () =>
                 {
                     lbTargetListBox.Items.Clear();
-                    lbTargetListBox.Items.AddRange(
-                        Files.getFilesFromDir(PublicDI.config.ScriptsTemplatesFolder).ToArray());
-                    if (lbTargetListBox.Items.Count > 0)
-                        lbTargetListBox.SelectedIndex = 0;
+                    if (PublicDI.config.ScriptsTemplatesFolder.dirExists())
+                    {
+                        lbTargetListBox.Items.AddRange(
+                            Files.getFilesFromDir(PublicDI.config.ScriptsTemplatesFolder).ToArray());
+                        if (lbTargetListBox.Items.Count > 0)
+                            lbTargetListBox.SelectedIndex = 0;
+                    }
                 });
         }
         public void openXRule(string fileOrDir)

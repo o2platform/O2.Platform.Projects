@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Configuration;
+using System.IO;
+using System.Reflection;
+using Microsoft.Win32;
+using System.Windows.Forms;
+using System.Diagnostics;
+
+namespace O2.Platform
+{
+	public class O2_Setup
+	{
+		
+		//public string Dll_Download_Location { get; set; }
+		
+
+		public O2_Setup()
+		{
+            
+			//loadValuesFromConfigFile();
+		}
+
+		/*public void loadValuesFromConfigFile()
+		{
+            try
+            {
+                //var virtualPath = ConfigurationSettings.AppSettings["Local_O2_Dlls_Folder"];
+                //this.O2_Execution_Folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, virtualPath);
+                //if (Directory.Exists(this.O2_Execution_Folder) == false)
+                //    Directory.CreateDirectory(this.O2_Execution_Folder);
+
+                //this.Dll_Download_Location = ConfigurationSettings.AppSettings["GitHub_O2_Dlls"];
+                                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+		}*/
+
+			
+	}
+}
+ 

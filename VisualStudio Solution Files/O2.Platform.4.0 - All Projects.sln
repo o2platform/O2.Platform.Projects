@@ -15,12 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.BCL", "..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.CoreLib", "..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj", "{0A7CE0E0-B092-43B5-AB80-99BA909019C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_Platform", "..\O2.Platform.exe\O2_Platform.csproj", "{83957D55-86AB-4C26-9F82-6182999F09E8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5} = {DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}
-		{0A7CE0E0-B092-43B5-AB80-99BA909019C9} = {0A7CE0E0-B092-43B5-AB80-99BA909019C9}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FluentSharp", "FluentSharp", "{AA501B54-FD82-4D72-941A-51B920FA9D34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects required for ScriptEditor", "Projects required for ScriptEditor", "{6FCA1DD0-DFF6-48E3-9EE2-2D887360EB13}"
@@ -30,6 +24,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.NGit", "..\..\O2.FluentSharp\O2.FluentSharp.NGit\O2.FluentSharp.NGit.csproj", "{B1AAFDA3-2A9F-4BBD-9A08-F0890BA886C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.Roslyn", "..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\O2.FluentSharp.Roslyn.csproj", "{1D5E7298-537E-409B-8059-2040CA60B55A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_Platform", "..\O2.Platform.exe\O2_Platform.csproj", "{83957D55-86AB-4C26-9F82-6182999F09E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_Platform_3.5_x86", "..\O2.Platform.exe_3.5_x86\O2_Platform_3.5_x86.csproj", "{FA9C85CC-70A7-4F0B-9816-16AC0128BFED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_Platform_3.5_x64", "..\O2.Platform.exe_3.5_x64\O2_Platform_3.5_x64.csproj", "{65AD96BC-A489-43EF-8BA9-75AA57F05106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_Platform_4.0_x64", "..\O2.Platform.exe_4.0_x64\O2_Platform_4.0_x64.csproj", "{9857DA99-B060-467C-ACAC-A55C5D46A02C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.FluentSharp.Misc", "..\..\O2.FluentSharp\O2.FluentSharp.Misc\O2.FluentSharp.Misc.csproj", "{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +69,6 @@ Global
 		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A7CE0E0-B092-43B5-AB80-99BA909019C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83957D55-86AB-4C26-9F82-6182999F09E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83957D55-86AB-4C26-9F82-6182999F09E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83957D55-86AB-4C26-9F82-6182999F09E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83957D55-86AB-4C26-9F82-6182999F09E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7428492-91D8-4B25-936C-7EA58DB0F01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -81,6 +81,26 @@ Global
 		{1D5E7298-537E-409B-8059-2040CA60B55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D5E7298-537E-409B-8059-2040CA60B55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D5E7298-537E-409B-8059-2040CA60B55A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83957D55-86AB-4C26-9F82-6182999F09E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83957D55-86AB-4C26-9F82-6182999F09E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83957D55-86AB-4C26-9F82-6182999F09E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83957D55-86AB-4C26-9F82-6182999F09E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9C85CC-70A7-4F0B-9816-16AC0128BFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9C85CC-70A7-4F0B-9816-16AC0128BFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9C85CC-70A7-4F0B-9816-16AC0128BFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9C85CC-70A7-4F0B-9816-16AC0128BFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65AD96BC-A489-43EF-8BA9-75AA57F05106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65AD96BC-A489-43EF-8BA9-75AA57F05106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65AD96BC-A489-43EF-8BA9-75AA57F05106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65AD96BC-A489-43EF-8BA9-75AA57F05106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9857DA99-B060-467C-ACAC-A55C5D46A02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9857DA99-B060-467C-ACAC-A55C5D46A02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9857DA99-B060-467C-ACAC-A55C5D46A02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9857DA99-B060-467C-ACAC-A55C5D46A02C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +115,6 @@ Global
 		{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5} = {AA501B54-FD82-4D72-941A-51B920FA9D34}
 		{B1AAFDA3-2A9F-4BBD-9A08-F0890BA886C1} = {AA501B54-FD82-4D72-941A-51B920FA9D34}
 		{1D5E7298-537E-409B-8059-2040CA60B55A} = {AA501B54-FD82-4D72-941A-51B920FA9D34}
+		{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07} = {AA501B54-FD82-4D72-941A-51B920FA9D34}
 	EndGlobalSection
 EndGlobal
