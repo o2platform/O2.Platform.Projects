@@ -89,7 +89,7 @@
     <Compile Include="HtmlAgilityPack\crc32.cs" />
     <Compile Include="HtmlAgilityPack\EncodingFoundException.cs" />
     <Compile Include="HtmlAgilityPack\ExtensionMethods\HtmlAgilityPack_ExtensionMethods.cs" />
-    <Compile Include="HtmlAgilityPack\ExtensionMethods\Linq_ExtensionMethods.cs" />
+    <Compile Include="HtmlAgilityPack\ExtensionMethods\XTypedElement_ExtensionMethods.cs" />
     <Compile Include="HtmlAgilityPack\HtmlAttribute.cs" />
     <Compile Include="HtmlAgilityPack\HtmlAttributeCollection.cs" />
     <Compile Include="HtmlAgilityPack\HtmlCmdLine.cs" />

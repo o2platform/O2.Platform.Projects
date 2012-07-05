@@ -18,7 +18,7 @@ using O2.External.SharpDevelop.AST;
 using O2.External.SharpDevelop.ScriptSamples;
 using O2.External.SharpDevelop.ExtensionMethods;
 using O2.Interfaces.Views;
-using O2.Kernel.ExtensionMethods;
+
 using O2.Kernel.CodeUtils;
 using O2.Kernel;
 using O2.Views.ASCX.CoreControls;
@@ -169,7 +169,7 @@ namespace O2.External.SharpDevelop.Ascx
             {
                 executeMethod();
             }
-            else if (e.KeyValue == 32)                                   // trigger on " " (space)
+            else if (o2CodeCompletion.isNull() || o2CodeCompletion.codeCompletionWindow.isNull())                                   // trigger on " " (space)
                 this.focus();  // hack to deal with the bug that sometimes happened where the cursor would disapear (from the currently GUI under edit)
             /*if (e.KeyValue == 17)
             {

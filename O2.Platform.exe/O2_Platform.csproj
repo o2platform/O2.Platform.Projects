@@ -141,6 +141,10 @@
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>O2.FluentSharp.CoreLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\O2.FluentSharp.Roslyn.csproj">
+      <Project>{1D5E7298-537E-409B-8059-2040CA60B55A}</Project>
+      <Name>O2.FluentSharp.Roslyn</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

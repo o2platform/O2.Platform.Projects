@@ -6,7 +6,7 @@ using System.Xml;
 using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
-using O2.Kernel.ExtensionMethods;
+
 using O2.DotNetWrappers.ExtensionMethods;
 using O2.DotNetWrappers.DotNet;
 using O2.Views.ASCX.classes.MainGUI;
@@ -229,21 +229,17 @@ namespace O2.External.SharpDevelop.Ascx
 		public void startParseCodeThread()
 		{
 			O2Thread.mtaThread(
-				()=>{
-						//"starting parseCodeThread".debug();
+				()=>{						
 						while (!textEditor.IsDisposed && UseParseCodeThread)
-			                {
-			                    //this.parseSourceCode(this.textEditorToGrabCodeFrom.get_Text());
+			                {			                    
                                 this.parseSourceCode(DummyFileName, this.textEditor.get_Text());
                                 foreach (var codeOrFile in extraSourceCodeToProcess)
                                     if (codeOrFile.isFile())
                                         this.parseSourceCode(codeOrFile,codeOrFile.contents());
                                     else
                                         this.parseSourceCode(codeOrFile);
-			                    this.sleep(2000,false);
-			             //       "post sleep in  parseCodeThread".debug();
-			                }
-			                "LEAVING  parseCodeThread".debug();
+			                    this.sleep(2000,false);			             
+			                }			              
 			         });
 		}        
 
@@ -792,10 +788,10 @@ namespace O2.External.SharpDevelop.Ascx
     
     public class CodeCompletionData : DefaultCompletionData, ICompletionData
 	{
-		O2CodeCompletion o2CodeCompletion;
-		IMember member;
-		IClass c;		
-		CSharpAmbience csharpAmbience = new CSharpAmbience();
+		public O2CodeCompletion o2CodeCompletion;
+        public IMember member;
+        public IClass c;
+        public CSharpAmbience csharpAmbience = new CSharpAmbience();
 		
 		public CodeCompletionData(IMember member, O2CodeCompletion _o2CodeCompletion)
 			: base(member.Name, null, GetMemberImageIndex(member))

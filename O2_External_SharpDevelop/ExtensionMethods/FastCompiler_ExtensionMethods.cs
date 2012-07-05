@@ -1,6 +1,6 @@
 using System.Reflection;
 using O2.DotNetWrappers.ExtensionMethods;
-using O2.Kernel.ExtensionMethods;
+
 using O2.External.SharpDevelop.AST;
 using O2.DotNetWrappers.Windows;
 using O2.DotNetWrappers.DotNet;
@@ -14,6 +14,21 @@ namespace O2.External.SharpDevelop.ExtensionMethods
 {
     public static class FastCompiler_ExtensionMethods
     {
+        public static Assembly compileScriptFile(this string scriptToCompile)
+        {
+            if (scriptToCompile.valid())
+            {
+                if (scriptToCompile.fileExists().isFalse())
+                    scriptToCompile = scriptToCompile.local();
+                if (scriptToCompile.fileExists())
+                    return (scriptToCompile.extension(".h2"))
+                                ? scriptToCompile.compile_H2Script()
+                                : scriptToCompile.compile();
+            }
+            "[compileScriptFile] could not find file to compile: {0}".error(scriptToCompile);
+            return null;
+        }
+
         public static Assembly compile(this string pathToFileToCompile)
         {
             return pathToFileToCompile.compile(false);
@@ -54,6 +69,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             var assembly = csharpCompiler.assembly();
             return assembly;
         }
+
         public static Assembly compile_H2Script(this string h2Script)
         {
             try

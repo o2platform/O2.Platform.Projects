@@ -7,7 +7,7 @@ using O2.DotNetWrappers.ExtensionMethods;
 using O2.External.SharpDevelop.Ascx;
 using O2.External.SharpDevelop.AST;
 using O2.Kernel;
-using O2.Kernel.ExtensionMethods;
+
 using O2.Views.ASCX.classes.MainGUI;
 using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory;
@@ -18,8 +18,8 @@ using System.CodeDom;
 using ICSharpCode.SharpDevelop.Dom;
 using O2.DotNetWrappers.H2Scripts;
 using System.Reflection;
-
-//O2Ref:O2_API_AST.dll
+using O2.Views.ASCX.Ascx.MainGUI;
+using O2.XRules.Database.Utils;
 
 namespace O2.External.SharpDevelop.ExtensionMethods
 {
@@ -560,6 +560,25 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         {
             return new TextLocation(location.Column - 1, location.Line - 1);
         }
+
+        public static ascx_SourceCodeEditor     clipboard_Copy(this ascx_SourceCodeEditor sourceCodeEditor)
+        {
+            sourceCodeEditor.invokeOnThread(()=> sourceCodeEditor.textArea().ClipboardHandler.Copy(null, null));
+            return sourceCodeEditor;
+        }
+
+        public static ascx_SourceCodeEditor clipboard_Cut(this ascx_SourceCodeEditor sourceCodeEditor)
+        {
+            sourceCodeEditor.invokeOnThread(()=> sourceCodeEditor.textArea().ClipboardHandler.Cut(null, null));
+            return sourceCodeEditor;
+        }
+
+        public static ascx_SourceCodeEditor clipboard_Paste(this ascx_SourceCodeEditor sourceCodeEditor)
+        {
+            sourceCodeEditor.invokeOnThread(()=> sourceCodeEditor.textArea().ClipboardHandler.Paste(null, null));
+            return sourceCodeEditor;
+        }
+        
     }
 
     public static class SourceCodeEditor_ExtensionMethods_WinForm_Guis
@@ -625,5 +644,20 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         {
             sourceCodeViewer.editor().enableCodeComplete(sourceCodeViewerToGrabCodeFrom.editor());
         }*/
+    }
+
+    public static class WinForms_ExtensionMethods_MDIForms_O2Controls_CodeEditor
+    {
+        public static ascx_LogViewer add_Mdi_LogViewer(this Form parentForm)
+        {
+            return parentForm.add_MdiChild()
+                             .add_LogViewer();
+        }
+
+        public static ascx_Simple_Script_Editor add_Mdi_ScriptEditor(this Form parentForm)
+        {
+            return parentForm.add_MdiChild()
+                             .add_Script();
+        }
     }
 }

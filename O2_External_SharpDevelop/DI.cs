@@ -15,7 +15,8 @@ namespace O2.External.SharpDevelop
             log = PublicDI.log;
             //reflection = PublicDI.reflection;       
             reflection = new O2FormsReflectionASCX();
-                       
+
+            new O2.DotNetWrappers.Zip.zipUtils();            // to force inclusion of the O2.FluentSharp.Misc in the compilation directory
         }
 
         // DI which will need to be injected 

@@ -28,6 +28,7 @@ namespace O2.Core.XRules.Ascx
                                            .afterSelect<string>((file)=>loadFile(file,true));
                 loadXRuleDatabase();                
                 runOnLoad = false;
+                this.Text += " " + clr.details();
             }
 
         }
@@ -35,7 +36,7 @@ namespace O2.Core.XRules.Ascx
         public void loadXRuleDatabase()
         {						
             directoryWithXRulesDatabase.openDirectory(PublicDI.config.LocalScriptsFolder);
-            directoryWithLocalXRules.openDirectory(PublicDI.config.LocallyDevelopedScriptsFolder);            
+            directoryWithLocalXRules.openDirectory(PublicDI.config.LocallyDevelopedScriptsFolder.createDir());            
             loadXRulesTemplates(lbCurrentXRulesTemplates);
         }
 

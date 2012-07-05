@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System;
 using System.Drawing.Drawing2D;
-using O2.Kernel.ExtensionMethods;
+
 using O2.DotNetWrappers.ExtensionMethods;
 using O2.External.IE.ExtensionMethods;
 using O2.DotNetWrappers.DotNet;

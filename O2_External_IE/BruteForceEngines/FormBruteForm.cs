@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using O2.Kernel.ExtensionMethods;
+
 using O2.DotNetWrappers.ExtensionMethods;
 using O2.External.IE.Wrapper;
 using O2.External.IE.Interfaces;

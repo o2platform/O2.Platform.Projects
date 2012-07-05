@@ -6,7 +6,7 @@ using O2.DotNetWrappers.ExtensionMethods;
 using O2.DotNetWrappers.Network;
 using O2.External.IE.Interfaces;
 using O2.Kernel;
-using O2.Kernel.ExtensionMethods;
+
 
 namespace O2.External.IE.ExtensionMethods
 {

@@ -9,7 +9,7 @@ using O2.External.IE.Interfaces;
 using O2.External.IE.ExtensionMethods;
 using O2.External.IE.WebObjects;
 using O2.Kernel;
-using O2.Kernel.ExtensionMethods;
+
 using O2.Views.ASCX.classes.MainGUI;
 
 namespace O2.External.IE.Wrapper
