@@ -43,7 +43,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\binaries\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,6 +71,25 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\binaries\O2_External_SharpDevelop.dll">
+      <Link>_Dlls_Embeded\O2_External_SharpDevelop.dll</Link>
+      <CustomToolNamespace>O2.EmbededDlls</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\binaries\QuickGraph.dll">
+      <Link>_Dlls_Embeded\QuickGraph.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\binaries\O2_FluentSharp_REPL.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\binaries\O2_FluentSharp_BCL.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_BCL.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\binaries\O2_FluentSharp_Misc.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_Misc.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\binaries\O2_FluentSharp_CoreLib.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_CoreLib.dll</Link>
+    </EmbeddedResource>
     <Content Include="O2_Setup.cs.txt" />
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
     <Compile Include="Program.cs" />
@@ -115,12 +134,12 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\H2Logo.ico">
+    <EmbeddedResource Include="Icons\H2Logo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Icons\O2Logo.ico">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Icons\O2Logo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <FileAssociation Include=".h2">
@@ -135,16 +154,6 @@
       <Progid>O2.XRule.Script.o2</Progid>
       <DefaultIcon>O2Logo.ico</DefaultIcon>
     </FileAssociation>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
-      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
-      <Name>O2.FluentSharp.CoreLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\O2.FluentSharp.Roslyn.csproj">
-      <Project>{1D5E7298-537E-409B-8059-2040CA60B55A}</Project>
-      <Name>O2.FluentSharp.Roslyn</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

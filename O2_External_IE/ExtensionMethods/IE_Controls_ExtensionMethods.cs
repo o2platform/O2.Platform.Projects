@@ -250,7 +250,7 @@ namespace O2.External.IE.ExtensionMethods
 
         public static IO2HtmlPage open(this Uri uri)
         {
-            var browser = (O2BrowserIE)O2.Kernel.open.webBrowser();
+            var browser = "WebBrowser".popupWindow().add_Control<O2BrowserIE>();
             return browser.openSync(uri);
         }
 

@@ -6,7 +6,8 @@
 // </file>
 
 using System;
-using log4net;
+using O2.DotNetWrappers.ExtensionMethods;
+//using log4net;
 
 namespace ICSharpCode.SharpDevelop.Dom
 {
@@ -15,42 +16,64 @@ namespace ICSharpCode.SharpDevelop.Dom
 	/// </summary>
 	internal static class LoggingService
 	{
-		static ILog log = LogManager.GetLogger(typeof(LoggingService));
+        public static bool IsDebugEnabled   { get; set; }
+        public static bool Info_Enabled     { get; set; }
+        public static bool Debug_Enabled    { get; set; }
+        public static bool Error_Enabled    { get; set; }
+
+        static LoggingService()
+        {
+            Error_Enabled = true;
+        }
+		
+        //static ILog log = LogManager.GetLogger(typeof(LoggingService));
 		
 		public static void Debug(object message)
 		{
-			log.Debug(message);
+            if (Debug_Enabled)
+                "[LoggingService][Debug] {0}".debug(message);
+			//log.Debug(message);
 		}
 		
 		public static void Info(object message)
 		{
-			log.Info(message);
+            if (Info_Enabled)
+                "[LoggingService][Info] {0}".info(message);
+			//log.Info(message);
 		}
 		
 		public static void Warn(object message)
 		{
-			log.Warn(message);
+            if (Debug_Enabled)    
+                "[LoggingService][Warn] {0}".debug(message);
+			//log.Warn(message);
 		}
 		
 		public static void Warn(object message, Exception exception)
 		{
-			log.Warn(message, exception);
+            if (Debug_Enabled)
+                "[LoggingService][Warn] {0} : {1}".debug(message, exception.Message);
+			//log.Warn(message, exception);
 		}
 		
 		public static void Error(object message)
 		{
-			log.Error(message);
+            if (Error_Enabled)
+                "[LoggingService][Error] {0}".error(message);
+			//log.Error(message);
 		}
 		
 		public static void Error(object message, Exception exception)
 		{
-			log.Error(message, exception);
+            if (Error_Enabled)
+                "[LoggingService][Error] {0} : {1}".error(message, exception.Message);
+			//log.Error(message, exception);
 		}
 		
-		public static bool IsDebugEnabled {
+		/*public static bool IsDebugEnabled {
 			get {
 				return log.IsDebugEnabled;
-			}
-		}
+			}*/
+		//}
 	}
 }
