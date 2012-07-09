@@ -277,12 +277,10 @@ namespace O2.External.SharpDevelop.AST
                     var providerOptions = new Dictionary<string, string>().add("CompilerVersion", CompilationVersion);
 
                     var csharpCodeProvider = new Microsoft.CSharp.CSharpCodeProvider(providerOptions);
-                    var compilerParams = new CompilerParameters
-                    {
-                        GenerateInMemory = !generateDebugSymbols,
-                        IncludeDebugInformation = generateDebugSymbols,
-                        OutputAssembly = "_o2_Script.dll".tempFile()
-                    };
+					var compilerParams = new CompilerParameters();
+					compilerParams.OutputAssembly = "_o2_Script.dll".tempFile();
+					compilerParams.IncludeDebugInformation = generateDebugSymbols;
+					compilerParams.GenerateInMemory = !generateDebugSymbols;
 
                     foreach (var referencedAssembly in ReferencedAssemblies)
                         compilerParams.ReferencedAssemblies.Add(referencedAssembly);
@@ -552,7 +550,7 @@ namespace O2.External.SharpDevelop.AST
                             var resolved = false;
                             // try using SourceCodeFile.directoryName()
                             if (fileToResolve.fileExists().isFalse())
-                                if (SourceCodeFile.valid())
+                                if (SourceCodeFile.valid() && SourceCodeFile.isFile())
                                 {
                                     var resolvedFile = SourceCodeFile.directoryName().pathCombine(fileToResolve);
                                     if (resolvedFile.fileExists())
@@ -571,13 +569,13 @@ namespace O2.External.SharpDevelop.AST
                         }
                     }
                     //add extra _ExtensionMethods.cs if avaiable
-                    for (int i = 0; i < ExtraSourceCodeFilesToCompile.size(); i++)
+/*                    for (int i = 0; i < ExtraSourceCodeFilesToCompile.size(); i++)
                     {
                         var extensionMethod = ExtraSourceCodeFilesToCompile[i].replace(".cs","_ExtensionMethods.cs");
                         if (extensionMethod.fileExists() && ExtraSourceCodeFilesToCompile.contains(extensionMethod).isFalse())
                             if (this.SourceCodeFile !=  extensionMethod)
                                 ExtraSourceCodeFilesToCompile.Add(extensionMethod);
-                    }
+                    }*/
 
                 }
                 catch (Exception ex)

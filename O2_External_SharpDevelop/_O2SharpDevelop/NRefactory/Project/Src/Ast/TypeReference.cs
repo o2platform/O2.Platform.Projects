@@ -23,7 +23,7 @@ namespace ICSharpCode.NRefactory.Ast
 		string type = "";
 		int    pointerNestingLevel;
 		int[]  rankSpecifier;
-		List<TypeReference> genericTypes = new List<TypeReference>();
+		public List<TypeReference> genericTypes = new List<TypeReference>();
 		
 		#region Static primitive type list
 		static Dictionary<string, string> types   = new Dictionary<string, string>();

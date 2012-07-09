@@ -113,7 +113,8 @@ namespace O2.Core.XRules.Ascx
 
         private void loadSourceCodeFileIntoTab(string fileToOpen, TabPage tabPage, bool compileLoadedFile)
         {
-            var sourceCodeEditor = new ascx_SourceCodeEditor {Dock = DockStyle.Fill};
+            var sourceCodeEditor = new ascx_SourceCodeEditor();
+            sourceCodeEditor.Dock = DockStyle.Fill;
             tabPage.Controls.Add(sourceCodeEditor);
             sourceCodeEditor.loadSourceCodeFile(fileToOpen.Trim());
             if (compileLoadedFile)

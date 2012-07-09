@@ -68,6 +68,7 @@ namespace O2.XRules.Database.Utils
         public Action OnAstOK { get; set; }
         public Action onCompileFail { get; set; }
         public Action onCompileOK { get; set; }
+        public Action<object> onExecute { get; set; }
 
         public CSharp_FastCompiler csharpCompiler { get; set; }
         public string GeneratedCode { get; set; }
@@ -647,21 +648,6 @@ namespace O2.XRules.Database.Utils
 
             if (result == null)
                 result = "[null value]";
-            /*else if (result is string && false == result.str().isFile() && result.str().isUri())
-            {
-                result_Panel.visible(true);
-                result_Panel.add_WebBrowser().open(result.str().uri());
-                return;
-            }*/
-            // displaying the files by default was causing a lot of nasty side effects (namely for large files)
-            /*else if (result is string && result.str().isFile())
-            {
-                result_Panel.visible(true);
-                var textToShow = "File Contents For: {0} \r\n\r\n {1}".format(result, result.str().fileContents());
-                result_Panel.add_RichTextBox().set_Text(textToShow);
-                //result_Panel.add_TextBox(true).set_Text(textToShow);
-                return;
-            } */
 
             switch (result.typeName())
             {
@@ -686,6 +672,7 @@ namespace O2.XRules.Database.Utils
                     break;
             }
 
+            onExecute.invoke(result);
 
         }
 

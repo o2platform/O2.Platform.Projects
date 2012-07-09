@@ -12,6 +12,7 @@ using ASTAttribute = ICSharpCode.NRefactory.Ast.Attribute;
  */
 using System;
 using System.Reflection;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.NRefactory.Parser.VB {
 
@@ -226,12 +227,12 @@ out attribute);
 		EndOfStmt();
 
 #line  2533 "VBNET.ATG" 
-		AttributeSection section = new AttributeSection {
-		AttributeTarget = attributeTarget,
-		Attributes = attributes,
-		StartLocation = startPos,
-		EndLocation = t.EndLocation
-		};
+        AttributeSection section = new AttributeSection();
+        section.EndLocation = t.EndLocation;
+        section.StartLocation = startPos;
+        section.Attributes = attributes;
+        section.AttributeTarget = attributeTarget;
+
 		compilationUnit.AddChild(section);
 		
 	}
@@ -460,13 +461,11 @@ out attribute);
 		Expect(27);
 
 #line  2623 "VBNET.ATG" 
-		section = new AttributeSection {
-		AttributeTarget = attributeTarget,
-		Attributes = attributes,
-		StartLocation = startPos,
-		EndLocation = t.EndLocation
-		};
-		
+        section = new AttributeSection();
+        section.EndLocation = t.EndLocation;
+        section.StartLocation = startPos;
+        section.Attributes = attributes;
+        section.AttributeTarget = attributeTarget;		
 	}
 
 	void TypeModifier(
@@ -1158,7 +1157,8 @@ out nestedTypeRef, canBeUnbound);
 #line  2439 "VBNET.ATG" 
 				List<TypeReference> typeArguments = new List<TypeReference>(1);
 				if (typeref != null) typeArguments.Add(typeref);
-				typeref = new TypeReference("System.Nullable", typeArguments) { IsKeyword = true };
+				typeref = new TypeReference("System.Nullable", typeArguments);
+                typeref.IsKeyword = true;
 				
 			}
 		} else if (StartOf(11)) {
@@ -1174,7 +1174,8 @@ out name);
 #line  2449 "VBNET.ATG" 
 				List<TypeReference> typeArguments = new List<TypeReference>(1);
 				if (typeref != null) typeArguments.Add(typeref);
-				typeref = new TypeReference("System.Nullable", typeArguments) { IsKeyword = true };
+				typeref = new TypeReference("System.Nullable", typeArguments);
+                typeref.IsKeyword = true; ;
 				
 			}
 		} else SynErr(236);
@@ -1497,28 +1498,36 @@ IsMustOverride(m)) {
 					EndOfStmt();
 
 #line  816 "VBNET.ATG" 
-					methodDeclaration = new MethodDeclaration {
-					Name = name, Modifier = m.Modifier, Parameters = p, Attributes = attributes,
-					StartLocation = m.GetDeclarationLocation(startPos), EndLocation = endLocation,
-					TypeReference = new TypeReference("System.Void", true),
-					Templates = templates,
-					HandlesClause = handlesClause,
-					InterfaceImplementations = implementsClause
-					};
+                    methodDeclaration = new MethodDeclaration();
+                    methodDeclaration.InterfaceImplementations = implementsClause;
+                    methodDeclaration.HandlesClause = handlesClause;
+                    methodDeclaration.Templates = templates;
+                    methodDeclaration.TypeReference = new TypeReference("System.Void", true);
+                    methodDeclaration.EndLocation = endLocation;
+                    methodDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+                    methodDeclaration.Attributes = attributes;
+                    methodDeclaration.Parameters = p;
+                    methodDeclaration.Modifier = m.Modifier;
+                    methodDeclaration.Name = name;
+
 					compilationUnit.AddChild(methodDeclaration);
 					
 				} else if (la.kind == 1) {
 					lexer.NextToken();
 
 #line  829 "VBNET.ATG" 
-					methodDeclaration = new MethodDeclaration {
-					Name = name, Modifier = m.Modifier, Parameters = p, Attributes = attributes,
-					StartLocation = m.GetDeclarationLocation(startPos), EndLocation = endLocation,
-					TypeReference = new TypeReference("System.Void", true),
-					Templates = templates,
-					HandlesClause = handlesClause,
-					InterfaceImplementations = implementsClause
-					};
+                    methodDeclaration = new MethodDeclaration();
+                    methodDeclaration.InterfaceImplementations = implementsClause;
+                    methodDeclaration.HandlesClause = handlesClause;
+                    methodDeclaration.Templates = templates;
+                    methodDeclaration.TypeReference = new TypeReference("System.Void", true);
+                    methodDeclaration.EndLocation = endLocation;
+                    methodDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+                    methodDeclaration.Attributes = attributes;
+                    methodDeclaration.Parameters = p;
+                    methodDeclaration.Modifier = m.Modifier;
+                    methodDeclaration.Name = name;
+
 					compilationUnit.AddChild(methodDeclaration);
 					
 
@@ -1654,15 +1663,18 @@ IsMustOverride(m)) {
 				EndOfStmt();
 
 #line  911 "VBNET.ATG" 
-				methodDeclaration = new MethodDeclaration {
-				Name = name, Modifier = m.Modifier, TypeReference = type,
-				Parameters = p, Attributes = attributes,
-				StartLocation = m.GetDeclarationLocation(startPos),
-				EndLocation   = t.EndLocation,
-				HandlesClause = handlesClause,
-				Templates     = templates,
-				InterfaceImplementations = implementsClause
-				};
+                methodDeclaration = new MethodDeclaration();
+                methodDeclaration.InterfaceImplementations = implementsClause;
+                methodDeclaration.Templates = templates;
+                methodDeclaration.HandlesClause = handlesClause;
+                methodDeclaration.EndLocation = t.EndLocation;
+                methodDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+                methodDeclaration.Attributes = attributes;
+                methodDeclaration.Parameters = p;
+                methodDeclaration.TypeReference = type;
+                methodDeclaration.Modifier = m.Modifier;
+                methodDeclaration.Name = name;
+
 				if (returnTypeAttributeSection != null) {
 					returnTypeAttributeSection.AttributeTarget = "return";
 					methodDeclaration.Attributes.Add(returnTypeAttributeSection);
@@ -1673,15 +1685,18 @@ IsMustOverride(m)) {
 				lexer.NextToken();
 
 #line  929 "VBNET.ATG" 
-				methodDeclaration = new MethodDeclaration {
-				Name = name, Modifier = m.Modifier, TypeReference = type,
-				Parameters = p, Attributes = attributes,
-				StartLocation = m.GetDeclarationLocation(startPos),
-				EndLocation   = t.EndLocation,
-				Templates     = templates,
-				HandlesClause = handlesClause,
-				InterfaceImplementations = implementsClause
-				};
+                methodDeclaration = new MethodDeclaration();
+                methodDeclaration.InterfaceImplementations = implementsClause;
+                methodDeclaration.HandlesClause = handlesClause;
+                methodDeclaration.Templates = templates;
+                methodDeclaration.EndLocation = t.EndLocation;
+                methodDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+                methodDeclaration.Attributes = attributes;
+                methodDeclaration.Parameters = p;
+                methodDeclaration.TypeReference = type;
+                methodDeclaration.Modifier = m.Modifier;
+                methodDeclaration.Name = name;
+
 				if (returnTypeAttributeSection != null) {
 					returnTypeAttributeSection.AttributeTarget = "return";
 					methodDeclaration.Attributes.Add(returnTypeAttributeSection);
@@ -1841,12 +1856,16 @@ out implementsClause);
 			}
 
 #line  1016 "VBNET.ATG" 
-			eventDeclaration = new EventDeclaration {
-			Name = name, TypeReference = type, Modifier = m.Modifier, 
-			Parameters = p, Attributes = attributes, InterfaceImplementations = implementsClause,
-			StartLocation = m.GetDeclarationLocation(startPos),
-			EndLocation = t.EndLocation
-			};
+            eventDeclaration = new EventDeclaration();
+            eventDeclaration.EndLocation = t.EndLocation;
+            eventDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+            eventDeclaration.InterfaceImplementations = implementsClause;
+            eventDeclaration.Attributes = attributes;
+            eventDeclaration.Parameters = p;
+            eventDeclaration.Modifier = m.Modifier;
+            eventDeclaration.TypeReference = type;
+            eventDeclaration.Name = name;
+
 			compilationUnit.AddChild(eventDeclaration);
 			
 			EndOfStmt();
@@ -2068,16 +2087,18 @@ out eventAccessorDeclaration);
 			{
 				Error("Need to provide RaiseEvent accessor.");
 			}
-			
-			EventDeclaration decl = new EventDeclaration {
-				TypeReference = type, Name = customEventName, Modifier = m.Modifier,
-				Attributes = attributes,
-				StartLocation = m.GetDeclarationLocation(startPos),
-				EndLocation = t.EndLocation,
-				AddRegion = addHandlerAccessorDeclaration,
-				RemoveRegion = removeHandlerAccessorDeclaration,
-				RaiseRegion = raiseEventAccessorDeclaration
-			};
+
+            EventDeclaration decl = new EventDeclaration();
+            decl.RaiseRegion = raiseEventAccessorDeclaration;
+            decl.RemoveRegion = removeHandlerAccessorDeclaration;
+            decl.AddRegion = addHandlerAccessorDeclaration;
+            decl.EndLocation = t.EndLocation;
+            decl.StartLocation = m.GetDeclarationLocation(startPos);
+            decl.Attributes = attributes;
+            decl.Modifier = m.Modifier;
+            decl.Name = customEventName;
+            decl.TypeReference = type;
+
 			compilationUnit.AddChild(decl);
 			
 			break;
@@ -2181,18 +2202,18 @@ out stmt);
 			EndOfStmt();
 
 #line  1202 "VBNET.ATG" 
-			OperatorDeclaration operatorDeclaration = new OperatorDeclaration {
-			Modifier = m.Modifier,
-			Attributes = attributes,
-			Parameters = parameters,
-			TypeReference = returnType,
-			OverloadableOperator = operatorType,
-			ConversionType = opConversionType,
-			ReturnTypeAttributes = returnTypeAttributes,
-			Body = (BlockStatement)stmt,
-			StartLocation = m.GetDeclarationLocation(startPos),
-			EndLocation = endPos
-			};
+            OperatorDeclaration operatorDeclaration = new OperatorDeclaration();
+            operatorDeclaration.EndLocation = endPos;
+            operatorDeclaration.StartLocation = m.GetDeclarationLocation(startPos);
+            operatorDeclaration.Body = (BlockStatement)stmt;
+            operatorDeclaration.ReturnTypeAttributes = returnTypeAttributes;
+            operatorDeclaration.ConversionType = opConversionType;
+            operatorDeclaration.OverloadableOperator = operatorType;
+            operatorDeclaration.TypeReference = returnType;
+            operatorDeclaration.Parameters = parameters;
+            operatorDeclaration.Attributes = attributes;
+            operatorDeclaration.Modifier = m.Modifier;
+
 			operatorDeclaration.Body.StartLocation = startPos;
 			operatorDeclaration.Body.EndLocation = t.Location;
 			compilationUnit.AddChild(operatorDeclaration);
@@ -2294,11 +2315,15 @@ out type);
 				EndOfStmt();
 
 #line  657 "VBNET.ATG" 
-				EventDeclaration ed = new EventDeclaration {
-				Name = name, TypeReference = type, Modifier = mod.Modifier,
-				Parameters = p, Attributes = attributes,
-				StartLocation = startLocation, EndLocation = t.EndLocation
-				};
+                EventDeclaration ed = new EventDeclaration();
+                ed.EndLocation = t.EndLocation;
+                ed.StartLocation = startLocation;
+                ed.Attributes = attributes;
+                ed.Parameters = p;
+                ed.Modifier = mod.Modifier;
+                ed.TypeReference = type;
+                ed.Name = name;
+
 				compilationUnit.AddChild(ed);
 				
 			} else if (la.kind == 195) {
@@ -2327,16 +2352,16 @@ p);
 				EndOfStmt();
 
 #line  675 "VBNET.ATG" 
-				MethodDeclaration md = new MethodDeclaration {
-				Name = name, 
-				Modifier = mod.Modifier, 
-				Parameters = p,
-				Attributes = attributes,
-				TypeReference = new TypeReference("System.Void", true),
-				StartLocation = startLocation,
-				EndLocation = t.EndLocation,
-				Templates = templates
-				};
+                MethodDeclaration md = new MethodDeclaration();
+                md.Templates = templates;
+                md.EndLocation = t.EndLocation;
+                md.StartLocation = startLocation;
+                md.TypeReference = new TypeReference("System.Void", true);
+                md.Attributes = attributes;
+                md.Parameters = p;
+                md.Modifier = mod.Modifier;
+                md.Name = name;
+
 				compilationUnit.AddChild(md);
 				
 			} else if (la.kind == 114) {
@@ -2378,10 +2403,13 @@ out type);
 				if(type == null) {
 				type = new TypeReference("System.Object", true);
 				}
-				MethodDeclaration md = new MethodDeclaration {
-					Name = name, Modifier = mod.Modifier, 
-					TypeReference = type, Parameters = p, Attributes = attributes
-				};
+                MethodDeclaration md = new MethodDeclaration();
+                md.Attributes = attributes;
+                md.Parameters = p;
+                md.TypeReference = type;
+                md.Modifier = mod.Modifier;
+                md.Name = name;
+
 				if (returnTypeAttributeSection != null) {
 					returnTypeAttributeSection.AttributeTarget = "return";
 					md.Attributes.Add(returnTypeAttributeSection);
@@ -3760,49 +3788,63 @@ out Expression pexpr) {
 				lexer.NextToken();
 
 #line  1655 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;                
 				break;
 			}
 			case 4: {
 				lexer.NextToken();
 
 #line  1656 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 7: {
 				lexer.NextToken();
 
 #line  1657 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 6: {
 				lexer.NextToken();
 
 #line  1658 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 5: {
 				lexer.NextToken();
 
 #line  1659 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 9: {
 				lexer.NextToken();
 
 #line  1660 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 8: {
 				lexer.NextToken();
 
 #line  1661 "VBNET.ATG" 
-				pexpr = new PrimitiveExpression(t.literalValue, t.val) { LiteralFormat = t.literalFormat };  
+                PrimitiveExpression primitiveExpression = new PrimitiveExpression(t.literalValue, t.val);
+                primitiveExpression.LiteralFormat = t.literalFormat;
+                pexpr = primitiveExpression;
 				break;
 			}
 			case 202: {
@@ -6172,17 +6214,16 @@ out nextExpr);
 				}
 
 #line  2890 "VBNET.ATG" 
-				statement = new ForNextStatement {
-				TypeReference = typeReference,
-				VariableName = typeName, 
-				LoopVariableExpression = variableExpr,
-				Start = start, 
-				End = end, 
-				Step = step, 
-				EmbeddedStatement = embeddedStatement, 
-				NextExpressions = nextExpressions
-				};
-				
+                var forNextStatement = new ForNextStatement();
+                forNextStatement.NextExpressions = nextExpressions;
+                forNextStatement.EmbeddedStatement = embeddedStatement;
+                forNextStatement.Step = step;
+                forNextStatement.End = end;
+                forNextStatement.Start = start;
+                forNextStatement.LoopVariableExpression = variableExpr;
+                forNextStatement.VariableName = typeName;
+                forNextStatement.TypeReference = typeReference;
+                statement = forNextStatement;
 			} else SynErr(275);
 		} else if (la.kind == 105) {
 			lexer.NextToken();
@@ -7347,7 +7388,70 @@ out blockStmt);
 		}
 		this.Errors.Error(line, col, s);
 	}
-	
+    //to deal with Roslyn's lack of support for multi-dimentional arrays
+    static List<List<bool>> _set = new List<List<bool>>();
+
+    //see C# of this code for more details
+    private bool StartOf(int s)
+	{
+        return _set[s][lexer.LookAhead.kind];
+	}
+
+    static Parser()
+    {
+        Action<bool[]> addMapping =
+                (values) =>
+                {
+                    _set.Add(values.toList());
+                };
+        addMapping(new bool[] { T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, T, T, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, x, x, x, x, T, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, x, x, x, x, x, x, T, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, x, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, T, x, x, T, T, x, x, x, x, x, x, x, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, x, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, x, x, x, x, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, T, T, T, T, T, x, T, x, x, x, x, x, x, x, T, T, x, x, T, x, T, x, x, x, T, T, T, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, T, x, x, T, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, x, x, x, T, T, x, x, T, x, T, x, x, x, T, x, T, T, T, x, T, T, T, T, T, T, x, T, x, x, x, x, x, x, x, x, T, T, x, x, T, x, x, x, x, x, T, T, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, T, x, T, T, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, T, x, T, x, T, x, T, T, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, T, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, x, x, x, x, T, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, T, x, T, x, T, T, T, T, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, T, T, T, x, T, x, T, T, T, T, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, T, T, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, x, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, T, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, T, T, T, T, T, T, T, T, T, x, T, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, T, x, x, T, T, T, T, T, T, T, T, x, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, T, T, T, T, x, x, x, x, x, x, T, T, T, x, T, T, T, x, T, x, T, x, x, T, T, x, T, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, T, x, T, T, T, T, T, x, x, x, T, T, T, T, x, T, x, T, x, x, T, T, T, x, T, x, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, x, T, x, x, x, x, x });
+        addMapping(new bool[] { x, T, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, T, T, T, T, T, T, x, T, T, x, T, x, x, T, T, T, T, T, T, T, T, x, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, T, T, T, T, x, T, x, T, x, x, T, T, T, x, T, T, T, x, T, x, T, x, x, T, T, x, T, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, T, x, T, T, T, T, T, x, x, x, T, T, T, T, x, T, x, T, x, x, T, T, T, x, T, x, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, x, T, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, T, T, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, T, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, T, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, T, T, x, x, T, T, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, T, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, T, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, x, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, T, T, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, x, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, T, x, x, T, T, T, T, T, T, T, T, x, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, T, T, T, T, x, x, x, x, x, x, T, T, T, x, T, T, T, x, T, x, T, x, x, T, T, x, T, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, T, x, T, T, T, T, T, x, x, x, T, T, T, T, x, T, x, T, x, x, T, T, T, x, T, x, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, x, T, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, T, x, x, x, T, x, T, T, x, x, T, x, x, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, T, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, T, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, x, x, x, T, T, T, T, T, T, T, T, x, T, T, T, x, x, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, x, T, T, x, T, x, x, x, x, x, x, T, x, x, x, x, T, T, x, x, x, T, x, x, T, T, x, x, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, T, T, T, x, x, x, x, T, x, x, x, T, T, x, x, x, T, x, T, T, T, T, T, T, T, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, T, T, T, T, T, T, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, x, x, x, T, x, T, T, T, T, T, x, T, T, x, T, x, x, T, T, T, T, T, T, T, T, x, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, T, T, T, T, x, x, x, T, x, x, T, T, T, x, T, T, T, x, T, x, T, x, x, T, T, x, T, T, x, T, x, x, x, T, x, T, x, T, x, x, T, x, x, x, T, x, T, x, x, x, x, T, T, x, x, T, x, x, T, x, x, T, x, T, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, T, x, T, x, T, T, T, T, T, x, x, x, T, T, T, T, x, T, x, T, x, x, T, T, T, x, T, x, T, T, T, T, T, T, T, T, T, T, x, x, x, T, T, x, T, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, T, T, T, T, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, T, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, T, x, T, T, T, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, T, x, x, x, x, T, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, T, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, T, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, x, x, x, x, T, T, x, x, x, x, x, T, x, x, x, x, x, x, x, x });
+        addMapping(new bool[] { x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, T, T, T, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, T, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x });
+
+    }
+    //to deal with Roslyn's lack of support for multi-dimentional arrays
+	/*
 	private bool StartOf(int s)
 	{
 		return set[s, lexer.LookAhead.kind];
@@ -7399,7 +7503,7 @@ out blockStmt);
 	{x,x,T,x, x,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,x,x, x,T,x,T, T,T,T,x, x,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,x, x,x,x,x, x,x,x,x, x,T,x,x, x,x,x,T, x,x,T,x, x,x,x,x, x,x,x,T, x,x,x,x, T,x,x,x, x,T,x,x, x,x,x,x, T,x,x,x, x,x,T,x, x,x,T,x, x,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,x,x,x, x,x,T,x, x,x,x,x, x,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,x,x,x, x,x,x,x, x,T,T,x, x,x,x,x, x,x,x,x, T,T,x,x, x,x,x,T, x,x,x,x, x,x,x,x},
 	{x,x,x,x, x,x,x,x, x,x,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x}
 
-	};
+	};*/
 } // end Parser
 
 }

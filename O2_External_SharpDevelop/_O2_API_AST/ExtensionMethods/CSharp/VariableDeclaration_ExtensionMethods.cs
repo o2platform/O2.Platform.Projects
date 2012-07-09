@@ -24,7 +24,8 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
         public static VariableDeclaration add_Variable(this BlockStatement blockDeclaration, string name, Expression expression, TypeReference typeReference)
         {
-            var variableDeclaration = new VariableDeclaration(name, expression) {TypeReference = typeReference};
+            var variableDeclaration = new VariableDeclaration(name, expression);
+            variableDeclaration.TypeReference = typeReference;
             var localVariableDeclaration = new LocalVariableDeclaration(variableDeclaration);
             blockDeclaration.append(localVariableDeclaration);
             return variableDeclaration;

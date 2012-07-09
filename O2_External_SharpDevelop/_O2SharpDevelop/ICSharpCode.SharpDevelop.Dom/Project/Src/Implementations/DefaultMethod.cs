@@ -193,11 +193,9 @@ namespace ICSharpCode.SharpDevelop.Dom
 		
 		public override string ToString()
 		{
-			return String.Format("[DefaultMethod: {0}]",
-			                     (new Dom.CSharp.CSharpAmbience {
-			                      	ConversionFlags = ConversionFlags.StandardConversionFlags
-			                      		| ConversionFlags.UseFullyQualifiedMemberNames
-			                      }).Convert(this));
+			var cSharpAmbience = new Dom.CSharp.CSharpAmbience();
+			cSharpAmbience.ConversionFlags = ConversionFlags.StandardConversionFlags | ConversionFlags.UseFullyQualifiedMemberNames;
+			return String.Format("[DefaultMethod: {0}]", cSharpAmbience.Convert(this));
 		}
 		
 		public virtual int CompareTo(IMethod value)

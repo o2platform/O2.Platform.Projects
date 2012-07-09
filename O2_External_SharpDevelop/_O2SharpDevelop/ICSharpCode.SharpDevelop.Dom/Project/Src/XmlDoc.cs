@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom
 {
@@ -18,9 +19,9 @@ namespace ICSharpCode.SharpDevelop.Dom
 	/// </summary>
 	public sealed class XmlDoc : IDisposable
 	{
-		static readonly List<string> xmlDocLookupDirectories = new List<string> {
-			System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory()
-		};
+
+        static readonly List<string> xmlDocLookupDirectories = new List<string>().add(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory());
+		
 		
 		public static IList<string> XmlDocLookupDirectories {
 			get { return xmlDocLookupDirectories; }

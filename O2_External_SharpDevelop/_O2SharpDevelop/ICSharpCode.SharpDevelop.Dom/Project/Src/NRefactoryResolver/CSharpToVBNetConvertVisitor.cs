@@ -13,6 +13,7 @@ using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory.AstBuilder;
 using ICSharpCode.NRefactory.Visitors;
 using System.Runtime.InteropServices;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 {
@@ -501,7 +502,7 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 					ResolveResult rr = resolver.ResolveInternal(unaryOperatorExpression.Expression, ExpressionContext.Default);
 					if (rr != null && rr.ResolvedType != null) {
 						TypeReference targetType = Refactoring.CodeGenerator.ConvertType(rr.ResolvedType, CreateContext());
-						TypeReference pointerType = new TypeReference("Pointer", new List<TypeReference> { targetType });
+						TypeReference pointerType = new TypeReference("Pointer", new List<TypeReference>().add(targetType));
 						ReplaceCurrentNode(pointerType.New(unaryOperatorExpression.Expression));
 					}
 					break;
@@ -511,20 +512,19 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		
 		public override object VisitTypeReference(TypeReference typeReference, object data)
 		{
-			while (typeReference.PointerNestingLevel > 0) {
-				TypeReference tr = new TypeReference(typeReference.Type) {
-					IsKeyword = typeReference.IsKeyword,
-					IsGlobal = typeReference.IsGlobal,
-				};
+			while (typeReference.PointerNestingLevel > 0) 
+			{			
+				TypeReference tr = new TypeReference(typeReference.Type);
+				tr.IsGlobal = typeReference.IsGlobal;
+				tr.IsKeyword = typeReference.IsKeyword;
 				tr.GenericTypes.AddRange(typeReference.GenericTypes);
 				
-				typeReference = new TypeReference("Pointer") {
-					StartLocation = typeReference.StartLocation,
-					EndLocation = typeReference.EndLocation,
-					PointerNestingLevel = typeReference.PointerNestingLevel - 1,
-					GenericTypes = { tr },
-					RankSpecifier = typeReference.RankSpecifier
-				};
+				typeReference = new TypeReference("Pointer");
+				typeReference.RankSpecifier = typeReference.RankSpecifier;
+                typeReference.genericTypes = new List<TypeReference>().add(tr);
+                typeReference.PointerNestingLevel = typeReference.PointerNestingLevel - 1;
+				typeReference.EndLocation = typeReference.EndLocation;
+				typeReference.StartLocation = typeReference.StartLocation;
 			}
 			ReplaceCurrentNode(typeReference);
 			return base.VisitTypeReference(typeReference, data);

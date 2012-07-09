@@ -107,7 +107,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Ascx\MiscUI\FileViewers.cs" />
-    <Compile Include="ExtensionMethods\HtmlAgilityPack_ExtensionMethods_SourceCodeViewer.cs" />
     <Compile Include="ExtensionMethods\Scripts_ExtensionMethods.cs" />
     <Compile Include="O2CodeCompletion.cs" />
     <Compile Include="Charp_FastCompiler.cs" />
@@ -123,11 +122,11 @@
     <Compile Include="Ascx\ascx_SourceCodeViewer.Designer.cs">
       <DependentUpon>ascx_SourceCodeViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="AST\AstDetails.cs" />
-    <Compile Include="AST\AstTreeView.cs" />
-    <Compile Include="AST\AstValue.cs" />
-    <Compile Include="AST\Ast_CSharp.cs" />
-    <Compile Include="AST\Ast_CSharp_ShowDetailsInViewer.cs" />
+    <Compile Include="_O2_API_AST\AST\AstDetails.cs" />
+    <Compile Include="_O2_API_AST\AST\AstTreeView.cs" />
+    <Compile Include="_O2_API_AST\AST\AstValue.cs" />
+    <Compile Include="_O2_API_AST\AST\Ast_CSharp.cs" />
+    <Compile Include="_O2_API_AST\AST\Ast_CSharp_ShowDetailsInViewer.cs" />
     <Compile Include="DI.cs" />
     <Compile Include="ExtensionMethods\TextEditor_ExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\XmlToXsd_ExtensionMethods.cs" />
@@ -581,10 +580,6 @@
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Misc\O2.FluentSharp.Misc.csproj">
       <Project>{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}</Project>
       <Name>O2.FluentSharp.Misc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Misc_Microsoft_MPL_Libs\O2_Misc_Microsoft_MPL_Libs.csproj">
-      <Project>{BB1489A2-57AB-4A8D-A4DA-7C7E444512B8}</Project>
-      <Name>O2_Misc_Microsoft_MPL_Libs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

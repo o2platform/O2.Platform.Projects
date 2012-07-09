@@ -23,10 +23,8 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                 return newType;
 
             const Modifiers modifiers = Modifiers.None | Modifiers.Public;
-            newType = new TypeDeclaration(modifiers, new List<AttributeSection>())
-            {
-                Name = typeName
-            };
+            newType = new TypeDeclaration(modifiers, new List<AttributeSection>());
+            newType.Name = typeName;
 
             foreach (var baseType in iClass.BaseTypes)
             {
@@ -64,10 +62,8 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                     return newType;
 
                 const Modifiers modifiers = Modifiers.None | Modifiers.Public;
-                newType = new TypeDeclaration(modifiers, new List<AttributeSection>())
-                {
-                    Name = typeName
-                };
+                newType = new TypeDeclaration(modifiers, new List<AttributeSection>());
+                newType.Name = typeName;                
 
                 foreach (var baseType in iClass.BaseTypes)
                 {
@@ -104,10 +100,8 @@ namespace O2.API.AST.ExtensionMethods.CSharp
                 return newType;            
 
             const Modifiers modifiers = Modifiers.None | Modifiers.Public;
-            newType = new TypeDeclaration(modifiers, new List<AttributeSection>())
-            {
-                Name = typeName
-            };
+            newType = new TypeDeclaration(modifiers, new List<AttributeSection>());
+            newType.Name = typeName;
             namespaceDeclaration.AddChild(newType);
             return newType;
         }
@@ -126,10 +120,8 @@ namespace O2.API.AST.ExtensionMethods.CSharp
         public static TypeDeclaration add_Type(this CompilationUnit compilationUnit, string typeName)
         {
             const Modifiers modifiers = Modifiers.None | Modifiers.Public;
-            var newType = new TypeDeclaration(modifiers, new List<AttributeSection>())
-            {
-                Name = typeName
-            };
+            var newType = new TypeDeclaration(modifiers, new List<AttributeSection>());
+            newType.Name = typeName;
             compilationUnit.AddChild(newType);
             return newType;
         }

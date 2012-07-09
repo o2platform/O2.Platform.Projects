@@ -206,22 +206,25 @@ namespace ICSharpCode.SharpDevelop.Dom.Refactoring
 		
 		public static ParametrizedNode ConvertMember(IMethod m, ClassFinder targetContext)
 		{
-			if (m.IsConstructor) {
-				return new ConstructorDeclaration(m.Name,
-				                                  ConvertModifier(m.Modifiers, targetContext),
-				                                  ConvertParameters(m.Parameters, targetContext),
-				                                  ConvertAttributes(m.Attributes, targetContext));
-			} else {
-				return new MethodDeclaration {
-					Name = m.Name,
-					Modifier = ConvertModifier(m.Modifiers, targetContext),
-					TypeReference = ConvertType(m.ReturnType, targetContext),
-					Parameters = ConvertParameters(m.Parameters, targetContext),
-					Attributes = ConvertAttributes(m.Attributes, targetContext),
-					Templates = ConvertTemplates(m.TypeParameters, targetContext),
-					Body = CreateNotImplementedBlock()
-				};
-			}
+            if (m.IsConstructor)
+            {
+                return new ConstructorDeclaration(m.Name,
+                                                  ConvertModifier(m.Modifiers, targetContext),
+                                                  ConvertParameters(m.Parameters, targetContext),
+                                                  ConvertAttributes(m.Attributes, targetContext));
+            }
+            else
+            {
+                var methodDeclaration = new MethodDeclaration();
+                methodDeclaration.Body = CreateNotImplementedBlock();
+                methodDeclaration.Templates = ConvertTemplates(m.TypeParameters, targetContext);
+                methodDeclaration.Attributes = ConvertAttributes(m.Attributes, targetContext);
+                methodDeclaration.Parameters = ConvertParameters(m.Parameters, targetContext);
+                methodDeclaration.TypeReference = ConvertType(m.ReturnType, targetContext);
+                methodDeclaration.Modifier = ConvertModifier(m.Modifiers, targetContext);
+                methodDeclaration.Name = m.Name;
+                return methodDeclaration;
+            }
 		}
 		
 		public static AttributedNode ConvertMember(IMember m, ClassFinder targetContext)
@@ -282,12 +285,12 @@ namespace ICSharpCode.SharpDevelop.Dom.Refactoring
 		
 		public static EventDeclaration ConvertMember(IEvent e, ClassFinder targetContext)
 		{
-			return new EventDeclaration {
-				TypeReference = ConvertType(e.ReturnType, targetContext),
-				Name = e.Name,
-				Modifier = ConvertModifier(e.Modifiers, targetContext),
-				Attributes = ConvertAttributes(e.Attributes, targetContext),
-			};
+            var eventDeclaration = new EventDeclaration();
+            eventDeclaration.Attributes = ConvertAttributes(e.Attributes, targetContext);
+            eventDeclaration.Modifier = ConvertModifier(e.Modifiers, targetContext);
+            eventDeclaration.Name = e.Name;
+            eventDeclaration.TypeReference = ConvertType(e.ReturnType, targetContext);
+            return eventDeclaration;
 		}
 		#endregion
 		
@@ -412,12 +415,11 @@ namespace ICSharpCode.SharpDevelop.Dom.Refactoring
 		public virtual void CreateChangedEvent(IProperty property, IDocument document)
 		{
 			ClassFinder targetContext = new ClassFinder(property);
-			string name = property.Name + "Changed";
-			EventDeclaration ed = new EventDeclaration {
-				TypeReference = new TypeReference("EventHandler"),
-				Name = name,
-				Modifier = ConvertModifier(property.Modifiers & (ModifierEnum.VisibilityMask | ModifierEnum.Static), targetContext),
-			};
+			string name = property.Name + "Changed";			
+            EventDeclaration ed = new EventDeclaration();
+            ed.Modifier = ConvertModifier(property.Modifiers & (ModifierEnum.VisibilityMask | ModifierEnum.Static), targetContext);
+            ed.Name = name;
+            ed.TypeReference = new TypeReference("EventHandler");
 			InsertCodeAfter(property, document, ed);
 			
 			List<Expression> arguments = new List<Expression>(2);
@@ -457,12 +459,12 @@ namespace ICSharpCode.SharpDevelop.Dom.Refactoring
 				modifier = ModifierEnum.Protected;
 			else
 				modifier = ModifierEnum.Protected | ModifierEnum.Virtual;
-			MethodDeclaration method = new MethodDeclaration {
-				Name = "On" + e.Name,
-				Modifier = ConvertModifier(modifier, context),
-				TypeReference = new TypeReference("System.Void", true),
-				Parameters = parameters
-			};
+
+            MethodDeclaration method = new MethodDeclaration();
+            method.Parameters = parameters;
+            method.TypeReference = new TypeReference("System.Void", true);
+            method.Modifier = ConvertModifier(modifier, context);
+            method.Name = "On" + e.Name;
 			
 			List<Expression> arguments = new List<Expression>();
 			if (sender) {

@@ -16,6 +16,8 @@ using ICSharpCode.NRefactory.Visitors;
 using AST = ICSharpCode.NRefactory.Ast;
 using RefParser = ICSharpCode.NRefactory;
 
+using O2.DotNetWrappers.ExtensionMethods;
+
 namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 {
 	public class NRefactoryASTConvertVisitor : AbstractAstVisitor
@@ -184,11 +186,11 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 			}
 			currentNamespace = new DefaultUsingScope();
 			if (!string.IsNullOrEmpty(VBRootNamespace)) {
-				foreach (string name in VBRootNamespace.Split('.')) {
-					currentNamespace = new DefaultUsingScope {
-						Parent = currentNamespace,
-						NamespaceName = PrependCurrentNamespace(name),
-					};
+				foreach (string name in VBRootNamespace.Split('.')) 
+				{
+					currentNamespace = new DefaultUsingScope();
+					currentNamespace.NamespaceName = PrependCurrentNamespace(name);
+					currentNamespace.Parent = currentNamespace;
 					currentNamespace.Parent.ChildScopes.Add(currentNamespace);
 				}
 			}
@@ -290,12 +292,14 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 					foreach (AST.NamedArgumentExpression namedArgumentExpression in attribute.NamedArguments) {
 						namedArguments.Add(namedArgumentExpression.Name, ConvertAttributeArgument(namedArgumentExpression.Expression));
 					}
-					result.Add(new DefaultAttribute(new AttributeReturnType(context, attribute.Name),
-					                                target, positionalArguments, namedArguments)
-					           {
-					           	CompilationUnit = cu,
-					           	Region = GetRegion(attribute.StartLocation, attribute.EndLocation)
-					           });
+					var defaultAttribute = new DefaultAttribute(new AttributeReturnType(context, attribute.Name),
+															 	target, 
+															 	positionalArguments, 
+															 	namedArguments);
+					defaultAttribute.Region = GetRegion(attribute.StartLocation, attribute.EndLocation);
+					defaultAttribute.CompilationUnit = cu;
+					
+					result.Add(defaultAttribute);
 				}
 			}
 			return result;
@@ -330,11 +334,11 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		public override object VisitNamespaceDeclaration(AST.NamespaceDeclaration namespaceDeclaration, object data)
 		{
 			DefaultUsingScope oldNamespace = currentNamespace;
-			foreach (string name in namespaceDeclaration.Name.Split('.')) {
-				currentNamespace = new DefaultUsingScope {
-					Parent = currentNamespace,
-					NamespaceName = PrependCurrentNamespace(name),
-				};
+			foreach (string name in namespaceDeclaration.Name.Split('.')) 
+			{
+				currentNamespace = new DefaultUsingScope();
+				currentNamespace.Parent = currentNamespace;
+				currentNamespace.NamespaceName = PrependCurrentNamespace(name);	
 				currentNamespace.Parent.ChildScopes.Add(currentNamespace);
 			}
 			object ret = namespaceDeclaration.AcceptChildren(this, data);
@@ -785,19 +789,21 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 			c.Events.Add(e);
 			
 			e.Documentation = GetDocumentation(region.BeginLine, eventDeclaration.Attributes);
-			if (eventDeclaration.HasAddRegion) {
-				e.AddMethod = new DefaultMethod(e.DeclaringType, "add_" + e.Name) {
-					Parameters = { new DefaultParameter("value", e.ReturnType, DomRegion.Empty) },
-					Region = GetRegion(eventDeclaration.AddRegion.StartLocation, eventDeclaration.AddRegion.EndLocation),
-					BodyRegion = GetRegion(eventDeclaration.AddRegion.Block.StartLocation, eventDeclaration.AddRegion.Block.EndLocation)
-				};
+			if (eventDeclaration.HasAddRegion) 
+			{
+				var defaultMethod = new DefaultMethod(e.DeclaringType, "add_" + e.Name);
+				defaultMethod.Parameters = new List<IParameter>().add(new DefaultParameter("value", e.ReturnType, DomRegion.Empty));
+				defaultMethod.Region = GetRegion(eventDeclaration.AddRegion.StartLocation, eventDeclaration.AddRegion.EndLocation);
+				defaultMethod.BodyRegion = GetRegion(eventDeclaration.AddRegion.Block.StartLocation, eventDeclaration.AddRegion.Block.EndLocation);				
+				e.AddMethod = defaultMethod;
 			}
-			if (eventDeclaration.HasRemoveRegion) {
-				e.RemoveMethod = new DefaultMethod(e.DeclaringType, "remove_" + e.Name) {
-					Parameters = { new DefaultParameter("value", e.ReturnType, DomRegion.Empty) },
-					Region = GetRegion(eventDeclaration.RemoveRegion.StartLocation, eventDeclaration.RemoveRegion.EndLocation),
-					BodyRegion = GetRegion(eventDeclaration.RemoveRegion.Block.StartLocation, eventDeclaration.RemoveRegion.Block.EndLocation)
-				};
+			if (eventDeclaration.HasRemoveRegion) 
+			{
+				var defaultMethod = new DefaultMethod(e.DeclaringType, "remove_" + e.Name);
+				defaultMethod.Parameters = new List<IParameter>().add(new DefaultParameter("value", e.ReturnType, DomRegion.Empty) );
+				defaultMethod.Region = GetRegion(eventDeclaration.RemoveRegion.StartLocation, eventDeclaration.RemoveRegion.EndLocation);
+				defaultMethod.BodyRegion = GetRegion(eventDeclaration.RemoveRegion.Block.StartLocation, eventDeclaration.RemoveRegion.Block.EndLocation);				
+				e.RemoveMethod = defaultMethod;
 			}
 			return null;
 		}

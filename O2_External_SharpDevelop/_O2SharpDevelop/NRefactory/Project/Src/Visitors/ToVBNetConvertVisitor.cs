@@ -11,6 +11,8 @@ using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory.AstBuilder;
 using Attribute = ICSharpCode.NRefactory.Ast.Attribute;
 
+using O2.DotNetWrappers.ExtensionMethods;
+
 namespace ICSharpCode.NRefactory.Visitors
 {
 	/// <summary>
@@ -154,9 +156,9 @@ namespace ICSharpCode.NRefactory.Visitors
 				AddInlineAssignHelper();
 				ReplaceCurrentNode(
 					new InvocationExpression(
-						new IdentifierExpression("InlineAssignHelper"),
-						new List<Expression> { assignmentExpression.Left, assignmentExpression.Right }
-					));
+						new IdentifierExpression("InlineAssignHelper"),						
+						new List<Expression>().add(assignmentExpression.Left)
+                                              .add(assignmentExpression.Right)));
 			}
 			return null;
 		}
@@ -172,14 +174,12 @@ namespace ICSharpCode.NRefactory.Visitors
 				}
 			}
 			
-			method = new MethodDeclaration {
-				Name = "InlineAssignHelper",
-				Modifier = Modifiers.Private | Modifiers.Static,
-				TypeReference = new TypeReference("T"),
-				Parameters = new List<ParameterDeclarationExpression> {
-					new ParameterDeclarationExpression(new TypeReference("T"), "target", ParameterModifiers.Ref),
-					new ParameterDeclarationExpression(new TypeReference("T"), "value")
-				}};
+			method = new MethodDeclaration();
+			method.Name = "InlineAssignHelper";
+			method.Modifier = Modifiers.Private | Modifiers.Static;
+            method.TypeReference = new TypeReference("T");
+			method.Parameters = new List<ParameterDeclarationExpression>().add(new ParameterDeclarationExpression(new TypeReference("T"), "target", ParameterModifiers.Ref))
+                                                                       .add(new ParameterDeclarationExpression(new TypeReference("T"), "value"));				
 			method.Templates.Add(new TemplateDefinition("T", null));
 			method.Body = new BlockStatement();
 			method.Body.AddChild(new ExpressionStatement(new AssignmentExpression(

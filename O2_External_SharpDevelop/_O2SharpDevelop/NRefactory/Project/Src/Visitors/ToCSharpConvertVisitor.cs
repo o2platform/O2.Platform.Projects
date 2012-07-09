@@ -79,15 +79,18 @@ namespace ICSharpCode.NRefactory.Visitors
 			while (member.InterfaceImplementations.Count > 0) {
 				InterfaceImplementation impl = member.InterfaceImplementations[0];
 				member.InterfaceImplementations.RemoveAt(0);
-				if (member.Name != impl.MemberName) {
-					MethodDeclaration newMember = new MethodDeclaration {
-						Name = impl.MemberName,
-						TypeReference = member.TypeReference,
-						Parameters = member.Parameters,
-						Body = new BlockStatement()
-					};
+				if (member.Name != impl.MemberName) 
+                {
+				
+                    MethodDeclaration newMember = new MethodDeclaration();
+                    newMember.Body = new BlockStatement();
+                    newMember.Parameters = member.Parameters;
+                    newMember.TypeReference = member.TypeReference;
+                    newMember.Name = impl.MemberName;
+
 					InvocationExpression callExpression = new InvocationExpression(new IdentifierExpression(member.Name));
-					foreach (ParameterDeclarationExpression decl in member.Parameters) {
+					foreach (ParameterDeclarationExpression decl in member.Parameters) 
+                    {
 						callExpression.Arguments.Add(new IdentifierExpression(decl.ParameterName));
 					}
 					if (member.TypeReference.Type == "System.Void") {

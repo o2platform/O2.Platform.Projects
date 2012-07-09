@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.TextEditor.Document
 {
@@ -292,44 +293,63 @@ namespace ICSharpCode.TextEditor.Document
 		/// </remarks>
 		public void RemoveSelectedText()
 		{
-			if (SelectionIsReadonly) {
-				ClearSelection();
-				return;
-			}
-			List<int> lines = new List<int>();
-			int offset = -1;
-			bool oneLine = true;
-//			PriorityQueue queue = new PriorityQueue();
-			foreach (ISelection s in selectionCollection) {
-//				ISelection s = ((ISelection)queue.Remove());
-				if (oneLine) {
-					int lineBegin = s.StartPosition.Y;
-					if (lineBegin != s.EndPosition.Y) {
-						oneLine = false;
-					} else {
-						lines.Add(lineBegin);
-					}
-				}
-				offset = s.Offset;
-				document.Remove(s.Offset, s.Length);
+            try
+            {
+                if (SelectionIsReadonly)
+                {
+                    ClearSelection();
+                    return;
+                }
+                List<int> lines = new List<int>();
+                int offset = -1;
+                bool oneLine = true;
+                //			PriorityQueue queue = new PriorityQueue();
+                foreach (ISelection s in selectionCollection)
+                {
+                    //				ISelection s = ((ISelection)queue.Remove());
+                    if (oneLine)
+                    {
+                        int lineBegin = s.StartPosition.Y;
+                        if (lineBegin != s.EndPosition.Y)
+                        {
+                            oneLine = false;
+                        }
+                        else
+                        {
+                            lines.Add(lineBegin);
+                        }
+                    }
+                    offset = s.Offset;
+                    document.Remove(s.Offset, s.Length);
 
-//				queue.Insert(-s.Offset, s);
-			}
-			ClearSelection();
-			if (offset >= 0) {
-				//             TODO:
-//				document.Caret.Offset = offset;
-			}
-			if (offset != -1) {
-				if (oneLine) {
-					foreach (int i in lines) {
-						document.RequestUpdate(new TextAreaUpdate(TextAreaUpdateType.SingleLine, i));
-					}
-				} else {
-					document.RequestUpdate(new TextAreaUpdate(TextAreaUpdateType.WholeTextArea));
-				}
-				document.CommitUpdate();
-			}
+                    //				queue.Insert(-s.Offset, s);
+                }
+                ClearSelection();
+                if (offset >= 0)
+                {
+                    //             TODO:
+                    //				document.Caret.Offset = offset;
+                }
+                if (offset != -1)
+                {
+                    if (oneLine)
+                    {
+                        foreach (int i in lines)
+                        {
+                            document.RequestUpdate(new TextAreaUpdate(TextAreaUpdateType.SingleLine, i));
+                        }
+                    }
+                    else
+                    {
+                        document.RequestUpdate(new TextAreaUpdate(TextAreaUpdateType.WholeTextArea));
+                    }
+                    document.CommitUpdate();
+                }
+            }
+            catch(Exception ex)
+            {
+                ex.log("Errors here usually have some TextEditor GUI implications");
+            }
 		}
 		
 		

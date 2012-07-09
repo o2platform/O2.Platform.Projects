@@ -342,7 +342,8 @@ namespace ICSharpCode.TextEditor
 		
 		class ManagedCaret : CaretImplementation
 		{
-			System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer { Interval = 300 };
+		
+			System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();            
 			bool visible;
 			bool blink = true;
 			int x, y, width, height;
@@ -351,6 +352,7 @@ namespace ICSharpCode.TextEditor
 			
 			public ManagedCaret(Caret caret)
 			{
+                timer.Interval = 300;
 				base.RequireRedrawOnPositionChange = true;
 				this.textArea = caret.textArea;
 				this.parentCaret = caret;

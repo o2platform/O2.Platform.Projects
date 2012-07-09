@@ -41,10 +41,7 @@ namespace CSharpEditor
 	{
 
         public static string currentFile;
-        public static List<string> referencedAssemblies = new List<string>() 
-                { 
-				    "System", "System.Data", "System.Drawing", "System.Xml", "System.Windows.Forms", "Microsoft.VisualBasic"
-			    };
+        public static List<string> referencedAssemblies = new List<string>();
 
 	/*	[STAThread]
 		public static void Main(string[] args)
@@ -59,7 +56,16 @@ namespace CSharpEditor
 		internal Dom.ParseInformation parseInformation = new Dom.ParseInformation();
 		Dom.ICompilationUnit lastCompilationUnit;
 		Thread parserThread;
-		
+
+        static MainForm()
+        {
+            referencedAssemblies.Add("Microsoft.VisualBasic");
+            referencedAssemblies.Add("System.Windows.Forms");
+            referencedAssemblies.Add("System.Xml");
+            referencedAssemblies.Add("System.Drawing");
+            referencedAssemblies.Add("System.Data");
+            referencedAssemblies.Add("System");
+        }
 		public static bool IsVisualBasic = false;
 		
 		/// <summary>

@@ -177,11 +177,9 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             return (TextEditorControl)textEditorControl.invokeOnThread(() =>
                 {
                     var finalCaretPosition = textEditorControl.ActiveTextAreaControl.TextArea.SelectionManager.SelectionCollection[0].StartPosition;
-                    var tempCaretPosition = new TextLocation
-                    {
-                        X = finalCaretPosition.X,
-                        Y = finalCaretPosition.Y + 10
-                    };
+                    var tempCaretPosition = new TextLocation();
+                    tempCaretPosition.X = finalCaretPosition.X;
+					tempCaretPosition.Y = finalCaretPosition.Y + 10;
                     textEditorControl.ActiveTextAreaControl.Caret.Position = tempCaretPosition;
                     textEditorControl.ActiveTextAreaControl.TextArea.ScrollToCaret();
                     textEditorControl.ActiveTextAreaControl.Caret.Position = finalCaretPosition;

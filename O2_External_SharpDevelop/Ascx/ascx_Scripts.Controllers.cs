@@ -109,7 +109,7 @@ namespace O2.External.SharpDevelop.Ascx
                     //DI.config.addPathToCurrentExecutableEnvironmentPathVariable(DI.config.O2TempDir);
 
                     sourceCodeEditor.saveSourceCode();
-                    var filesToCompile = new List<String> {sourceCodeEditor.sPathToFileLoaded};
+                    var filesToCompile = new List<String>().add(sourceCodeEditor.sPathToFileLoaded);
                     if (compileEngine.compileSourceFiles(filesToCompile, lsExtraReferencesToAdd.ToArray(),
                                                          ref aCompiledAssembly, ref sErrorMessages, false /*verbose*/,
                                                          exeMainClass,

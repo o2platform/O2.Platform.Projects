@@ -12,6 +12,8 @@ using System.Reflection;
 using ICSharpCode.NRefactory.Ast;
 using Attribute = ICSharpCode.NRefactory.Ast.Attribute;
 
+using O2.DotNetWrappers.ExtensionMethods;
+
 namespace ICSharpCode.NRefactory.Visitors
 {
 	/// <summary>
@@ -135,13 +137,12 @@ namespace ICSharpCode.NRefactory.Visitors
 				base.VisitUsingDeclaration(@using, data);
 			}
 			
-			MethodDeclaration method = new MethodDeclaration {
-				Name = declareDeclaration.Name,
-				Modifier = declareDeclaration.Modifier,
-				TypeReference = declareDeclaration.TypeReference,
-				Parameters = declareDeclaration.Parameters,
-				Attributes = declareDeclaration.Attributes
-			};
+			MethodDeclaration method = new MethodDeclaration();
+			method.Attributes = declareDeclaration.Attributes;
+			method.Parameters = declareDeclaration.Parameters;
+			method.TypeReference = declareDeclaration.TypeReference;
+			method.Modifier = declareDeclaration.Modifier;
+			method.Name = declareDeclaration.Name;
 			
 			if ((method.Modifier & Modifiers.Visibility) == 0)
 				method.Modifier |= Modifiers.Public;
@@ -175,7 +176,9 @@ namespace ICSharpCode.NRefactory.Visitors
 			}
 			att.NamedArguments.Add(new NamedArgumentExpression("SetLastError", new PrimitiveExpression(true, true.ToString())));
 			att.NamedArguments.Add(new NamedArgumentExpression("ExactSpelling", new PrimitiveExpression(true, true.ToString())));
-			method.Attributes.Add(new AttributeSection { Attributes = { att } });
+			var attributeSection = new AttributeSection();
+            attributeSection.Attributes = new List<Attribute>().add(att);
+			method.Attributes.Add(attributeSection);
 			ReplaceCurrentNode(method);
 			return base.VisitMethodDeclaration(method, data);
 		}

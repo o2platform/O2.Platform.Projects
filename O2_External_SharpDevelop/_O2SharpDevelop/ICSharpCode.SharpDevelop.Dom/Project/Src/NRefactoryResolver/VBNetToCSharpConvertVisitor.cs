@@ -12,6 +12,7 @@ using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory.AstBuilder;
 using ICSharpCode.NRefactory.Visitors;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 {
@@ -540,10 +541,8 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 									ace.CreateType,
 									new InvocationExpression(
 										MakeFieldReferenceExpression("Microsoft.VisualBasic.CompilerServices.Utils.CopyArray"),
-										new List<Expression> {
-											reDimStatement.ReDimClauses[0].TargetObject,
-											ace
-										}
+										new List<Expression>().add(reDimStatement.ReDimClauses[0].TargetObject)
+															.add(ace)
 									),
 									CastType.Cast
 								)

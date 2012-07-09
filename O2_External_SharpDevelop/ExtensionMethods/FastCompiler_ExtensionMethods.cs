@@ -57,6 +57,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
             //Note we can't use the precompiled engines here since there is an issue of the resolution of this code dependencies
 
             var csharpCompiler = new CSharp_FastCompiler();
+            csharpCompiler.DebugMode = true;
             csharpCompiler.generateDebugSymbols= generateDebugSymbols;
             var compileProcess = new System.Threading.AutoResetEvent(false);
             //csharpCompiler.compileSourceCode(pathToFileToCompile.contents());            
@@ -194,7 +195,7 @@ namespace O2.External.SharpDevelop.ExtensionMethods
         }
         public static object executeCodeSnippet(this string sourceCodeToExecute)
         {
-            return sourceCodeToExecute.executeCodeSnippet();
+            return sourceCodeToExecute.executeSourceCode();
         }
         public static object executeSourceCode(this string sourceCodeToExecute)
         {

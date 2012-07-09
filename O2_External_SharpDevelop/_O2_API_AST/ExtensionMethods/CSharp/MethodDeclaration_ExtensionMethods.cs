@@ -54,13 +54,10 @@ namespace O2.API.AST.ExtensionMethods.CSharp
 
         public static MethodDeclaration add_Method(this TypeDeclaration typeDeclaration, string methodName, Dictionary<string, object> invocationParameters, bool resolveInvocationParametersType, BlockStatement body)
         {
-            var newMethod = new MethodDeclaration
-            {
-                Name = methodName,
-                //Modifier = Modifiers.None | Modifiers.Public | Modifiers.Static,
-                Modifier = Modifiers.None | Modifiers.Public,
-                Body = body
-            };
+			var newMethod = new MethodDeclaration();
+			newMethod.Body = body;
+			newMethod.Modifier = Modifiers.None | Modifiers.Public;
+			newMethod.Name = methodName;
             newMethod.setReturnType();
             if (invocationParameters != null)
 

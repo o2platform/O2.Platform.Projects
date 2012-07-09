@@ -539,13 +539,14 @@ namespace ICSharpCode.SharpDevelop.Dom
 				throw new ArgumentNullException("resolvedMember");
 			this.resolvedMember = resolvedMember;
 		}
-		
-		public override ResolveResult Clone()
-		{
-			return new MemberResolveResult(this.CallingClass, this.CallingMember, this.ResolvedMember) {
-				IsExtensionMethodCall = IsExtensionMethodCall
-			};
-		}
+
+        public override ResolveResult Clone()
+        {
+
+            var memberResolveResult = new MemberResolveResult(this.CallingClass, this.CallingMember, this.ResolvedMember);
+            memberResolveResult.IsExtensionMethodCall = IsExtensionMethodCall;
+            return memberResolveResult;
+        }
 		
 		bool isExtensionMethodCall;
 		

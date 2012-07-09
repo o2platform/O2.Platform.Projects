@@ -574,7 +574,9 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		
 		public ResolveResult ResolveIdentifier(string identifier, NR.Location position, ExpressionContext context)
 		{
-			return ResolveIdentifier(new IdentifierExpression(identifier) { StartLocation = position }, context);
+			var identifierExpression = new IdentifierExpression(identifier);
+			identifierExpression.StartLocation = position;
+			return ResolveIdentifier(identifierExpression, context);
 		}
 		
 		IField CreateLocalVariableField(LocalLookupVariable variable)
@@ -757,12 +759,11 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 					return new MethodGroupResolveResult(callingClass, callingMember,
 					                                    declaringType ?? methods[0][0].DeclaringTypeReference,
 					                                    memberName, methods);
-			} else {
-				methods.Add(
-					new MethodGroup(
-						new LazyList<IMethod>(() => ApplyTypeArgumentsToMethods(SearchExtensionMethods(memberName), typeArgs).ToList())
-					)
-					{ IsExtensionMethodGroup = true });
+			} else 
+			{
+				var newMethodGroup = new MethodGroup(new LazyList<IMethod>(() => ApplyTypeArgumentsToMethods(SearchExtensionMethods(memberName), typeArgs).ToList()));
+				newMethodGroup.IsExtensionMethodGroup = true;
+				methods.Add(newMethodGroup);
 				return new MethodGroupResolveResult(callingClass, callingMember,
 				                                    declaringType,
 				                                    memberName, methods);

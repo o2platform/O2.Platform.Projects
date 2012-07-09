@@ -47,9 +47,9 @@ namespace ICSharpCode.NRefactory
 			} else if (cmd.Equals("#ElseIf", StringComparison.InvariantCultureIgnoreCase)) {
 				cmd = "#elif";
 			}
-			return new PreprocessingDirective(cmd, arg, dir.StartPosition, dir.EndPosition) {
-				Expression = dir.Expression
-			};
+			var preprocessingDirective = new PreprocessingDirective(cmd, arg, dir.StartPosition, dir.EndPosition);
+			preprocessingDirective.Expression = dir.Expression;			
+			return preprocessingDirective;
 		}
 		
 		public static void CSharpToVB(List<ISpecial> list)
@@ -86,9 +86,9 @@ namespace ICSharpCode.NRefactory
 			if (cmd.Length > 1) {
 				cmd = cmd.Substring(0, 2).ToUpperInvariant() + cmd.Substring(2);
 			}
-			return new PreprocessingDirective(cmd, arg, dir.StartPosition, dir.EndPosition) {
-				Expression = dir.Expression
-			};
+			var preprocessingDirective = new PreprocessingDirective(cmd, arg, dir.StartPosition, dir.EndPosition);
+			preprocessingDirective.Expression = dir.Expression;			
+			return preprocessingDirective;
 		}
 		#endregion
 		

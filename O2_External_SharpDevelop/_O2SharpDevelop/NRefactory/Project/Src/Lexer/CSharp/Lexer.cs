@@ -1108,8 +1108,12 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 					}
 					SkipToEndOfLine(); // skip comment
 				}
-				return new PreprocessingDirective(directive, arg, start, endLocation) { Expression = expr, LastLineEnd = lastLineEnd };
-			} else {
+				var preprocessingDirective = new PreprocessingDirective(directive, arg, start, endLocation);
+				preprocessingDirective.Expression = expr;
+				preprocessingDirective.LastLineEnd = lastLineEnd;
+				return preprocessingDirective;
+			} else 
+			{
 				Location endLocation = new Location(Col, Line);
 				string arg = ReadToEndOfLine();
 				endLocation.Column += arg.Length;
@@ -1117,7 +1121,9 @@ namespace ICSharpCode.NRefactory.Parser.CSharp
 				if (pos >= 0)
 					arg = arg.Substring(0, pos);
 				arg = arg.Trim();
-				return new PreprocessingDirective(directive, arg, start, endLocation) { LastLineEnd = lastLineEnd };
+				var preprocessingDirective = new PreprocessingDirective(directive, arg, start, endLocation);
+				preprocessingDirective.LastLineEnd = lastLineEnd ;
+				return preprocessingDirective;
 			}
 		}
 		

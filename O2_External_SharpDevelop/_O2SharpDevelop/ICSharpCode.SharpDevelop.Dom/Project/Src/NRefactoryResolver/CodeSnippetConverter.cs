@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.Ast;
 using ICSharpCode.NRefactory.PrettyPrinter;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 {
@@ -23,12 +24,12 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		/// <summary>
 		/// Project-wide imports to add to all files when converting VB to C#.
 		/// </summary>
-		public IList<string> DefaultImportsToAdd = new List<string> { "Microsoft.VisualBasic", "System", "System.Collections", "System.Collections.Generic", "System.Data", "System.Diagnostics" };
+		public IList<string> DefaultImportsToAdd = new List<string>();
 		
 		/// <summary>
 		/// Imports to remove (because they will become project-wide imports) when converting C# to VB.
 		/// </summary>
-		public IList<string> DefaultImportsToRemove = new List<string> { "Microsoft.VisualBasic", "System" };
+		public IList<string> DefaultImportsToRemove = new List<string>();
 		
 		/// <summary>
 		/// References project contents, for resolving type references during the conversion.
@@ -40,6 +41,19 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		CompilationUnit compilationUnit;
 		ParseInformation parseInfo;
 		bool wasExpression;
+		
+		CodeSnippetConverter()
+		{
+			DefaultImportsToAdd.Add("System.Diagnostics");
+			DefaultImportsToAdd.Add("System.Data");
+			DefaultImportsToAdd.Add("System.Collections.Generic");
+			DefaultImportsToAdd.Add("System.Collections");
+			DefaultImportsToAdd.Add("System");
+			DefaultImportsToAdd.Add("Microsoft.VisualBasic");
+			
+			DefaultImportsToRemove.Add("Microsoft.VisualBasic");
+			DefaultImportsToRemove.Add("System");
+		}
 		
 		#region Parsing
 		INode Parse(SupportedLanguage sourceLanguage, string sourceCode, out string error)
@@ -117,40 +131,34 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 		
 		BlockStatement MakeBlockFromExpression(Expression expr)
 		{
-			return new BlockStatement {
-				Children = {
-					new ExpressionStatement(expr)
-				},
-				StartLocation = expr.StartLocation,
-				EndLocation = expr.EndLocation
-			};
+			var blockStatement = new BlockStatement();
+			blockStatement.Children = new List<INode>().add(new ExpressionStatement(expr));
+			blockStatement.StartLocation = expr.StartLocation;
+			blockStatement.EndLocation = expr.EndLocation;
+			return blockStatement;
 		}
 		
 		INode[] MakeMethodFromBlock(BlockStatement block)
 		{
-			return new INode[] {
-				new MethodDeclaration {
-					Name = "DummyMethodForConversion",
-					Body = block,
-					StartLocation = block.StartLocation,
-					EndLocation = block.EndLocation
-				}
-			};
+			var methodDeclaration = new MethodDeclaration();
+			methodDeclaration.EndLocation = block.EndLocation;
+			methodDeclaration.StartLocation = block.StartLocation;
+			methodDeclaration.Body = block;
+			methodDeclaration.Name = "DummyMethodForConversion";
+			return new INode[] { methodDeclaration };
 		}
 		
 		CompilationUnit MakeCompilationUnitFromTypeMembers(IList<INode> members)
 		{
-			TypeDeclaration type = new TypeDeclaration(Modifiers.None, null) {
-				Name = "DummyTypeForConversion",
-				StartLocation = members[0].StartLocation,
-				EndLocation = members[members.Count - 1].EndLocation
-			};
+			TypeDeclaration type = new TypeDeclaration(Modifiers.None, null);
+			type.EndLocation = members[members.Count - 1].EndLocation;
+			type.StartLocation = members[0].StartLocation;
+			type.Name = "DummyTypeForConversion";
 			type.Children.AddRange(members);
-			return new CompilationUnit {
-				Children = {
-					type
-				}
-			};
+			
+			var compilationUnit = new CompilationUnit();
+			compilationUnit.Children = new List<INode>().add(type);
+			return compilationUnit;			
 		}
 		#endregion
 		
@@ -160,11 +168,9 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
 			if (node == null)
 				return null;
 			// apply conversion logic:
-			compilationUnit.AcceptVisitor(
-				new CSharpToVBNetConvertVisitor(project, parseInfo) {
-					DefaultImportsToRemove = DefaultImportsToRemove,
-				},
-				null);
+            var visitor = new CSharpToVBNetConvertVisitor(project, parseInfo);
+            visitor.DefaultImportsToRemove = DefaultImportsToRemove;
+            compilationUnit.AcceptVisitor(visitor,null);
 			PreprocessingDirective.CSharpToVB(specials);
 			return CreateCode(UnpackExpression(node), new VBNetOutputVisitor());
 		}

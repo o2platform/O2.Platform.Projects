@@ -102,11 +102,15 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		void ConstructExpandedForms()
 		{
 			LogStep("Step 1 (Construct expanded forms)");
-			foreach (Candidate candidate in candidates.ToArray()) {
-				if (candidate.Status == CandidateStatus.Success) {
-					if (candidate.Parameters.Count > 0 && arguments.Count >= candidate.Parameters.Count - 1) {
+			foreach (Candidate candidate in candidates.ToArray()) 
+			{
+				if (candidate.Status == CandidateStatus.Success) 
+				{
+					if (candidate.Parameters.Count > 0 && arguments.Count >= candidate.Parameters.Count - 1) 
+					{
 						IParameter lastParameter = candidate.Parameters[candidate.Parameters.Count - 1];
-						if (lastParameter.IsParams && lastParameter.ReturnType.IsArrayReturnType) {
+						if (lastParameter.IsParams && lastParameter.ReturnType.IsArrayReturnType) 
+						{
 							// try to construct an expanded form with the correct parameter count
 							IReturnType elementType = lastParameter.ReturnType.CastToArrayReturnType().ArrayElementType;
 							IMethodOrProperty expanded = (IMethodOrProperty)candidate.Method.CreateSpecializedMember();
@@ -115,10 +119,10 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 							while (expanded.Parameters.Count < arguments.Count) {
 								expanded.Parameters.Add(new DefaultParameter(lastParameter.Name + (index++), elementType, lastParameter.Region));
 							}
-							candidates.Add(new Candidate(expanded) {
-							               	IsExpanded = true,
-							               	OriginalMethod = candidate.Method
-							               });
+							var _candidate = new Candidate(expanded);
+							_candidate.OriginalMethod = candidate.Method;
+							_candidate.IsExpanded = true;
+							candidates.Add(_candidate);		
 						}
 					}
 					
