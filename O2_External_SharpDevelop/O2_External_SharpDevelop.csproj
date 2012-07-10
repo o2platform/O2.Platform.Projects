@@ -39,13 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Cecil, Version=0.6.9.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>_External_Dlls\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph, Version=3.2.40122.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>_External_Dlls\QuickGraph.dll</HintPath>
+    <Reference Include="Mono.Cecil">
+      <HintPath>_ExternalDlls\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -446,10 +442,6 @@
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>O2.FluentSharp.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Misc\O2.FluentSharp.Misc.csproj">
-      <Project>{1EDD5D0C-09D5-4A58-9EC9-E972F8F28C07}</Project>
-      <Name>O2.FluentSharp.Misc</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -522,6 +514,7 @@
     <Content Include="Resources\images\tbShowO2ObjectModel.Image.png" />
     <Content Include="Resources\ScriptSamples\IronPython_CreateFindingManually_py.py" />
     <None Include="Resources\ScriptSamples\IronPython_HelloWorld_py.py" />
+    <EmbeddedResource Include="_ExternalDlls\Mono.Cecil.dll" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\CSharp\KeywordList.txt" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\VBNet\KeywordList.txt" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\Frames\SharpCoco.exe" />

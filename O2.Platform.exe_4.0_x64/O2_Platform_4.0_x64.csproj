@@ -40,8 +40,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -108,12 +108,8 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\H2Logo.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Icons\O2Logo.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Icons\H2Logo.ico" />
+    <EmbeddedResource Include="Icons\O2Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <FileAssociation Include=".h2">

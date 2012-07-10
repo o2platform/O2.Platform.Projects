@@ -40,10 +40,10 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,24 +71,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\binaries\O2_External_SharpDevelop.dll">
-      <Link>_Dlls_Embeded\O2_External_SharpDevelop.dll</Link>
-      <CustomToolNamespace>O2.EmbededDlls</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\binaries\QuickGraph.dll">
-      <Link>_Dlls_Embeded\QuickGraph.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\binaries\O2_FluentSharp_REPL.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\binaries\O2_FluentSharp_BCL.dll">
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_BCL.dll">
       <Link>_Dlls_Embeded\O2_FluentSharp_BCL.dll</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\binaries\O2_FluentSharp_Misc.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_Misc.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\binaries\O2_FluentSharp_CoreLib.dll">
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_CoreLib.dll">
       <Link>_Dlls_Embeded\O2_FluentSharp_CoreLib.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_NGit.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_NGit.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_REPL.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_Roslyn.dll">
+      <Link>_Dlls_Embeded\O2_FluentSharp_Roslyn.dll</Link>
     </EmbeddedResource>
     <Content Include="O2_Setup.cs.txt" />
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
@@ -134,12 +130,8 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Icons\H2Logo.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Icons\O2Logo.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Icons\H2Logo.ico" />
+    <EmbeddedResource Include="Icons\O2Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <FileAssociation Include=".h2">
