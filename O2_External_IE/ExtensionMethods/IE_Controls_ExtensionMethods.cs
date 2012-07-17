@@ -12,14 +12,14 @@ namespace O2.External.IE.ExtensionMethods
 {
     public static class IE_Controls_ExtensionMethods
     {
-        public static O2BrowserIE add_Browser(this Control control)
+        /*public static O2BrowserIE add_Browser(this Control control)
         {
             //var browserType = "O2_External_IE.dll".type("O2BrowserIE");
             //return hostControl.add_Control(browserType);
-            return (O2BrowserIE)control.add_WebBrowser();
-        }
+            return (O2BrowserIE)control.add_O2_Browser_IE();
+        }*/
 
-        public static IO2Browser add_WebBrowser(this Control control)
+        public static IO2Browser add_O2_Browser_IE(this Control control)
         {            
             return (IO2Browser) control.invokeOnThread(
                                     () =>
@@ -28,8 +28,7 @@ namespace O2.External.IE.ExtensionMethods
                                             control.Controls.Add(o2BrowserIE);                        
                                             return o2BrowserIE;
                                         });
-        }
-        
+        }        
         public static IO2Browser add_WebBrowserWithLocationBar(this Control control)
         {
             return control.add_WebBrowserWithLocationBar("");
@@ -66,7 +65,7 @@ namespace O2.External.IE.ExtensionMethods
                                            var textBox = splitControl.Panel1.add_TextBox();
                                            //textBox.Multiline = false;
                                            textBox.Dock = DockStyle.Fill;
-                                           var webBrowser = splitControl.Panel2.add_WebBrowser();
+                                           var webBrowser = splitControl.Panel2.add_O2_Browser_IE();
                                            
                                            webBrowser.onDocumentCompleted +=
                                                htmlPage => textBox.set_Text(htmlPage.PageUri.ToString());
@@ -188,16 +187,6 @@ namespace O2.External.IE.ExtensionMethods
             return false;
         }
 
-        public static O2BrowserIE silent(this O2BrowserIE o2BrowserIE, bool value)
-        {            
-            return (O2BrowserIE)o2BrowserIE.invokeOnThread(
-                () =>
-                {
-                    o2BrowserIE.ActiveXInstance.prop("Silent", value);
-                    return o2BrowserIE;
-                });
-        }
-
         public static ExtendedWebBrowser.IWebBrowser2 activeX(this O2BrowserIE o2BrowserIE)
         {
             return (ExtendedWebBrowser.IWebBrowser2)o2BrowserIE.ActiveXInstance;
@@ -209,44 +198,23 @@ namespace O2.External.IE.ExtensionMethods
             return o2BrowserIE;
         }
 
-        public static string cookie(this O2BrowserIE o2BrowserIE)
+        public static void logBeforeNavigate(this  O2BrowserIE o2BrowserIE)
         {
-            return (string)o2BrowserIE.invokeOnThread(() => o2BrowserIE.document().Cookie);
-        }
-
-        public static O2BrowserIE cookie(this O2BrowserIE o2BrowserIE, string value)
-        {
-            return (O2BrowserIE)o2BrowserIE.invokeOnThread(
-                () =>
-                {
-                    var document = o2BrowserIE.document();
-                    if (document != null)
-                        document.Cookie = value;
-                    return o2BrowserIE;
-                });
-        }
-
-        public static O2BrowserIE clearCookie(this O2BrowserIE o2BrowserIE)
-        {
-            return o2BrowserIE.cookie("");
-        }
-
-        public static void logBeforeNavigate(this O2BrowserIE o2BrowserIE)
-        {            
             o2BrowserIE.BeforeNavigate +=
                 (URL, flags, postData, headers)
                     =>
+                {
+                    "on before Navigate for {0}".format(URL).debug();
+                    if (postData != null)
                     {
-                        "on before Navigate for {0}".format(URL).debug();
-                        if (postData != null)
-                        {
-                            "post flags: {0}".format(flags).info();
-                            "post headers: {0}".format(headers).info();
-                            "post url: {0}".format(URL).info();
-                            "post data: {0}".format(((byte[])postData).ascii()).info();
-                        }
-                    };
+                        "post flags: {0}".format(flags).info();
+                        "post headers: {0}".format(headers).info();
+                        "post url: {0}".format(URL).info();
+                        "post data: {0}".format(((byte[])postData).ascii()).info();
+                    }
+                };
         }
+
 
         public static IO2HtmlPage open(this Uri uri)
         {

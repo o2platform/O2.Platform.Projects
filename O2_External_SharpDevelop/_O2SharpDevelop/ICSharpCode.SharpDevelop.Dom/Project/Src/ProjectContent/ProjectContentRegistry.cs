@@ -227,62 +227,89 @@ namespace ICSharpCode.SharpDevelop.Dom
 			int pos = shortName.IndexOf(',');
 			if (pos > 0)
 				shortName = shortName.Substring(0, pos);
-			
-			
 
-			Assembly assembly = File.Exists(shortName)
-									? Assembly.LoadFrom(shortName)
-									: GetDefaultAssembly(shortName);
-			ReflectionProjectContent pc = null;
-			if (assembly != null) {
-				if (persistence != null) {
-					pc = persistence.LoadProjectContentByAssemblyName(assembly.FullName);
-				}
-				if (pc == null) {
-					pc = new ReflectionProjectContent(assembly, this);
-					if (persistence != null) {
-						persistence.SaveProjectContent(pc);
-					}
-				}
-			} else {
-				// find real file name for cecil:
-				if (File.Exists(itemFileName)) {
-					if (persistence != null) {
-						pc = persistence.LoadProjectContentByAssemblyName(itemFileName);
-					}
-					if (pc == null) {
-						pc = CecilReader.LoadAssembly(itemFileName, this);
-						
-						if (persistence != null) {
-							persistence.SaveProjectContent(pc);
-						}
-					}
-				} else {
-					DomAssemblyName asmName = GacInterop.FindBestMatchingAssemblyName(itemInclude);
-					if (persistence != null && asmName != null) {
-						//LoggingService.Debug("Looking up in DOM cache: " + asmName.FullName);
-						pc = persistence.LoadProjectContentByAssemblyName(asmName.FullName);
-					}
-					if (pc == null && asmName != null) {
-						string subPath = Path.Combine(asmName.ShortName, GetVersion__Token(asmName));
-						subPath = Path.Combine(subPath, asmName.ShortName + ".dll");
-						foreach (string dir in Directory.GetDirectories(GacInterop.GacRootPath, "GAC*")) {
-							itemFileName = Path.Combine(dir, subPath);
-							if (File.Exists(itemFileName)) {
-								pc = CecilReader.LoadAssembly(itemFileName, this);
-								if (persistence != null) {
-									persistence.SaveProjectContent(pc);
-								}
-								break;
-							}
-						}
-					}
-					if (pc == null) {
-						HostCallback.ShowAssemblyLoadErrorInternal(itemFileName, itemInclude, "Could not find assembly file.");
-					}
-				}
-			}
-			return pc;
+
+//            var a = O2.DotNetWrappers.ExtensionMethods.Reflection_ExtensionMethods_Assemby.assembly(shortName);
+            try
+            {
+                Assembly assembly = File.Exists(shortName)
+                                        ? Assembly.LoadFrom(shortName)
+                                        : GetDefaultAssembly(shortName);
+                ReflectionProjectContent pc = null;
+                if (assembly != null)
+                {
+                    if (persistence != null)
+                    {
+                        pc = persistence.LoadProjectContentByAssemblyName(assembly.FullName);
+                    }
+                    if (pc == null)
+                    {
+                        pc = new ReflectionProjectContent(assembly, this);
+                        if (persistence != null)
+                        {
+                            persistence.SaveProjectContent(pc);
+                        }
+                    }
+                }
+                else
+                {
+                    // find real file name for cecil:
+                    if (File.Exists(itemFileName))
+                    {
+                        if (persistence != null)
+                        {
+                            pc = persistence.LoadProjectContentByAssemblyName(itemFileName);
+                        }
+                        if (pc == null)
+                        {
+                            pc = CecilReader.LoadAssembly(itemFileName, this);
+
+                            if (persistence != null)
+                            {
+                                persistence.SaveProjectContent(pc);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        DomAssemblyName asmName = GacInterop.FindBestMatchingAssemblyName(itemInclude);
+                        if (persistence != null && asmName != null)
+                        {
+                            //LoggingService.Debug("Looking up in DOM cache: " + asmName.FullName);
+                            pc = persistence.LoadProjectContentByAssemblyName(asmName.FullName);
+                        }
+                        if (pc == null && asmName != null)
+                        {
+                            string subPath = Path.Combine(asmName.ShortName, GetVersion__Token(asmName));
+                            subPath = Path.Combine(subPath, asmName.ShortName + ".dll");
+                            foreach (string dir in Directory.GetDirectories(GacInterop.GacRootPath, "GAC*"))
+                            {
+                                itemFileName = Path.Combine(dir, subPath);
+                                if (File.Exists(itemFileName))
+                                {
+                                    pc = CecilReader.LoadAssembly(itemFileName, this);
+                                    if (persistence != null)
+                                    {
+                                        persistence.SaveProjectContent(pc);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (pc == null)
+                        {
+                            HostCallback.ShowAssemblyLoadErrorInternal(itemFileName, itemInclude, "Could not find assembly file.");
+                        }
+                    }
+                }
+                return pc;
+            }
+            catch (Exception ex)
+            {
+                O2.Kernel.PublicDI.log.ex(ex);
+                
+                return null;
+            }
 		}
 		
 		static string GetVersion__Token(DomAssemblyName asmName)

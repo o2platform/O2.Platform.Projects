@@ -844,7 +844,9 @@ namespace ICSharpCode.SharpDevelop.Dom
 					}
 				}
 			}
-			
+
+            var maxLoop = 50;           //DC: see details below (hack to try to prevent an infinit loop here);
+
 			for (IUsingScope usingScope = request.CurrentUsingScope; usingScope != null; usingScope = usingScope.Parent) {
 				string fullname;
 				if (string.IsNullOrEmpty(usingScope.NamespaceName)) {
@@ -882,6 +884,15 @@ namespace ICSharpCode.SharpDevelop.Dom
 						}
 					}
 				}
+
+                if (usingScope == usingScope.Parent)  //DC: 7/13/2012 - there seemed to be an infinit loop here on Method Stream creation
+                {
+                    if (maxLoop-- < 1)
+                        break;
+                }
+                else
+                { 
+                }
 			}
 			
 			if (defaultImports != null) {

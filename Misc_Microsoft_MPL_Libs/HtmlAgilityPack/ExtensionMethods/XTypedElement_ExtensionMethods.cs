@@ -14,19 +14,14 @@ namespace O2.DotNetWrappers.ExtensionMethods
         {
             return (XElement)xTypedElement.prop("Untyped");
         }
-
         public static string xElementName(this XTypedElement xTypedElement)
         {
             return xTypedElement.xElement().Name.str();
         }
-
-
-
     }
 
     public static class XTypedElement_ExtensionMethods_TreeView
     {
-
         public static TreeNode add_Node(this TreeView treeView, XElement xElement)
         {
             return treeView.add_Node(xElement.name(), xElement, xElement.hasDataForChildTreeNodes());
