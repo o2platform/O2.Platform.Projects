@@ -73,7 +73,7 @@ namespace ICSharpCode.TextEditor
         {
             if (ownerThread != System.Threading.Thread.CurrentThread.ManagedThreadId)
             {
-                System.Diagnostics.Debug.WriteLine("Ambience may only be used by the thread that created it");
+                O2.Kernel.PublicDI.log.error("Ambience may only be used by the thread that created it");
                 return false;
             }
             return true;
@@ -366,10 +366,10 @@ namespace ICSharpCode.TextEditor
                     toolTip = new DeclarationViewWindow(this.FindForm());
                 if (toolTip.Owner == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("in TextArea.SetToolTip, toolTip.Owner  was null");
+                    O2.Kernel.PublicDI.log.error("in TextArea.SetToolTip, toolTip.Owner  was null");
                 }
                 else if (toolTip.Owner.InvokeRequired)
-                    System.Diagnostics.Debug.WriteLine("in TextArea.SetToolTip, aborting method due to CrossThread Problem");
+                    O2.Kernel.PublicDI.log.error("in TextArea.SetToolTip, aborting method due to CrossThread Problem");
                 else
                 {               
                     if (oldToolTip == text)
@@ -390,7 +390,7 @@ namespace ICSharpCode.TextEditor
                         p.Offset(3, 3);
                         var form = this.FindForm(); // DC
                         if (form.InvokeRequired || toolTip.Owner.InvokeRequired)
-                            System.Diagnostics.Debug.WriteLine("in TextArea.SetToolTip, aborting method due to CrossThread Problem");
+                            O2.Kernel.PublicDI.log.error("in TextArea.SetToolTip, aborting method due to CrossThread Problem");
                         else
                         {
 
@@ -406,7 +406,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Exception in TextArea.SetToolTip: {0}" + ex.Message);
+                O2.Kernel.PublicDI.log.error("Exception in TextArea.SetToolTip: {0}" + ex.Message);
             }
 		}
 		
@@ -773,7 +773,7 @@ namespace ICSharpCode.TextEditor
 		}
 		
 		public void BeginUpdate()
-		{
+		{            
 			motherTextEditorControl.BeginUpdate();
 		}
 		

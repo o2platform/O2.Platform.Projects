@@ -100,7 +100,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("In GutterMargin: " + ex.Message);
+                O2.Kernel.PublicDI.log.error("In GutterMargin: " + ex.Message);
             }
 		}
 

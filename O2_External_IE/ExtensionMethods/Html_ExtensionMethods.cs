@@ -84,7 +84,7 @@ namespace O2.External.IE.ExtensionMethods
                 if (fields.ContainsKey(fieldName))
                     fields[fieldName].Value = value;
                 else
-                    PublicDI.log.error("the provided IO2HtmlForm.form did not contain the field: {0}", fieldName);
+                    O2.Kernel.PublicDI.log.error("the provided IO2HtmlForm.form did not contain the field: {0}", fieldName);
                 return form;
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace O2.External.IE.ExtensionMethods
             if (fields.ContainsKey(fieldName))
                 return fields[fieldName].Value;
 
-            PublicDI.log.error("the provided IO2HtmlForm.form did not contain the field: {0}", fieldName);
+            O2.Kernel.PublicDI.log.error("the provided IO2HtmlForm.form did not contain the field: {0}", fieldName);
             return "";
         }
 

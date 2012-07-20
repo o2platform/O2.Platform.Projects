@@ -107,7 +107,7 @@ namespace Microsoft.Http
             }
             if (local.exception != null && throwException)
             {
-                System.Diagnostics.Debug.WriteLine(local.exception);
+                O2.Kernel.PublicDI.log.ex(local.exception);
                 throw local.exception;
             }
             return local;

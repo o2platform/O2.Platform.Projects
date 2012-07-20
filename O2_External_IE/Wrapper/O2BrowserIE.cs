@@ -145,7 +145,7 @@ namespace O2.External.IE.Wrapper
                     var doc = (mshtml.IHTMLDocument2) Document.DomDocument;
                     return (doc.designMode == "On");
                 }
-                PublicDI.log.error("in DesignMode.get Document == null");
+                O2.Kernel.PublicDI.log.error("in DesignMode.get Document == null");
                 return false;
             }
             set

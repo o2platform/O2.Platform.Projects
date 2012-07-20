@@ -321,7 +321,7 @@ namespace O2.External.WinFormsUI.Forms
             addControlToMenu(ascxControlToLoad, O2DockState.Float, guiWindowName);
         }
         
-        public static void addControlToMenu(string menuItemName, O2Thread.FuncVoid onMenuItemClick)
+        public static void addControlToMenu(string menuItemName, Action onMenuItemClick)
         {
             DI.o2GuiWithDockPanel.addToLoadedO2ModulesMenu(menuItemName, onMenuItemClick);
         }

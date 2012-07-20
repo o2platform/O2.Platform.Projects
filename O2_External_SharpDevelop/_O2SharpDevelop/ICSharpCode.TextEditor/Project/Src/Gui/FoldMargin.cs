@@ -85,7 +85,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("in FoldMargin " + ex.Message);
+                O2.Kernel.PublicDI.log.error("in FoldMargin " + ex.Message);
             }
 		}
 		
@@ -223,7 +223,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("in FoldMargin " + ex.Message);
+                O2.Kernel.PublicDI.log.error("in FoldMargin " + ex.Message);
             }
 		}
 		
@@ -257,7 +257,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("in FoldMargin " + ex.Message);
+                O2.Kernel.PublicDI.log.error("in FoldMargin " + ex.Message);
             }
 		}
 		
@@ -286,7 +286,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("in FoldMargin " + ex.Message);
+                O2.Kernel.PublicDI.log.error("in FoldMargin " + ex.Message);
             }
 		}
 		

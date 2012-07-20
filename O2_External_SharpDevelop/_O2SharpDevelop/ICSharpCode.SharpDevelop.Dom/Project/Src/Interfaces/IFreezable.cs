@@ -68,7 +68,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 		protected void CheckBeforeMutation()
 		{
 			if (isFrozen)
-                System.Diagnostics.Debug.WriteLine("Cannot mutate frozen " + GetType().Name); // DC
+                O2.Kernel.PublicDI.log.error("Cannot mutate frozen " + GetType().Name); // DC
 				//throw new InvalidOperationException("Cannot mutate frozen " + GetType().Name);
 		}
 		

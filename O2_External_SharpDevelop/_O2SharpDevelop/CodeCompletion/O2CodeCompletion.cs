@@ -883,7 +883,7 @@ namespace O2.External.SharpDevelop.Ascx
 		
 		static public string XmlDocumentationToText(string xmlDoc)
 		{
-			System.Diagnostics.Debug.WriteLine(xmlDoc);
+			PublicDI.log.error(xmlDoc);
 			StringBuilder b = new StringBuilder();
 			try {
 				using (XmlTextReader reader = new XmlTextReader(new StringReader("<root>" + xmlDoc + "</root>"))) {

@@ -283,7 +283,7 @@ namespace ICSharpCode.TextEditor
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("Error in TextView: " + ex.Message);
+                        O2.Kernel.PublicDI.log.error("Error in TextView: " + ex.Message);
                     }
                 }
                 if (TextEditorProperties.ShowVerticalRuler)
@@ -637,7 +637,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("In PaintLinePart: " + ex.Message);
+                O2.Kernel.PublicDI.log.error("In PaintLinePart: " + ex.Message);
                 return -1;
             }
 		}
@@ -677,7 +677,7 @@ namespace ICSharpCode.TextEditor
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("in SharpDevelop DrawDocumentWord: " + ex.Message);
+                O2.Kernel.PublicDI.log.error("in SharpDevelop DrawDocumentWord: " + ex.Message);
             }
 			return wordWidth;
 		}

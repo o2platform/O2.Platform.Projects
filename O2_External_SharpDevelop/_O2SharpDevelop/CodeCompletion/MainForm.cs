@@ -34,6 +34,7 @@ using System.Threading;
 
 using NRefactory = ICSharpCode.NRefactory;
 using Dom = ICSharpCode.SharpDevelop.Dom;
+using O2.Kernel;
 
 namespace CSharpEditor
 {
@@ -181,8 +182,8 @@ class A
                 }
             }
             catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("in MainForm.ParserThread: " + ex.Message);
+            {                
+                PublicDI.log.error("in MainForm.ParserThread: " + ex.Message);
             }
 		}
 		
@@ -219,7 +220,7 @@ class A
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(" in MainForm: " + ex.Message); // DC
+                PublicDI.log.error(" in MainForm: " + ex.Message); // DC
             }
         }
 

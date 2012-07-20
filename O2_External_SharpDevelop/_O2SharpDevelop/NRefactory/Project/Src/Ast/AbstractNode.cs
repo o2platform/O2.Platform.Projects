@@ -47,7 +47,7 @@ namespace ICSharpCode.NRefactory.Ast
                     //Debug.Assert(child != null);
                     child.AcceptVisitor(visitor, data);
                 else
-                    System.Diagnostics.Debug.WriteLine("In AcceptChildren child == null");
+                    O2.Kernel.PublicDI.log.error("In AcceptChildren child == null");
 			}
 			return data;
 		}

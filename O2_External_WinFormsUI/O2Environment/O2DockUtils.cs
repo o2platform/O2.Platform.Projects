@@ -185,7 +185,7 @@ namespace O2.External.WinFormsUI.O2Environment
             
         }
 
-        public static void addMenuItemWithOnClickEvent(string menuItemName, O2Thread.FuncVoid onMenuItemClick)
+        public static void addMenuItemWithOnClickEvent(string menuItemName, Action onMenuItemClick)
         {
             
         }

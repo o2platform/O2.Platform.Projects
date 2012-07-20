@@ -167,7 +167,7 @@ namespace O2.External.WinFormsUI.Forms
                     });
         }
 
-        public void addToLoadedO2ModulesMenu(string menuItemName, O2Thread.FuncVoid onMenuItemClick)
+        public void addToLoadedO2ModulesMenu(string menuItemName, Action onMenuItemClick)
         {
             DI.o2GuiWithDockPanel.invokeOnThread(
                 () =>

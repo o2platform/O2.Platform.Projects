@@ -80,7 +80,7 @@ namespace O2.External.IE.WebObjects
                         FormFields.Add(this.formField(element));                        
                         break;                                                    
                     default:
-                        PublicDI.log.error("In IE_Form. loadData, unhandled Form type :{0}", element.comTypeName());
+                        O2.Kernel.PublicDI.log.error("In IE_Form. loadData, unhandled Form type :{0}", element.comTypeName());
                         break;
                 }
                 //PublicDI.log.debug(element.type().Name);
