@@ -79,9 +79,6 @@
     <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_Roslyn.dll">
       <Link>_Dlls_Embeded\O2_FluentSharp_Roslyn.dll</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_REPL.exe">
-      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.exe</Link>
-    </EmbeddedResource>
     <Content Include="O2_Setup.cs.txt" />
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
     <Compile Include="Program.cs" />
@@ -144,9 +141,21 @@
     </FileAssociation>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
+      <Name>O2.FluentSharp.BCL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>O2.FluentSharp.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.REPL\O2.FluentSharp.REPL.csproj">
+      <Project>{D742BBEF-BFDC-477F-9880-5E0E2C89B6B2}</Project>
+      <Name>O2.FluentSharp.REPL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj">
+      <Project>{E76BCE43-8511-4CE8-A965-C0150F713CE9}</Project>
+      <Name>O2_External_SharpDevelop</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

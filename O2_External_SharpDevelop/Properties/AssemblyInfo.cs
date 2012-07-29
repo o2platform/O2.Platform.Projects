@@ -38,4 +38,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 */
 using System.Reflection;
-[assembly: AssemblyVersionAttribute("4.1.0.*")]
+using System;
+
+[assembly: CLSCompliant(false)]
+[assembly: AssemblyVersionAttribute("4.1.0")]

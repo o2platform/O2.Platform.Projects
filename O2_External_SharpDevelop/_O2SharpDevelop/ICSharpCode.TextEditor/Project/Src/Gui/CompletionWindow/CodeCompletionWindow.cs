@@ -34,7 +34,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
         public static bool busy;        //DC
 
 		DeclarationViewWindow declarationViewWindow = null;
-		Rectangle workingScreen;
+		new Rectangle workingScreen;
 		
 		public static CodeCompletionWindow ShowCompletionWindow(Form parent, TextEditorControl control, string fileName, ICompletionDataProvider completionDataProvider, char firstChar)
 		{
