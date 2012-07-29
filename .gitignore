@@ -11,3 +11,4 @@ UpgradeLog.xml
 binaries
 /Misc_Microsoft_MPL_Libs/packages
 *.nupkg
+/VisualStudio Solution Files/packages

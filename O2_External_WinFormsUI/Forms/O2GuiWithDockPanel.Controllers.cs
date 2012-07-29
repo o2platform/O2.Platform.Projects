@@ -37,7 +37,7 @@ namespace O2.External.WinFormsUI.Forms
                 if (o2Message is IM_GUIAction)
                 {
                     var mGuiAction = (IM_GUIAction) o2Message;
-                    DI.log.info("O2GuiWithDockPanel received IM_GUIAction of action: {0}", mGuiAction.GuiAction);
+                    PublicDI.log.info("O2GuiWithDockPanel received IM_GUIAction of action: {0}", mGuiAction.GuiAction);
                     switch (mGuiAction.GuiAction)
                     {
                             
@@ -78,7 +78,7 @@ namespace O2.External.WinFormsUI.Forms
                     BackgroundImage =
                         Screenshots.getScreenshotOfFormObjectAndItsControls(this)
                 };
-                DI.log.debug("Sending email to O2 Support with: " + text);
+                PublicDI.log.debug("Sending email to O2 Support with: " + text);
                 Mail.sendMail(PublicDI.sEmailHost, "O2User@ouncelabs.com",
                               PublicDI.sEmailToSendBugReportsTo, "",
                               "Email from O2 User - " + subject,
@@ -90,8 +90,8 @@ namespace O2.External.WinFormsUI.Forms
             }
             catch (Exception ex)
             {
-                DI.log.ex(ex, "in sendEmailToO2Support");
-                DI.log.error(
+                PublicDI.log.ex(ex, "in sendEmailToO2Support");
+                PublicDI.log.error(
                     "Could not send support email, please ensure that this o2 module is connected to the Internet");
             }
         }
@@ -106,7 +106,7 @@ namespace O2.External.WinFormsUI.Forms
             if (result)
             {
                 toolStripTextBoxForMailServer.Visible = false;
-                DI.log.debug("Email sucessfull sent. Thanks");
+                PublicDI.log.debug("Email sucessfull sent. Thanks");
                 setDefaultEmailO2SupportMessage();
                 sendMessageToolStripMenuItem1.Text =
                     "Mail Sent OK: You can type another message and Click here to send it (or press entrer)";
@@ -132,7 +132,7 @@ namespace O2.External.WinFormsUI.Forms
 
         public static void CloseThisForm()
         {
-            DI.o2GuiWithDockPanel.Close();
+            O2AscxGUI.o2GuiWithDockPanel.Close();
         }
         
 
@@ -145,14 +145,14 @@ namespace O2.External.WinFormsUI.Forms
 
         public Control getAscx(string ascxControlName)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(ascxControlName))
-                return DI.dO2LoadedO2DockContent[ascxControlName].control;           
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(ascxControlName))
+                return O2AscxGUI.dO2LoadedO2DockContent[ascxControlName].control;           
             return null;
         }
 
         public void addControlToLoadedO2ModulesMenu(O2DockContent controlToLoad)
         {
-            DI.o2GuiWithDockPanel.invokeOnThread(
+            O2AscxGUI.o2GuiWithDockPanel.invokeOnThread(
                 () =>
                     {
                         // Make sure there isn't alread an item with this type 
@@ -169,7 +169,7 @@ namespace O2.External.WinFormsUI.Forms
 
         public void addToLoadedO2ModulesMenu(string menuItemName, Action onMenuItemClick)
         {
-            DI.o2GuiWithDockPanel.invokeOnThread(
+            O2AscxGUI.o2GuiWithDockPanel.invokeOnThread(
                 () =>
                     {                        
                         var toolStripItem = new ToolStripMenuItem(

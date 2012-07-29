@@ -12,12 +12,13 @@ using O2.Views.ASCX.Ascx.MainGUI;
 using O2.Views.ASCX.classes.MainGUI;
 using O2.Views.ASCX.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using O2.Kernel.InterfacesBaseImpl;
 
 namespace O2.External.WinFormsUI.Forms
 {
     public partial class O2GuiWithDockPanel : Form
     {
-        //private string guiXmlFormat = Path.Combine(DI.o2CorLibConfig.O2TempDir, "GuiFormat.xml");
+        //private string guiXmlFormat = Path.Combine(PublicDI.o2CorLibConfig.O2TempDir, "GuiFormat.xml");
 
         public O2GuiWithDockPanel()
         {
@@ -26,8 +27,8 @@ namespace O2.External.WinFormsUI.Forms
             {
                 // set the logRedirection in the  publicDI log so that all messages go to the GUIs Log (and visible by the LogViewer)
                 PublicDI.log.LogRedirectionTarget = new WinFormsUILog(); // first create the one we are going to use locally                
-                DI.o2MessageQueue.onMessages += o2MessageQueue_onMessages;
-                DI.o2GuiWithDockPanel = this;
+                KO2MessageQueue.getO2KernelQueue().onMessages += o2MessageQueue_onMessages;
+                O2AscxGUI.o2GuiWithDockPanel = this;
                 cbAutoSendLogsOnClose.Checked = false; // ClickOnceDeployment.isApplicationBeingExecutedViaClickOnceDeployment();
             }
         }
@@ -51,10 +52,10 @@ namespace O2.External.WinFormsUI.Forms
                 sendEmailToO2Support("On Form Closing", "Closed at: " + DateTime.Now.ToShortTimeString(), false);
             PublicDI.log.LogRedirectionTarget = null;
 
-            DI.o2MessageQueue.onMessages -= o2MessageQueue_onMessages;
-            DI.o2GuiWithDockPanel = null; // reset this value since this GUI is not available anymore
+            KO2MessageQueue.getO2KernelQueue().onMessages -= o2MessageQueue_onMessages;
+            O2AscxGUI.o2GuiWithDockPanel = null; // reset this value since this GUI is not available anymore
             O2AscxGUI.guiClosed.Set();            // set flag to the treads on WaitFor() can continute
-            DI.log.info("O2GuiWithDockPanel form Closing"); // this log entry should now go to the Debug View            
+            PublicDI.log.info("O2GuiWithDockPanel form Closing"); // this log entry should now go to the Debug View            
         }
 
         private void requestHelpFromO2SupportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -180,18 +181,18 @@ namespace O2.External.WinFormsUI.Forms
 
         private void ozasmtQuerytoViewAndFilterOzasmtFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DI.windowsForms.openAscx(typeof (ascx_OzasmtQuery), false, "O2 Tool - Ozasmt Query");
+            //PublicDI.windowsForms.openAscx(typeof (ascx_OzasmtQuery), false, "O2 Tool - Ozasmt Query");
         }
 
 
         private void findingsEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DI.windowsForms.openAscx(typeof (ascx_FindingEditor), true, "O2 Tool - Finding Editor");
+            //PublicDI.windowsForms.openAscx(typeof (ascx_FindingEditor), true, "O2 Tool - Finding Editor");
         }
 
         private void currentTempDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DI.windowsForms.openAscx(typeof (ascx_Directory), true, "O2 Temp Directory");
+            //PublicDI.windowsForms.openAscx(typeof (ascx_Directory), true, "O2 Temp Directory");
         }
 
         private void logToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,39 +204,39 @@ namespace O2.External.WinFormsUI.Forms
 
         private void findingsViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DI.windowsForms.openAscx(typeof (ascx_FindingsViewer), true, "O2 Tool - Findings Viewer");
+            //PublicDI.windowsForms.openAscx(typeof (ascx_FindingsViewer), true, "O2 Tool - Findings Viewer");
         }
 
         private void cirViewertoViewCirDataFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-//            DI.windowsForms.openAscx(typeof (ascx_CirViewer_CirData), false, "O2 Tool - Cir Viewer");
+//            PublicDI.windowsForms.openAscx(typeof (ascx_CirViewer_CirData), false, "O2 Tool - Cir Viewer");
         }
 
         private void unziputilToUnzipFilesOnUsingDragAndDropToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //          DI.windowsForms.openAscx(typeof (ascx_Unzip), true, "O2 Tool - Unzip files");
+            //          PublicDI.windowsForms.openAscx(typeof (ascx_Unzip), true, "O2 Tool - Unzip files");
         }
 
         /*  private void o2ReflectorveryBetaVersionOfAnBuiltInNETReflectorToolToolStripMenuItem_Click(object sender,
                                                                                                   EventArgs e)
         {
-            DI.windowsForms.openAscx(typeof (ascx_O2Reflector), false, "O2 Tool - O2 Reflector");
+            PublicDI.windowsForms.openAscx(typeof (ascx_O2Reflector), false, "O2 Tool - O2 Reflector");
         }
         */
 
         private void webAutomationusesFirefoxGeckoWebBrowserControlToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //        DI.windowsForms.openAscx(typeof (ascx_WebAutomation), false, "Web Automation using Firefox Gecko Web Browser Control");
+            //        PublicDI.windowsForms.openAscx(typeof (ascx_WebAutomation), false, "Web Automation using Firefox Gecko Web Browser Control");
         }
 
         /*      private void sourceCodeViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DI.windowsForms.openAscx(typeof (ascx_SourceCodeEditor), false, "File Viewer");
+            PublicDI.windowsForms.openAscx(typeof (ascx_SourceCodeEditor), false, "File Viewer");
         }
 
         private void sourceCodeEditorwriteAndExecuteDynamicCCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DI.windowsForms.openAscx(typeof (ascx_Scripts), false, "C# Scripts Editor");
+            PublicDI.windowsForms.openAscx(typeof (ascx_Scripts), false, "C# Scripts Editor");
         }
 
         private void editThisO2ModuleStartUpXmlConfigFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -246,28 +247,28 @@ namespace O2.External.WinFormsUI.Forms
         private void dynamicallyInvokeO2sInternalClassesAndMethodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ascx_AssemblyInvoke.loadAsO2DockPanel(DockState.Float, "O2 Object Model").loadAssembly(
-                DI.reflection.getCurrentAssembly(), false);
+                PublicDI.reflection.getCurrentAssembly(), false);
         }*/
 
         private void webAutomationusesFirefoxGeckoWebBrowserControlToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-//            DI.windowsForms.openAscx(typeof (ascx_WebAutomation), false, "Web automation - using Firefox Gecko engine");
+//            PublicDI.windowsForms.openAscx(typeof (ascx_WebAutomation), false, "Web automation - using Firefox Gecko engine");
         }
 
         private void fileMappingsfilteredByFileTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-//            DI.windowsForms.openAscx(typeof (ascx_FileMappings), false, "File Mappings");
+//            PublicDI.windowsForms.openAscx(typeof (ascx_FileMappings), false, "File Mappings");
         }
 
 /*        private void assemblyObjectInvocationshouldWorkWithMostNetAssesmbliesToolStripMenuItem_Click(object sender,
                                                                                                      EventArgs e)
         {
-            DI.windowsForms.openAscx(typeof (ascx_AssemblyInvoke), false, "Generic Assembly Invoke");
+            PublicDI.windowsForms.openAscx(typeof (ascx_AssemblyInvoke), false, "Generic Assembly Invoke");
         }*/
 
         private void crashO2HeyYouKnowYouWantToToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DI.log.info("Crashing O2 :)");
+            PublicDI.log.info("Crashing O2 :)");
             throw new Exception("How to crash O2 in 1 click!");
         }
 
@@ -278,7 +279,7 @@ namespace O2.External.WinFormsUI.Forms
 
         private void whichDirectoryIsThisO2ModuleRunningFromToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DI.log.showMessageBox(DI.config.CurrentExecutableDirectory, "This O2 module is running from:",
+            //PublicDI.log.showMessageBox(PublicDI.config.CurrentExecutableDirectory, "This O2 module is running from:",
             //                      MessageBoxButtons.OK);
             O2AscxGUI.openAscxASync(typeof (ascx_O2InstallAndTempDirectories), O2DockState.Float, "O2 Install and Temp Directories");
 
@@ -290,8 +291,7 @@ namespace O2.External.WinFormsUI.Forms
 		}
 
         private void o2CREPLScriptToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
+        {            
             open.scriptEditor_MtaThread();
         }
 

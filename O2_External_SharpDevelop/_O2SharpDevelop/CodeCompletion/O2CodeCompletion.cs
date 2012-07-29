@@ -33,33 +33,33 @@ namespace O2.External.SharpDevelop.Ascx
         public TextEditorControl textEditor;
         //public TextEditorControl textEditorToGrabCodeFrom;      // (Was not really working) to support behind the scenes AST building
         public List<string> extraSourceCodeToProcess;
-		public LanguageProperties CurrentLanguageProperties = LanguageProperties.CSharp;
-		public ProjectContentRegistry pcRegistry;
+        public LanguageProperties CurrentLanguageProperties = LanguageProperties.CSharp;
+        public ProjectContentRegistry pcRegistry;
         public DefaultProjectContent myProjectContent;
-		public ParseInformation parseInformation = new ParseInformation();
+        public ParseInformation parseInformation = new ParseInformation();
         public Dictionary<string, ICompilationUnit> mappedCompilationUnits { get; set; } // so that we support dynamic CodeCompletion from multiple files
-		//public ICompilationUnit lastCompilationUnit;
-		public string DummyFileName = "edited.cs";
+        //public ICompilationUnit lastCompilationUnit;
+        public string DummyFileName = "edited.cs";
         public int startOffset = 0;
-		public ImageList SmallIcons;
-    	public Form HostForm { get; set; }
+        public ImageList SmallIcons;
+        public Form HostForm { get; set; }
         public Location CodeCompleteCaretLocationOffset { get; set; }
         public string CodeCompleteTargetText { get; set; }
-    	public CodeCompletionWindow codeCompletionWindow;
-    	public Action<string> statusMessage;
+        public CodeCompletionWindow codeCompletionWindow;
+        public Action<string> statusMessage;
         public bool OnlyShowCodeCompleteResulstFromO2Namespace { get; set; }
         public bool UseParseCodeThread { get; set; }
         public ExpressionResult currentExpression;
         public List<String> loadedReferences { get; set; }
         public List<String> gacAssemblies { get; set; }
 
-    	public O2CodeCompletion(TextEditorControl _textEditor)
-    		: this(_textEditor,(text)=>text.info())
-    	{
-    	}
+        public O2CodeCompletion(TextEditorControl _textEditor)
+            : this(_textEditor,(text)=>text.info())
+        {
+        }
 
-    	public O2CodeCompletion(TextEditorControl _textEditor, Action<string> status)
-    	{
+        public O2CodeCompletion(TextEditorControl _textEditor, Action<string> status)
+        {
             OnlyShowCodeCompleteResulstFromO2Namespace = false; //true;            
             UseParseCodeThread = true;
             extraSourceCodeToProcess = new List<string>();
@@ -67,18 +67,18 @@ namespace O2.External.SharpDevelop.Ascx
             gacAssemblies = GacUtils.assemblyNames(true);
             loadedReferences = new List<string>();
 
-    		_textEditor.invokeOnThread(
-    			()=>{
-			    		textEditor = _textEditor;
+            _textEditor.invokeOnThread(
+                ()=>{
+                        textEditor = _textEditor;
                         statusMessage = status;				    	
-			    		loadIcons();			    		
-			    		setupEnvironment();
-		    		});
-    	}
-    	    	
-    	
-    	public void setupEnvironment()
-    	{
+                        loadIcons();			    		
+                        setupEnvironment();
+                    });
+        }
+                
+        
+        public void setupEnvironment()
+        {
             try
             {
                 textEditor.ActiveTextAreaControl.TextArea.KeyEventHandler += TextAreaKeyEventHandler;
@@ -106,7 +106,7 @@ namespace O2.External.SharpDevelop.Ascx
                 ex.log("in setupEnvironment");
             }
 
-    	}
+        }
 
         void Caret_PositionChanged(object sender, EventArgs e)
         {
@@ -114,25 +114,25 @@ namespace O2.External.SharpDevelop.Ascx
            // "Current Offset: {0}".format(caret.Offset).info();
            // showLocationDetails(caret.Position);           
         }
-    	
-    	void loadIcons()    	
-    	{    	
-    		//System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(O2CodeCompletion));
-    		System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));    		
-    		SmallIcons = new ImageList();
-			SmallIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));    			
-    	}
-    	/*public O2CodeCompletion(Form hostForm)
-    	{
-    		HostForm = hostForm;
-    	}*/
+        
+        void loadIcons()    	
+        {    	
+            //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(O2CodeCompletion));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));    		
+            SmallIcons = new ImageList();
+            SmallIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));    			
+        }
+        /*public O2CodeCompletion(Form hostForm)
+        {
+            HostForm = hostForm;
+        }*/
     
     
 /*    	public void open(string fileToOpen)
-    	{
-    		textEditor.open(fileToOpen);
-    		//DummyFileName = fileToOpen;				// DC  - check if this makes the diference
-    	}
+        {
+            textEditor.open(fileToOpen);
+            //DummyFileName = fileToOpen;				// DC  - check if this makes the diference
+        }
 */
         public void mapDotNetReferencesForCodeComplete()
         {
@@ -150,8 +150,8 @@ namespace O2.External.SharpDevelop.Ascx
             addReference("WindowsFormsIntegration");*/
         }
 
-    	public void startAddReferencesThread()
-    	{
+        public void startAddReferencesThread()
+        {
             O2Thread.mtaThread(
                 () =>
                 {
@@ -172,27 +172,27 @@ namespace O2.External.SharpDevelop.Ascx
                                    
                     //statusMessage("Dependencies loaded");
                 });
-    	}
-    	
-    	public void addReference(string referenceAssembly)
-    	{
+        }
+        
+        public void addReference(string referenceAssembly)
+        {
             try
             {
                 if (loadedReferences.contains(referenceAssembly).isFalse())
                 {
-					if (referenceAssembly.fileExists())
-						this.myProjectContent.add_Reference(this.pcRegistry, referenceAssembly, statusMessage);
-					else
-					{
-						var assembly = referenceAssembly.assembly();
-						if (assembly.notNull() && assembly.Location.fileExists())
-						{
-							this.myProjectContent.add_Reference(this.pcRegistry, assembly.Location, statusMessage);
-						}
-						else
-							"[addReference] could not find assembly for: {0}".error(referenceAssembly);
-						
-					}
+                    if (referenceAssembly.fileExists())
+                        this.myProjectContent.add_Reference(this.pcRegistry, referenceAssembly, statusMessage);
+                    else
+                    {
+                        var assembly = referenceAssembly.assembly();
+                        if (assembly.notNull() && assembly.Location.fileExists())
+                        {
+                            this.myProjectContent.add_Reference(this.pcRegistry, assembly.Location, statusMessage);
+                        }
+                        else
+                            "[addReference] could not find assembly for: {0}".error(referenceAssembly);
+                        
+                    }
  
                     //if (gacAssemblies.contains(assemblyWithoutExtension))
                     //    this.myProjectContent.add_Reference(this.pcRegistry, assemblyWithoutExtension, statusMessage);
@@ -205,7 +205,7 @@ namespace O2.External.SharpDevelop.Ascx
             {
                 ex.log("in O2CodeCompletion addReference:{0}".format(referenceAssembly));
             }
-    	}
+        }
 
         public void addReferences(List<string> referencesToAdd)
         {
@@ -225,23 +225,23 @@ namespace O2.External.SharpDevelop.Ascx
                     });
         }    
     
-    	// this will regularly parse the current source code so that we have code completion for its methods 
-		public void startParseCodeThread()
-		{
-			O2Thread.mtaThread(
-				()=>{						
-						while (!textEditor.IsDisposed && UseParseCodeThread)
-			                {			                    
+        // this will regularly parse the current source code so that we have code completion for its methods 
+        public void startParseCodeThread()
+        {
+            O2Thread.mtaThread(
+                ()=>{						
+                        while (!textEditor.IsDisposed && UseParseCodeThread)
+                            {			                    
                                 this.parseSourceCode(DummyFileName, this.textEditor.get_Text());
                                 foreach (var codeOrFile in extraSourceCodeToProcess)
                                     if (codeOrFile.isFile())
                                         this.parseSourceCode(codeOrFile,codeOrFile.contents());
                                     else
                                         this.parseSourceCode(codeOrFile);
-			                    this.sleep(2000,false);			             
-			                }			              
-			         });
-		}        
+                                this.sleep(2000,false);			             
+                            }			              
+                     });
+        }        
 
         public void parseFile(string fileToParse)
         {
@@ -293,8 +293,8 @@ namespace O2.External.SharpDevelop.Ascx
             }
 
         }
-		
-		public ICompilationUnit ConvertCompilationUnit(CompilationUnit compilationUnit)
+        
+        public ICompilationUnit ConvertCompilationUnit(CompilationUnit compilationUnit)
         {
             NRefactoryASTConvertVisitor converter;
             converter = new NRefactoryASTConvertVisitor(myProjectContent);
@@ -304,11 +304,11 @@ namespace O2.External.SharpDevelop.Ascx
         
         
         
-		// Was part of the CodeCompletionKeyHandler file
-		
-		/// <summary>
-		/// Return true to handle the keypress, return false to let the text area handle the keypress
-		/// </summary>
+        // Was part of the CodeCompletionKeyHandler file
+        
+        /// <summary>
+        /// Return true to handle the keypress, return false to let the text area handle the keypress
+        /// </summary>
         public bool TextAreaKeyEventHandler(char key)
         {            
             if (codeCompletionWindow != null)
@@ -369,21 +369,21 @@ namespace O2.External.SharpDevelop.Ascx
             }
             o2Timer.stop();
         }
-		
-		void CloseCodeCompletionWindow(object sender, EventArgs e)
-		{
-			if (codeCompletionWindow != null) {
-				codeCompletionWindow.Closed -= new EventHandler(CloseCodeCompletionWindow);
-				codeCompletionWindow.Dispose();
-				codeCompletionWindow = null;
-			}
-		}
-		
-		
-		// was part of Tool Tip Provider
-		
-		void OnToolTipRequest(object sender, ToolTipRequestEventArgs e)
-		{
+        
+        void CloseCodeCompletionWindow(object sender, EventArgs e)
+        {
+            if (codeCompletionWindow != null) {
+                codeCompletionWindow.Closed -= new EventHandler(CloseCodeCompletionWindow);
+                codeCompletionWindow.Dispose();
+                codeCompletionWindow = null;
+            }
+        }
+        
+        
+        // was part of Tool Tip Provider
+        
+        void OnToolTipRequest(object sender, ToolTipRequestEventArgs e)
+        {
             O2Thread.mtaThread(
             () =>
             {
@@ -411,7 +411,7 @@ namespace O2.External.SharpDevelop.Ascx
                     ex.log("in OnToolTipRequest");
                 }
             });
-		}
+        }
 
         public void showLocationDetails(TextLocation location)
         {
@@ -500,122 +500,122 @@ namespace O2.External.SharpDevelop.Ascx
 
             return rr;
         }
-		
-		static string GetText(ResolveResult result)
-		{
-			if (result == null) {
-				return null;
-			}
-			if (result is MixedResolveResult)
-				return GetText(((MixedResolveResult)result).PrimaryResult);
-			IAmbience ambience = new CSharpAmbience();
-			ambience.ConversionFlags = ConversionFlags.StandardConversionFlags | ConversionFlags.ShowAccessibility;
-			if (result is MemberResolveResult) {
-				return GetMemberText(ambience, ((MemberResolveResult)result).ResolvedMember);
-			} else if (result is LocalResolveResult) {
-				LocalResolveResult rr = (LocalResolveResult)result;
-				ambience.ConversionFlags = ConversionFlags.UseFullyQualifiedTypeNames
-					| ConversionFlags.ShowReturnType;
-				StringBuilder b = new StringBuilder();
-				if (rr.IsParameter)
-					b.Append("parameter ");
-				else
-					b.Append("local variable ");
-				b.Append(ambience.Convert(rr.Field));
-				return b.ToString();
-			} else if (result is NamespaceResolveResult) {
-				return "namespace " + ((NamespaceResolveResult)result).Name;
-			} else if (result is TypeResolveResult) {
-				IClass c = ((TypeResolveResult)result).ResolvedClass;
-				if (c != null)
-					return GetMemberText(ambience, c);
-				else
-					return ambience.Convert(result.ResolvedType);
-			} else if (result is MethodGroupResolveResult) {
-				MethodGroupResolveResult mrr = result as MethodGroupResolveResult;
-				IMethod m = mrr.GetMethodIfSingleOverload();
-				if (m != null)
-					return GetMemberText(ambience, m);
-				else
-					return "Overload of " + ambience.Convert(mrr.ContainingType) + "." + mrr.Name;
-			} else {
-				return null;
-			}
-		}
-		
-		static string GetMemberText(IAmbience ambience, IEntity member)
-		{
-			StringBuilder text = new StringBuilder();
-			if (member is IField) {
-				text.Append(ambience.Convert(member as IField));
-			} else if (member is IProperty) {
-				text.Append(ambience.Convert(member as IProperty));
-			} else if (member is IEvent) {
-				text.Append(ambience.Convert(member as IEvent));
-			} else if (member is IMethod) {
-				text.Append(ambience.Convert(member as IMethod));
-			} else if (member is IClass) {
-				text.Append(ambience.Convert(member as IClass));
-			} else {
-				text.Append("unknown member ");
-				text.Append(member.ToString());
-			}
-			string documentation = member.Documentation;
-			if (documentation != null && documentation.Length > 0) {
-				text.Append('\n');
-				text.Append(CodeCompletionData.XmlDocumentationToText(documentation));
-			}
-			return text.ToString();
-		}
-		
-		
-		// part of the CodeCompletionProvider   (public class CodeCompletionProvider : ICompletionDataProvider)
-		
-		
-		public ImageList ImageList {
-			get {
-				return this.SmallIcons;				
-			}
-		}
-		
-		public string PreSelection {
-			get {
-				return null;
-			}
-		}
-		
-		public int DefaultIndex {
-			get {
-				return -1;
-			}
-		}
-		
-		public CompletionDataProviderKeyResult ProcessKey(char key)
-		{
-			if (char.IsLetterOrDigit(key) || key == '_') {
-				return CompletionDataProviderKeyResult.NormalKey;
-			} else {
-				// key triggers insertion of selected items
-				return CompletionDataProviderKeyResult.InsertionKey;
-			}
-		}
-		
-		/// <summary>
-		/// Called when entry should be inserted. Forward to the insertion action of the completion data.
-		/// </summary>
-		public bool InsertAction(ICompletionData data, TextArea textArea, int insertionOffset, char key)
-		{
-			textArea.Caret.Position = textArea.Document.OffsetToPosition(insertionOffset);
-			return data.InsertAction(textArea, key);
-		}
-		
-		public ICompletionData[] GenerateCompletionData(string fileName, TextArea textArea, char charTyped)
-		{
-			// We can return code-completion items like this:
-			
-			//return new ICompletionData[] {
-			//	new DefaultCompletionData("Text", "Description", 1)
-			//};
+        
+        static string GetText(ResolveResult result)
+        {
+            if (result == null) {
+                return null;
+            }
+            if (result is MixedResolveResult)
+                return GetText(((MixedResolveResult)result).PrimaryResult);
+            IAmbience ambience = new CSharpAmbience();
+            ambience.ConversionFlags = ConversionFlags.StandardConversionFlags | ConversionFlags.ShowAccessibility;
+            if (result is MemberResolveResult) {
+                return GetMemberText(ambience, ((MemberResolveResult)result).ResolvedMember);
+            } else if (result is LocalResolveResult) {
+                LocalResolveResult rr = (LocalResolveResult)result;
+                ambience.ConversionFlags = ConversionFlags.UseFullyQualifiedTypeNames
+                    | ConversionFlags.ShowReturnType;
+                StringBuilder b = new StringBuilder();
+                if (rr.IsParameter)
+                    b.Append("parameter ");
+                else
+                    b.Append("local variable ");
+                b.Append(ambience.Convert(rr.Field));
+                return b.ToString();
+            } else if (result is NamespaceResolveResult) {
+                return "namespace " + ((NamespaceResolveResult)result).Name;
+            } else if (result is TypeResolveResult) {
+                IClass c = ((TypeResolveResult)result).ResolvedClass;
+                if (c != null)
+                    return GetMemberText(ambience, c);
+                else
+                    return ambience.Convert(result.ResolvedType);
+            } else if (result is MethodGroupResolveResult) {
+                MethodGroupResolveResult mrr = result as MethodGroupResolveResult;
+                IMethod m = mrr.GetMethodIfSingleOverload();
+                if (m != null)
+                    return GetMemberText(ambience, m);
+                else
+                    return "Overload of " + ambience.Convert(mrr.ContainingType) + "." + mrr.Name;
+            } else {
+                return null;
+            }
+        }
+        
+        static string GetMemberText(IAmbience ambience, IEntity member)
+        {
+            StringBuilder text = new StringBuilder();
+            if (member is IField) {
+                text.Append(ambience.Convert(member as IField));
+            } else if (member is IProperty) {
+                text.Append(ambience.Convert(member as IProperty));
+            } else if (member is IEvent) {
+                text.Append(ambience.Convert(member as IEvent));
+            } else if (member is IMethod) {
+                text.Append(ambience.Convert(member as IMethod));
+            } else if (member is IClass) {
+                text.Append(ambience.Convert(member as IClass));
+            } else {
+                text.Append("unknown member ");
+                text.Append(member.ToString());
+            }
+            string documentation = member.Documentation;
+            if (documentation != null && documentation.Length > 0) {
+                text.Append('\n');
+                text.Append(CodeCompletionData.XmlDocumentationToText(documentation));
+            }
+            return text.ToString();
+        }
+        
+        
+        // part of the CodeCompletionProvider   (public class CodeCompletionProvider : ICompletionDataProvider)
+        
+        
+        public ImageList ImageList {
+            get {
+                return this.SmallIcons;				
+            }
+        }
+        
+        public string PreSelection {
+            get {
+                return null;
+            }
+        }
+        
+        public int DefaultIndex {
+            get {
+                return -1;
+            }
+        }
+        
+        public CompletionDataProviderKeyResult ProcessKey(char key)
+        {
+            if (char.IsLetterOrDigit(key) || key == '_') {
+                return CompletionDataProviderKeyResult.NormalKey;
+            } else {
+                // key triggers insertion of selected items
+                return CompletionDataProviderKeyResult.InsertionKey;
+            }
+        }
+        
+        /// <summary>
+        /// Called when entry should be inserted. Forward to the insertion action of the completion data.
+        /// </summary>
+        public bool InsertAction(ICompletionData data, TextArea textArea, int insertionOffset, char key)
+        {
+            textArea.Caret.Position = textArea.Document.OffsetToPosition(insertionOffset);
+            return data.InsertAction(textArea, key);
+        }
+        
+        public ICompletionData[] GenerateCompletionData(string fileName, TextArea textArea, char charTyped)
+        {
+            // We can return code-completion items like this:
+            
+            //return new ICompletionData[] {
+            //	new DefaultCompletionData("Text", "Description", 1)
+            //};
             var targetText = "";
             if (CodeCompleteCaretLocationOffset.Line == 0)
             {
@@ -628,15 +628,15 @@ namespace O2.External.SharpDevelop.Ascx
                 targetText = getAdjustedSnippetText(textArea, firstMethodOffset);
             }
 
-			NRefactoryResolver resolver = new NRefactoryResolver(this.myProjectContent.Language);
-			//ResolveResult rr = resolver.Resolve(FindExpression(textArea),
+            NRefactoryResolver resolver = new NRefactoryResolver(this.myProjectContent.Language);
+            //ResolveResult rr = resolver.Resolve(FindExpression(textArea),
             ResolveResult rr = resolver.Resolve(currentExpression,
-			                                        this.parseInformation,
+                                                    this.parseInformation,
                                                     targetText);
-			List<ICompletionData> resultList = new List<ICompletionData>();
-			if (rr.notNull())// && ) 
+            List<ICompletionData> resultList = new List<ICompletionData>();
+            if (rr.notNull())// && ) 
             {                
-				ArrayList completionData = rr.GetCompletionData(this.myProjectContent);
+                ArrayList completionData = rr.GetCompletionData(this.myProjectContent);
                 /*"[CodeComplete] expression '{0}' was resolved into type: {1} with {2} results".info(currentExpression.Expression, 
                                                                                                     rr.ResolvedType.FullyQualifiedName,
                                                                                                     completionData.isNull() ? -1 
@@ -648,23 +648,23 @@ namespace O2.External.SharpDevelop.Ascx
                                                                                                completionData.isNull() 
                                                                                                     ? -1 
                                                                                                     : completionData.Count);
-				if (completionData != null) {
-					AddCompletionData(resultList, completionData);
-				}
-			}
+                if (completionData != null) {
+                    AddCompletionData(resultList, completionData);
+                }
+            }
             else
                 "[CodeComplete] expression '{0}' could not be resolved".error(currentExpression.Expression);
            // "In generate completion Data, There were {0} results found".format(resultList.Count).debug();
-			return resultList.ToArray();
-		}
-		
-		/// <summary>
-		/// Find the expression the cursor is at.
-		/// Also determines the context (using statement, "new"-expression etc.) the
-		/// cursor is at.
-		/// </summary>
-		ExpressionResult FindExpression()//TextArea textArea)
-		{
+            return resultList.ToArray();
+        }
+        
+        /// <summary>
+        /// Find the expression the cursor is at.
+        /// Also determines the context (using statement, "new"-expression etc.) the
+        /// cursor is at.
+        /// </summary>
+        ExpressionResult FindExpression()//TextArea textArea)
+        {
             var textArea = textEditor.ActiveTextAreaControl.TextArea;
             try
             {                
@@ -683,7 +683,7 @@ namespace O2.External.SharpDevelop.Ascx
                 ex.log("in FindExpression");
                 return new ExpressionResult(); ;
             }
-		}
+        }
 
         public ExpressionResult getExpressionFromTextArea(TextArea textArea)
         {
@@ -734,32 +734,32 @@ namespace O2.External.SharpDevelop.Ascx
                 return currentText;
         }
 
-		void AddCompletionData(List<ICompletionData> resultList, ArrayList completionData)
-		{
+        void AddCompletionData(List<ICompletionData> resultList, ArrayList completionData)
+        {
          //   var currentCodeCompleteText = "";
          //   var lenght = textEditor.currentOffset() - startOffset;
          //   if (lenght >0)
          //       currentCodeCompleteText = textEditor.get_Text(startOffset,lenght);
          //   "{0}:{1}  = {2}".format(startOffset,lenght , currentCodeCompleteText).debug();
 
-			// used to store the method names for grouping overloads
-			Dictionary<string, CodeCompletionData> nameDictionary = new Dictionary<string, CodeCompletionData>();
-			
-			// Add the completion data as returned by SharpDevelop.Dom to the
-			// list for the text editor
-			foreach (object obj in completionData) {
-				if (obj is string) {
-					// namespace names are returned as string
-					resultList.Add(new DefaultCompletionData((string)obj, "namespace " + obj, 5));
-				} else if (obj is IClass) {
-					IClass c = (IClass)obj;
-					resultList.Add(new CodeCompletionData(c,this));
-				} else if (obj is IMember) {
-					IMember m = (IMember)obj;
-					if (m is IMethod && ((m as IMethod).IsConstructor)) {
-						// Skip constructors
-						continue;
-					}
+            // used to store the method names for grouping overloads
+            Dictionary<string, CodeCompletionData> nameDictionary = new Dictionary<string, CodeCompletionData>();
+            
+            // Add the completion data as returned by SharpDevelop.Dom to the
+            // list for the text editor
+            foreach (object obj in completionData) {
+                if (obj is string) {
+                    // namespace names are returned as string
+                    resultList.Add(new DefaultCompletionData((string)obj, "namespace " + obj, 5));
+                } else if (obj is IClass) {
+                    IClass c = (IClass)obj;
+                    resultList.Add(new CodeCompletionData(c,this));
+                } else if (obj is IMember) {
+                    IMember m = (IMember)obj;
+                    if (m is IMethod && ((m as IMethod).IsConstructor)) {
+                        // Skip constructors
+                        continue;
+                    }
                     // if OnlyShowCodeCompleteResulstFromO2Namespace filter for only O2.* namepace
                     if (OnlyShowCodeCompleteResulstFromO2Namespace &&  m.DeclaringType.Namespace.starts("O2") == false)
                         continue;
@@ -768,177 +768,177 @@ namespace O2.External.SharpDevelop.Ascx
             //        if (currentCodeCompleteText != "" && m.DotNetName.nregEx(currentCodeCompleteText))
             //            continue;
                     //if 
-					// Group results by name and add "(x Overloads)" to the
-					// description if there are multiple results with the same name.                    
-					CodeCompletionData data;
-					if (nameDictionary.TryGetValue(m.Name, out data)) {
-						data.AddOverload();
-					} else {
-						nameDictionary[m.Name] = data = new CodeCompletionData(m,this);
-						resultList.Add(data);
-					}
-				} else {
-					// Current ICSharpCode.SharpDevelop.Dom should never return anything else
-					throw new NotSupportedException();
-				}
-			}
-		}
-		
+                    // Group results by name and add "(x Overloads)" to the
+                    // description if there are multiple results with the same name.                    
+                    CodeCompletionData data;
+                    if (nameDictionary.TryGetValue(m.Name, out data)) {
+                        data.AddOverload();
+                    } else {
+                        nameDictionary[m.Name] = data = new CodeCompletionData(m,this);
+                        resultList.Add(data);
+                    }
+                } else {
+                    // Current ICSharpCode.SharpDevelop.Dom should never return anything else
+                    throw new NotSupportedException();
+                }
+            }
+        }
+        
     }
     
     public class CodeCompletionData : DefaultCompletionData, ICompletionData
-	{
-		public O2CodeCompletion o2CodeCompletion;
+    {
+        public O2CodeCompletion o2CodeCompletion;
         public IMember member;
         public IClass c;
         public CSharpAmbience csharpAmbience = new CSharpAmbience();
-		
-		public CodeCompletionData(IMember member, O2CodeCompletion _o2CodeCompletion)
-			: base(member.Name, null, GetMemberImageIndex(member))
-		{
-			this.member = member;
-			o2CodeCompletion =  _o2CodeCompletion;
-		}
-		
-		public CodeCompletionData(IClass c, O2CodeCompletion _o2CodeCompletion)
-			: base(c.Name, null, GetClassImageIndex(c))
-		{
-			this.c = c;
-			o2CodeCompletion = _o2CodeCompletion;
-		}
-		
-		int overloads = 0;
-		
-		public void AddOverload()
-		{
-			overloads++;
-		}
-		
-		static int GetMemberImageIndex(IMember member)
-		{
-			// Missing: different icons for private/public member
-			if (member is IMethod)
-				return 1;
-			if (member is IProperty)
-				return 2;
-			if (member is IField)
-				return 3;
-			if (member is IEvent)
-				return 6;
-			return 3;
-		}
-		
-		static int GetClassImageIndex(IClass c)
-		{
-			switch (c.ClassType) {
-				case ICSharpCode.SharpDevelop.Dom.ClassType.Enum:
-					return 4;
-				default:
-					return 0;
-			}
-		}
-		
-		string description;
-		
-		// DefaultCompletionData.Description is not virtual, but we can reimplement
-		// the interface to get the same effect as overriding.
-		string ICompletionData.Description {
-			get {
-				if (description == null) {
-					IEntity entity = (IEntity)member ?? c;
-					description = GetText(entity);
-					if (overloads > 1) {
-						description += " (+" + overloads + " overloads)";
-					}
-					description += Environment.NewLine + XmlDocumentationToText(entity.Documentation);
-				}
-				return description;
-			}
-		}
-		
-		/// <summary>
-		/// Converts a member to text.
-		/// Returns the declaration of the member as C# or VB code, e.g.
-		/// "public void MemberName(string parameter)"
-		/// </summary>
-		string GetText(IEntity entity)
-		{
-			return (string)o2CodeCompletion.textEditor.invokeOnThread(
-				()=> {					
-						IAmbience ambience = csharpAmbience;
-						if (entity is IMethod)
-							return ambience.Convert(entity as IMethod);
-						if (entity is IProperty)
-							return ambience.Convert(entity as IProperty);
-						if (entity is IEvent)
-							return ambience.Convert(entity as IEvent);
-						if (entity is IField)
-							return ambience.Convert(entity as IField);
-						if (entity is IClass)
-							return ambience.Convert(entity as IClass);
-						// unknown entity:
-						return entity.ToString();
-					});
-		}
-		
-		static public string XmlDocumentationToText(string xmlDoc)
-		{
-			PublicDI.log.error(xmlDoc);
-			StringBuilder b = new StringBuilder();
-			try {
-				using (XmlTextReader reader = new XmlTextReader(new StringReader("<root>" + xmlDoc + "</root>"))) {
-					reader.XmlResolver = null;
-					while (reader.Read()) {
-						switch (reader.NodeType) {
-							case XmlNodeType.Text:
-								b.Append(reader.Value);
-								break;
-							case XmlNodeType.Element:
-								switch (reader.Name) {
-									case "filterpriority":
-										reader.Skip();
-										break;
-									case "returns":
-										b.AppendLine();
-										b.Append("Returns: ");
-										break;
-									case "param":
-										b.AppendLine();
-										b.Append(reader.GetAttribute("name") + ": ");
-										break;
-									case "remarks":
-										b.AppendLine();
-										b.Append("Remarks: ");
-										break;
-									case "see":
-										if (reader.IsEmptyElement) {
-											b.Append(reader.GetAttribute("cref"));
-										} else {
-											reader.MoveToContent();
-											if (reader.HasValue) {
-												b.Append(reader.Value);
-											} else {
-												b.Append(reader.GetAttribute("cref"));
-											}
-										}
-										break;
-								}
-								break;
-						}
-					}
-				}
-				return b.ToString();
-			} catch (XmlException) {
-				return xmlDoc;
-			}
-		}
-	}
-	
-	
-	public static class SharpdevelopExtensionMethods
+        
+        public CodeCompletionData(IMember member, O2CodeCompletion _o2CodeCompletion)
+            : base(member.Name, null, GetMemberImageIndex(member))
+        {
+            this.member = member;
+            o2CodeCompletion =  _o2CodeCompletion;
+        }
+        
+        public CodeCompletionData(IClass c, O2CodeCompletion _o2CodeCompletion)
+            : base(c.Name, null, GetClassImageIndex(c))
+        {
+            this.c = c;
+            o2CodeCompletion = _o2CodeCompletion;
+        }
+        
+        int overloads = 0;
+        
+        public void AddOverload()
+        {
+            overloads++;
+        }
+        
+        static int GetMemberImageIndex(IMember member)
+        {
+            // Missing: different icons for private/public member
+            if (member is IMethod)
+                return 1;
+            if (member is IProperty)
+                return 2;
+            if (member is IField)
+                return 3;
+            if (member is IEvent)
+                return 6;
+            return 3;
+        }
+        
+        static int GetClassImageIndex(IClass c)
+        {
+            switch (c.ClassType) {
+                case ICSharpCode.SharpDevelop.Dom.ClassType.Enum:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+        
+        string description;
+        
+        // DefaultCompletionData.Description is not virtual, but we can reimplement
+        // the interface to get the same effect as overriding.
+        string ICompletionData.Description {
+            get {
+                if (description == null) {
+                    IEntity entity = (IEntity)member ?? c;
+                    description = GetText(entity);
+                    if (overloads > 1) {
+                        description += " (+" + overloads + " overloads)";
+                    }
+                    description += Environment.NewLine + XmlDocumentationToText(entity.Documentation);
+                }
+                return description;
+            }
+        }
+        
+        /// <summary>
+        /// Converts a member to text.
+        /// Returns the declaration of the member as C# or VB code, e.g.
+        /// "public void MemberName(string parameter)"
+        /// </summary>
+        string GetText(IEntity entity)
+        {
+            return (string)o2CodeCompletion.textEditor.invokeOnThread(
+                ()=> {					
+                        IAmbience ambience = csharpAmbience;
+                        if (entity is IMethod)
+                            return ambience.Convert(entity as IMethod);
+                        if (entity is IProperty)
+                            return ambience.Convert(entity as IProperty);
+                        if (entity is IEvent)
+                            return ambience.Convert(entity as IEvent);
+                        if (entity is IField)
+                            return ambience.Convert(entity as IField);
+                        if (entity is IClass)
+                            return ambience.Convert(entity as IClass);
+                        // unknown entity:
+                        return entity.ToString();
+                    });
+        }
+        
+        static public string XmlDocumentationToText(string xmlDoc)
+        {
+            PublicDI.log.error(xmlDoc);
+            StringBuilder b = new StringBuilder();
+            try {
+                using (XmlTextReader reader = new XmlTextReader(new StringReader("<root>" + xmlDoc + "</root>"))) {
+                    reader.XmlResolver = null;
+                    while (reader.Read()) {
+                        switch (reader.NodeType) {
+                            case XmlNodeType.Text:
+                                b.Append(reader.Value);
+                                break;
+                            case XmlNodeType.Element:
+                                switch (reader.Name) {
+                                    case "filterpriority":
+                                        reader.Skip();
+                                        break;
+                                    case "returns":
+                                        b.AppendLine();
+                                        b.Append("Returns: ");
+                                        break;
+                                    case "param":
+                                        b.AppendLine();
+                                        b.Append(reader.GetAttribute("name") + ": ");
+                                        break;
+                                    case "remarks":
+                                        b.AppendLine();
+                                        b.Append("Remarks: ");
+                                        break;
+                                    case "see":
+                                        if (reader.IsEmptyElement) {
+                                            b.Append(reader.GetAttribute("cref"));
+                                        } else {
+                                            reader.MoveToContent();
+                                            if (reader.HasValue) {
+                                                b.Append(reader.Value);
+                                            } else {
+                                                b.Append(reader.GetAttribute("cref"));
+                                            }
+                                        }
+                                        break;
+                                }
+                                break;
+                        }
+                    }
+                }
+                return b.ToString();
+            } catch (XmlException) {
+                return xmlDoc;
+            }
+        }
+    }
+    
+    
+    public static class SharpdevelopExtensionMethods
     {
-    	public static void add_Reference(this DefaultProjectContent projectContent, ProjectContentRegistry pcRegistry, string assemblyToLoad, Action<string> debugMessage)
-    	{
+        public static void add_Reference(this DefaultProjectContent projectContent, ProjectContentRegistry pcRegistry, string assemblyToLoad, Action<string> debugMessage)
+        {
             try
             {
                 debugMessage("Loading Code Completion Reference: {0}".format(assemblyToLoad));
@@ -960,6 +960,6 @@ namespace O2.External.SharpDevelop.Ascx
             {
                 ex.log("in DefaultProjectContent.add_Reference");
             }
-    	}
+        }
     }
 }

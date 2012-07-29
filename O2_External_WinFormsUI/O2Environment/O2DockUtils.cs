@@ -8,6 +8,7 @@ using O2.DotNetWrappers.ExtensionMethods;
 using O2.External.WinFormsUI.Forms;
 using O2.Interfaces.Views;
 using WeifenLuo.WinFormsUI.Docking;
+using O2.Kernel;
 
 namespace O2.External.WinFormsUI.O2Environment
 {
@@ -20,9 +21,9 @@ namespace O2.External.WinFormsUI.O2Environment
 
         public static bool setDockState(string name, DockState state)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(name))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(name))
             {
-                DI.dO2LoadedO2DockContent[name].dockContent.DockState = state;
+                O2AscxGUI.dO2LoadedO2DockContent[name].dockContent.DockState = state;
                 return true;
             }
             return false;
@@ -30,7 +31,7 @@ namespace O2.External.WinFormsUI.O2Environment
 
         public static bool isControlAvailable(string name)
         {
-            return DI.dO2LoadedO2DockContent.ContainsKey(name);
+            return O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(name);
         }
 
         public static DockState getDockStateFromO2DockState(O2DockState o2DockState)
@@ -65,46 +66,46 @@ namespace O2.External.WinFormsUI.O2Environment
 
         public static void addO2DockContentToDIGlobalVar(O2DockContent controlToLoad)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(controlToLoad.name))
-                DI.dO2LoadedO2DockContent[controlToLoad.name] = controlToLoad;
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(controlToLoad.name))
+                O2AscxGUI.dO2LoadedO2DockContent[controlToLoad.name] = controlToLoad;
             else
             {
-                DI.dO2LoadedO2DockContent.Add(controlToLoad.name, controlToLoad);                
+                O2AscxGUI.dO2LoadedO2DockContent.Add(controlToLoad.name, controlToLoad);                
                 addControlToLoadedO2ModulesList(controlToLoad);
             }
         }
 
         private static void addControlToLoadedO2ModulesList(O2DockContent controlToLoad)
-        {            
-            if (DI.o2GuiStandAloneFormMode == false)
-                if (DI.o2GuiWithDockPanel == null)
-                    DI.log.error("in addControlToLoadedO2ModulesList , DI.o2GuiWithDockPanel == null");
+        {
+            if (O2AscxGUI.o2GuiStandAloneFormMode == false)
+                if (O2AscxGUI.o2GuiWithDockPanel == null)
+                    PublicDI.log.error("in addControlToLoadedO2ModulesList , O2AscxGUI.o2GuiWithDockPanel == null");
                 else
-                    DI.o2GuiWithDockPanel.addControlToLoadedO2ModulesMenu(controlToLoad);
+                    O2AscxGUI.o2GuiWithDockPanel.addControlToLoadedO2ModulesMenu(controlToLoad);
         }
 
         public static void removeO2DockContentFromDIGlobalVar(string controlToRemove)
         {            
-            if (DI.dO2LoadedO2DockContent.ContainsKey(controlToRemove))
-                DI.dO2LoadedO2DockContent.Remove(controlToRemove);
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(controlToRemove))
+                O2AscxGUI.dO2LoadedO2DockContent.Remove(controlToRemove);
             else            
-                DI.log.error("in removeO2DockContentFromDIGlobalVar, tried to remove a control that is not in DI.dO2LoadedO2DockContent: {0}", controlToRemove);            
+                PublicDI.log.error("in removeO2DockContentFromDIGlobalVar, tried to remove a control that is not in O2AscxGUI.dO2LoadedO2DockContent: {0}", controlToRemove);            
         }
 
         public static O2DockContent getO2DockContent(string name)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(name))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(name))
             {
-                return DI.dO2LoadedO2DockContent[name];
+                return O2AscxGUI.dO2LoadedO2DockContent[name];
             }
             return null;
         }
         
         public static Form getO2DockContentForm(string name)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(name))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(name))
             {              
-                return DI.dO2LoadedO2DockContent[name].dockContent;
+                return O2AscxGUI.dO2LoadedO2DockContent[name].dockContent;
             }
             return null;
         }
@@ -116,53 +117,53 @@ namespace O2.External.WinFormsUI.O2Environment
 
         public static Control getAscx(string name, bool logErrorOnFail)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(name))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(name))
             {
                 var o2DockContent = O2DockUtils.getO2DockContent(name);            
                 o2DockContent.dockContent.invokeOnThread(() => o2DockContent.dockContent.Activate());
                 return o2DockContent.control;
             }
             if (logErrorOnFail)
-                DI.log.error("in O2DockUtils.getAscx, could not find registed Ascx: {0}", name);
+                PublicDI.log.error("in O2DockUtils.getAscx, could not find registed Ascx: {0}", name);
             return null;
         }
 
         public static List<string> getListAvailableAscx()
         {
             var availabledAscx = new List<string>();
-            availabledAscx.AddRange(DI.dO2LoadedO2DockContent.Keys);
+            availabledAscx.AddRange(O2AscxGUI.dO2LoadedO2DockContent.Keys);
             return availabledAscx;        
         }
 
         public static void setDocState(string parentControl, string childControl, DockStyle dockStyle)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(parentControl) && DI.dO2LoadedO2DockContent.ContainsKey(childControl))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(parentControl) && O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(childControl))
             {
-                var parent = DI.dO2LoadedO2DockContent[parentControl].dockContent;
-                var child = DI.dO2LoadedO2DockContent[childControl].dockContent;
+                var parent = O2AscxGUI.dO2LoadedO2DockContent[parentControl].dockContent;
+                var child = O2AscxGUI.dO2LoadedO2DockContent[childControl].dockContent;
                 child.invokeOnThread(() =>
                                          {
                                              if (parent.Pane != null)
                                                  child.DockTo(parent.Pane, dockStyle, 0);
                                              else
-                                                 DI.log.error("in O2DockUtils.setDocState, parent.Pane was null for parent: {0}", parent.Name ?? "[null value]");
+                                                 PublicDI.log.error("in O2DockUtils.setDocState, parent.Pane was null for parent: {0}", parent.Name ?? "[null value]");
                                          });
             }
             else
             {
-                DI.log.error("in O2DockUtils.setDocState, could not find registed parent or child controls: {0} , {1}", parentControl, childControl);
+                PublicDI.log.error("in O2DockUtils.setDocState, could not find registed parent or child controls: {0} , {1}", parentControl, childControl);
             }
         }
 
         public static void setPaneHeight(string controlInPane, int newHeight)
         {
-            if (DI.dO2LoadedO2DockContent.ContainsKey(controlInPane))
+            if (O2AscxGUI.dO2LoadedO2DockContent.ContainsKey(controlInPane))
             {
-                var targetPane = DI.dO2LoadedO2DockContent[controlInPane].dockContent.Pane;     
+                var targetPane = O2AscxGUI.dO2LoadedO2DockContent[controlInPane].dockContent.Pane;     
            
                 targetPane.invokeOnThread(() =>
                                               {
-                                                  //DI.dO2LoadedO2DockContent[controlInPane].dockContent.Height = 300;
+                                                  //O2AscxGUI.dO2LoadedO2DockContent[controlInPane].dockContent.Height = 300;
                                                   /*targetPane.SetDockState(DockState.DockBottom);
                                                   var nestedPanes = targetPane.DockWindow.NestedPanes;
                                                   targetPane.DockWindow.NestedPanes[0].Height = 300;
@@ -174,13 +175,13 @@ namespace O2.External.WinFormsUI.O2Environment
                                                 //  targetPane.Float();
                                                   //targetPane.ParentForm.Height = newHeight + 500;  // this works
                                                   //targetPane.DockPanel.Height = 300;
-                                                  //DI.dO2LoadedO2DockContent[controlInPane].dockContent.DockPanel.Height = 300;
+                                                  //O2AscxGUI.dO2LoadedO2DockContent[controlInPane].dockContent.DockPanel.Height = 300;
                                                   */
                                               });
             }
             else
             {
-                DI.log.error("in O2DockUtils.setPaneHeight, could not find the controlInPane{0} , {1}", controlInPane);
+                PublicDI.log.error("in O2DockUtils.setPaneHeight, could not find the controlInPane{0} , {1}", controlInPane);
             }
             
         }

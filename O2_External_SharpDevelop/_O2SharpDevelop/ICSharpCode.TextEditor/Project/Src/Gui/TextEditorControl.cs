@@ -277,7 +277,7 @@ namespace ICSharpCode.TextEditor
                 //				this.secondaryTextArea.TextArea.Update();
                 //			}
             }
-            catch (Exception ex)
+            catch// (Exception ex)
             { 
                 
             }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom
 {
@@ -119,18 +120,28 @@ namespace ICSharpCode.SharpDevelop.Dom
 		
 		void SaveCacheIndex(Dictionary<string, string> cacheIndex)
 		{
-			string indexFile = GetIndexFileName();
-			using (FileStream fs = new FileStream(indexFile, FileMode.Create, FileAccess.Write)) {
-				using (BinaryWriter writer = new BinaryWriter(fs)) {
-					writer.Write(IndexFileMagic);
-					writer.Write(FileVersion);
-					writer.Write(cacheIndex.Count);
-					foreach (KeyValuePair<string, string> e in cacheIndex) {
-						writer.Write(e.Key);
-						writer.Write(e.Value);
-					}
-				}
-			}
+            try
+            {
+                string indexFile = GetIndexFileName();
+                using (FileStream fs = new FileStream(indexFile, FileMode.Create, FileAccess.Write))
+                {
+                    using (BinaryWriter writer = new BinaryWriter(fs))
+                    {
+                        writer.Write(IndexFileMagic);
+                        writer.Write(FileVersion);
+                        writer.Write(cacheIndex.Count);
+                        foreach (KeyValuePair<string, string> e in cacheIndex)
+                        {
+                            writer.Write(e.Key);
+                            writer.Write(e.Value);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.log("[in SaveCacheIndex]");
+            }
 		}
 		
 		void AddFileNameToCacheIndex(string cacheFile, ReflectionProjectContent pc)

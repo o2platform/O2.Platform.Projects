@@ -53,7 +53,7 @@ namespace O2.External.WinFormsUI.O2Environment
         {
             Type typeToLoad = Type.GetType(controlToLoad);
             if (typeToLoad == null)
-                DI.log.error("in openO2DockContentInNewDockPanel, could not resolve type: {0}", controlToLoad);
+                PublicDI.log.error("in openO2DockContentInNewDockPanel, could not resolve type: {0}", controlToLoad);
             else
                 openO2DockContentInNewDockPanel(typeToLoad);
         }
@@ -70,7 +70,7 @@ namespace O2.External.WinFormsUI.O2Environment
 
         public void openO2DockContentInNewDockPanel(List<O2DockContent> controlsToLoad)
         {
-            if (DI.autoAddLogViewerToGui)
+            if (O2AscxGUI.autoAddLogViewerToGui)
                 addLogViewerToControlsToLoad(controlsToLoad);
                         
             
@@ -86,24 +86,24 @@ namespace O2.External.WinFormsUI.O2Environment
         
         private O2GuiWithDockPanel getO2GuiWithDockPanel()
         {
-            if (DI.o2GuiWithDockPanel == null)
+            if (O2AscxGUI.o2GuiWithDockPanel == null)
             {
-                DI.o2GuiWithDockPanel = new O2GuiWithDockPanel();
-                DI.o2GuiWithDockPanel.Text =
-                    ClickOnceDeployment.getFormTitle_forClickOnce(formName ?? DI.o2GuiWithDockPanel.Text);
-                DI.o2GuiWithDockPanel.Width = (formWidth > 0) ? formWidth : DI.o2GuiWithDockPanel.Width;
-                DI.o2GuiWithDockPanel.Height = (formHeight > 0) ? formHeight : DI.o2GuiWithDockPanel.Height;
+                O2AscxGUI.o2GuiWithDockPanel = new O2GuiWithDockPanel();
+                O2AscxGUI.o2GuiWithDockPanel.Text =
+                    ClickOnceDeployment.getFormTitle_forClickOnce(formName ?? O2AscxGUI.o2GuiWithDockPanel.Text);
+                O2AscxGUI.o2GuiWithDockPanel.Width = (formWidth > 0) ? formWidth : O2AscxGUI.o2GuiWithDockPanel.Width;
+                O2AscxGUI.o2GuiWithDockPanel.Height = (formHeight > 0) ? formHeight : O2AscxGUI.o2GuiWithDockPanel.Height;
             }
-            return DI.o2GuiWithDockPanel;                            
+            return O2AscxGUI.o2GuiWithDockPanel;                            
         }
 
         private void addControlToO2GuiWithDockPanelSync(O2DockContent controlToAdd)
         {
             var controlAdded = new AutoResetEvent(false);
             var o2GuiWithDockPanel = getO2GuiWithDockPanel();
-            //if (DI.o2GuiWithDockPanel.Handle != null)
-            if (DI.o2GuiWithDockPanel.InvokeRequired)
-                DI.o2GuiWithDockPanel.Invoke(new EventHandler(delegate { addControlToO2GuiWithDockPanelSync(o2GuiWithDockPanel,controlToAdd, controlAdded); }));
+            //if (O2AscxGUI.o2GuiWithDockPanel.Handle != null)
+            if (O2AscxGUI.o2GuiWithDockPanel.InvokeRequired)
+                O2AscxGUI.o2GuiWithDockPanel.Invoke(new EventHandler(delegate { addControlToO2GuiWithDockPanelSync(o2GuiWithDockPanel,controlToAdd, controlAdded); }));
             else
                addControlToO2GuiWithDockPanelSync(o2GuiWithDockPanel,controlToAdd, controlAdded);
 
@@ -119,7 +119,7 @@ namespace O2.External.WinFormsUI.O2Environment
             //var sync = new AutoResetEvent(false);
 
             // add the control on the o2GuiThread             
-            //DI.o2GuiWithDockPanel.Invoke(new EventHandler(delegate {
+            //O2AscxGUI.o2GuiWithDockPanel.Invoke(new EventHandler(delegate {
             try
             {
                 if (controlToAdd.createControlFromType())
@@ -133,17 +133,17 @@ namespace O2.External.WinFormsUI.O2Environment
                     }
                     if (controlToAdd.dockState == DockState.Document)
                     {
-                        if (DI.o2GuiWithDockPanel.Width < controlToAdd.desiredWidth)
-                            DI.o2GuiWithDockPanel.Width = controlToAdd.desiredWidth + 10;
-                        if (DI.o2GuiWithDockPanel.Height < controlToAdd.desiredHeight + 100)
-                            DI.o2GuiWithDockPanel.Height = controlToAdd.desiredHeight + 100;
+                        if (O2AscxGUI.o2GuiWithDockPanel.Width < controlToAdd.desiredWidth)
+                            O2AscxGUI.o2GuiWithDockPanel.Width = controlToAdd.desiredWidth + 10;
+                        if (O2AscxGUI.o2GuiWithDockPanel.Height < controlToAdd.desiredHeight + 100)
+                            O2AscxGUI.o2GuiWithDockPanel.Height = controlToAdd.desiredHeight + 100;
                     }
                     O2DockUtils.addO2DockContentToDIGlobalVar(controlToAdd);
                 }
             }
             catch(Exception ex)
             {
-                DI.log.ex(ex, "in addControlToO2GuiWithDockPanelSync");
+                PublicDI.log.ex(ex, "in addControlToO2GuiWithDockPanelSync");
             }
 
             controlAdded.Set();
@@ -156,8 +156,8 @@ namespace O2.External.WinFormsUI.O2Environment
         {
 //            if (mainO2Form.getDockPanel().okThread(delegate { addControlsToFormAndStartIt(mainO2Form, controlsToLoad); }))
             {
-                // check if the DI.o2GuiWithDockPanel exists, and if it doesn't create it (we need to do do this here because of multi=thread conflics 
-                // that occour sometimes if the DI.o2GuiWithDockPanel is created on a separate thread
+                // check if the O2AscxGUI.o2GuiWithDockPanel exists, and if it doesn't create it (we need to do do this here because of multi=thread conflics 
+                // that occour sometimes if the O2AscxGUI.o2GuiWithDockPanel is created on a separate thread
          
                 foreach (O2DockContent controlToAdd in controlsToAdd)                
                     addControlToO2GuiWithDockPanelSync(controlToAdd);                                   
@@ -168,12 +168,12 @@ namespace O2.External.WinFormsUI.O2Environment
                     //ClickOnceDeployment.startThreadFor_checkForClickOnceUpdatesAndInstall();  // removed 
                                                     
                     guiLoaded.Set();                    
-                    Application.Run(DI.o2GuiWithDockPanel);                    
+                    Application.Run(O2AscxGUI.o2GuiWithDockPanel);                    
                 }
                 catch (Exception ex)
                 {
-                    //DI.log.reportCriticalErrorToO2Developers(this, ex, "Inside Application.Run(mainO2Form);");
-					DI.log.error("Inside Application.Run(mainO2Form);: " + ex.Message);
+                    //PublicDI.log.reportCriticalErrorToO2Developers(this, ex, "Inside Application.Run(mainO2Form);");
+					PublicDI.log.error("Inside Application.Run(mainO2Form);: " + ex.Message);
                 }
             }
         }
@@ -234,9 +234,9 @@ namespace O2.External.WinFormsUI.O2Environment
                                                                                     DockState dockState,
                                                                                     String name, bool showControl)
         {
-            if (DI.o2GuiWithDockPanel == null)
+            if (O2AscxGUI.o2GuiWithDockPanel == null)
             {
-                DI.log.error(" in addAscxControlToO2GuiWithDockPanelWithDockState o2GuiWithDockPanel was null, so aborting load of {0}", ascxControlToLoad.FullName);
+                PublicDI.log.error(" in addAscxControlToO2GuiWithDockPanelWithDockState o2GuiWithDockPanel was null, so aborting load of {0}", ascxControlToLoad.FullName);
                 return null;
             }
             var o2DocContent = new O2DockContent(ascxControlToLoad, dockState, name);
@@ -254,7 +254,7 @@ namespace O2.External.WinFormsUI.O2Environment
                 if (false == DebugMsg.IsDebuggerAttached())
                     o2DocContent.controlLoadedIntoGui.WaitOne();
                 else if (false == o2DocContent.controlLoadedIntoGui.WaitOne(10000))
-                    DI.log.error("Failed to load control {0} in 10 sec", o2DocContent.name);
+                    PublicDI.log.error("Failed to load control {0} in 10 sec", o2DocContent.name);
             }
             return o2DocContent;
         }
@@ -263,11 +263,11 @@ namespace O2.External.WinFormsUI.O2Environment
         {
             try
             {
-                DI.log.info("on O2DockPanel.showO2DockContentInDockPanel: {0} [{1}]", o2DockContent.name, o2DockContent.type);
-                if (DI.o2GuiWithDockPanel.okThread(delegate { showO2DockContentInDockPanel(o2DockContent); }))
+                PublicDI.log.info("on O2DockPanel.showO2DockContentInDockPanel: {0} [{1}]", o2DockContent.name, o2DockContent.type);
+                if (O2AscxGUI.o2GuiWithDockPanel.okThread(delegate { showO2DockContentInDockPanel(o2DockContent); }))
                 {
                     //  if (o2DocContent.dockContent.okThread(delegate { showO2DockContentInDockPanel(o2DocContent); }))
-                    //    if (DI.o2GuiWithDockPanel.getDockPanel().okThread(
+                    //    if (O2AscxGUI.o2GuiWithDockPanel.getDockPanel().okThread(
                     //        delegate { showO2DockContentInDockPanel(o2DocContent); }))
 
                     // now that we are on the correct thread the control can be created
@@ -275,7 +275,7 @@ namespace O2.External.WinFormsUI.O2Environment
                     {
                         if (o2DockContent.dockContent.TopLevelControl != null)
                         {
-                            o2DockContent.dockContent.Show(DI.o2GuiWithDockPanel.getDockPanel(), o2DockContent.dockState);
+                            o2DockContent.dockContent.Show(O2AscxGUI.o2GuiWithDockPanel.getDockPanel(), o2DockContent.dockState);
                             
                             if (o2DockContent.dockState == DockState.Float &&
                                 o2DockContent.dockContent.TopLevelControl != null)
@@ -286,13 +286,13 @@ namespace O2.External.WinFormsUI.O2Environment
                         }
                     }
                     else
-                        DI.log.error("in showO2DockContentInDockPanel, could not create instance of controlToLoad: {0}",
+                        PublicDI.log.error("in showO2DockContentInDockPanel, could not create instance of controlToLoad: {0}",
                                                            o2DockContent.type.ToString());
                 }
             }
             catch (Exception ex)
             {
-                DI.log.ex(ex, "on O2DockPanel.showO2DockContentInDockPanel");
+                PublicDI.log.ex(ex, "on O2DockPanel.showO2DockContentInDockPanel");
             }
             o2DockContent.controlLoadedIntoGui.Set();
         }

@@ -19,9 +19,7 @@ namespace O2.External.WinFormsUI
             config = PublicDI.config;
             o2MessageQueue = KO2MessageQueue.getO2KernelQueue();
             
-            new O2MessagesHandler(); // set up O2Message hook
-
-            autoAddLogViewerToGui = true;
+            
         }
         
         // DI objects
@@ -31,11 +29,7 @@ namespace O2.External.WinFormsUI
         public static IReflection reflection;
 
         // local global vars
-        public static Dictionary<String, O2DockContent> dO2LoadedO2DockContent  = new Dictionary<String, O2DockContent>();
-        public static O2GuiWithDockPanel o2GuiWithDockPanel;
-        public static bool o2GuiStandAloneFormMode;
         
-        public static bool autoAddLogViewerToGui { get; set; }
      
     }
 }

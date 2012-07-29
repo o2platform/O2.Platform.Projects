@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using O2.DotNetWrappers.Windows;
 using O2.External.WinFormsUI.Forms;
 using O2.Interfaces.Messages;
+using O2.Kernel;
+using O2.Kernel.InterfacesBaseImpl;
 
 namespace O2.External.WinFormsUI.O2Environment
 {
@@ -17,7 +19,7 @@ namespace O2.External.WinFormsUI.O2Environment
     {
         static O2MessagesHandler()
         {            
-            DI.o2MessageQueue.onMessages += (o2MessageQueue_onMessages);
+            KO2MessageQueue.getO2KernelQueue().onMessages += (o2MessageQueue_onMessages);
         }
 
         private static void o2MessageQueue_onMessages(IO2Message o2Message)
@@ -27,7 +29,7 @@ namespace O2.External.WinFormsUI.O2Environment
                 if (o2Message is IM_GUIAction)
                 {
                     var mGuiAction = (IM_GUIAction) o2Message;
-                    DI.log.info("O2GuiWithDockPanel received IM_GUIAction of action: {0}", mGuiAction.GuiAction);
+                    PublicDI.log.info("O2GuiWithDockPanel received IM_GUIAction of action: {0}", mGuiAction.GuiAction);
                     switch (mGuiAction.GuiAction)
                     {
                         case IM_GUIActions.isAscxGuiAvailable:
@@ -41,17 +43,17 @@ namespace O2.External.WinFormsUI.O2Environment
                         case IM_GUIActions.executeOnAscx:
                             if (mGuiAction.controlName == null || mGuiAction.targetMethod == null ||
                                 mGuiAction.methodParameters == null)
-                                DI.log.error(
+                                PublicDI.log.error(
                                     "in O2Environment.O2MessagesHandler.o2MessageQueue_onMessages received a O2Message for IM_GUIActions.executeOnAscx, but either the targetMethod or methodParameters are null");
                             else
                             {
                                 var ascxControlToExecute = O2AscxGUI.getAscx(mGuiAction.controlName);
                                 if (ascxControlToExecute == null)
-                                    DI.log.error(
+                                    PublicDI.log.error(
                                         "in O2MessagesHandler...IM_GUIActions.executeOnAscx, could not get control: {0}",
                                         mGuiAction.controlName);
                                 else
-                                    o2Message.returnData = DI.reflection.invoke(ascxControlToExecute,
+                                    o2Message.returnData = PublicDI.reflection.invoke(ascxControlToExecute,
                                                                                 mGuiAction.targetMethod,
                                                                                 mGuiAction.methodParameters);
                             }
@@ -72,13 +74,13 @@ namespace O2.External.WinFormsUI.O2Environment
             }
             catch (Exception ex)
             {
-                DI.log.ex(ex, " in O2MessagesHandler.o2MessageQueue_onMessages");
+                PublicDI.log.ex(ex, " in O2MessagesHandler.o2MessageQueue_onMessages");
             }                                        
        }
 
         public static bool isAscxGuiAvailable()
         {
-            return DI.o2GuiWithDockPanel != null;
+            return O2AscxGUI.o2GuiWithDockPanel != null;
         }
     }
 }

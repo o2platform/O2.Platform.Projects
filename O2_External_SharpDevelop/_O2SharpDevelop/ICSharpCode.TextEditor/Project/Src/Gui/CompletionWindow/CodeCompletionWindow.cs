@@ -92,7 +92,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 
                     return codeCompletionWindow;
                 }
-                catch (Exception ex)
+                catch// (Exception ex)
                 {
                     busy = false;
                     return null;

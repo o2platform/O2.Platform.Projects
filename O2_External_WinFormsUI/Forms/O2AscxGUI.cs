@@ -20,9 +20,19 @@ namespace O2.External.WinFormsUI.Forms
     [Serializable]
     public class O2AscxGUI
     {
+        public static Dictionary<String, O2DockContent> dO2LoadedO2DockContent = new Dictionary<String, O2DockContent>();
+        public static O2GuiWithDockPanel o2GuiWithDockPanel;
+        public static bool o2GuiStandAloneFormMode;
+
+        public static bool autoAddLogViewerToGui { get; set; }
+
         static O2AscxGUI()
         {
-            new O2MessagesHandler(); // make sure the Messages Handler is setup
+            new O2MessagesHandler(); // make sure the Messages Handler is setup            
+
+            autoAddLogViewerToGui = true;
+
+            //o2MessageQueue = KO2MessageQueue.getO2KernelQueue();
         }
 
         public static AutoResetEvent guiClosed = new AutoResetEvent(false);
@@ -38,7 +48,7 @@ namespace O2.External.WinFormsUI.Forms
             {
                 if (isGuiLoaded())
                 {
-                    DI.log.error("There is already a GUI loaded and only one can be loaded");
+                    PublicDI.log.error("There is already a GUI loaded and only one can be loaded");
                     return false;
                 }
                 parentFormTitle = ClickOnceDeployment.getFormTitle_forClickOnce(parentFormTitle);
@@ -49,12 +59,12 @@ namespace O2.External.WinFormsUI.Forms
                 var maxTimeToWaitForGuiCreation = 20000;
                 if (O2DockPanel.guiLoaded.WaitOne(maxTimeToWaitForGuiCreation))
                 {
-                    DI.o2GuiWithDockPanel.invokeOnThread(()=>DI.o2GuiWithDockPanel.Text = parentFormTitle);                    
+                    O2AscxGUI.o2GuiWithDockPanel.invokeOnThread(()=>O2AscxGUI.o2GuiWithDockPanel.Text = parentFormTitle);                    
                     return true;
                 }
                 if (false == DebugMsg.IsDebuggerAttached())
-					//DI.log.reportCriticalErrorToO2Developers(null, null, "from O2AscxGUI: GUI was not available after 20 seconds");
-					DI.log.error("from O2AscxGUI: GUI was not available after 20 seconds");
+					//PublicDI.log.reportCriticalErrorToO2Developers(null, null, "from O2AscxGUI: GUI was not available after 20 seconds");
+					PublicDI.log.error("from O2AscxGUI: GUI was not available after 20 seconds");
                 return false;
             }
             catch (Exception)
@@ -67,11 +77,11 @@ namespace O2.External.WinFormsUI.Forms
         {
             if (launch(parentFormTitle))
             {
-                DI.o2GuiWithDockPanel.invokeOnThread(
+                O2AscxGUI.o2GuiWithDockPanel.invokeOnThread(
                     () =>
                         {
-                            DI.o2GuiWithDockPanel.Height = height;
-                            DI.o2GuiWithDockPanel.Width = width;
+                            O2AscxGUI.o2GuiWithDockPanel.Height = height;
+                            O2AscxGUI.o2GuiWithDockPanel.Width = width;
                         });
                 
                 return true;
@@ -84,7 +94,7 @@ namespace O2.External.WinFormsUI.Forms
         {
             if (false == guiClosed.WaitOne(milisecondsToWait))
             {
-                DI.log.error("in waitForAscxGuiClose , Gui didn't close after {0} seconds", milisecondsToWait / 1000);
+                PublicDI.log.error("in waitForAscxGuiClose , Gui didn't close after {0} seconds", milisecondsToWait / 1000);
                 return false;
             }
             return true;
@@ -100,31 +110,31 @@ namespace O2.External.WinFormsUI.Forms
             if (isGuiLoaded())
                 try
                 {
-                    if (DI.o2GuiWithDockPanel.okThread(delegate { close(); }))
+                    if (O2AscxGUI.o2GuiWithDockPanel.okThread(delegate { close(); }))
                     {
-                        // before we close this we need to remove all loaded Ascx from the DI.dO2LoadedO2DockContent
-                        DI.dO2LoadedO2DockContent.Clear();    
+                        // before we close this we need to remove all loaded Ascx from the O2AscxGUI.dO2LoadedO2DockContent
+                        O2AscxGUI.dO2LoadedO2DockContent.Clear();    
 
                         // now close the GUI
-                        DI.o2GuiWithDockPanel.Close();
+                        O2AscxGUI.o2GuiWithDockPanel.Close();
                         
-                        //DI.o2GuiWithDockPanel.Dispose();
+                        //O2AscxGUI.o2GuiWithDockPanel.Dispose();
 
                     }
                 }
                 catch (Exception ex)
                 {
-                    DI.log.ex(ex, "in O2AscxGUI.close");
+                    PublicDI.log.ex(ex, "in O2AscxGUI.close");
                     return false;
                 }
-            if (DI.o2GuiWithDockPanel == null)
+            if (O2AscxGUI.o2GuiWithDockPanel == null)
                 return true;
             if (false == DebugMsg.IsDebuggerAttached())
                 waitForAscxGuiClose(5000);
             else
                 waitForAscxGuiClose();
 
-            DI.log.info("Gui Closed");
+            PublicDI.log.info("Gui Closed");
             return true;
         }
 
@@ -135,7 +145,7 @@ namespace O2.External.WinFormsUI.Forms
                 var ascxControlToClose = (ContainerControl)getAscx(ascxControlName);
 
                 if (ascxControlToClose == null)
-                    DI.log.error(
+                    PublicDI.log.error(
                         "in O2AscxGui.closeAscxParent, could not get control: {0}", ascxControlName);
                 else
                     O2Forms.closeParentForm(ascxControlToClose);
@@ -150,35 +160,35 @@ namespace O2.External.WinFormsUI.Forms
 
         public static void logInfo(string infoMessageToLog)
         {
-            DI.log.info(infoMessageToLog);
+            PublicDI.log.info(infoMessageToLog);
         }
 
         public static void logDebug(string debugMessageToLog)
         {
-            DI.log.debug(debugMessageToLog);
+            PublicDI.log.debug(debugMessageToLog);
         }
 
         public static void logError(string errorMessageToLog)
         {
-            DI.log.error(errorMessageToLog);
+            PublicDI.log.error(errorMessageToLog);
         }
 
         /*public static void showMessageBox(string messageBoxText)
         {
-            DI.log.showMessageBox(messageBoxText);
+            PublicDI.log.showMessageBox(messageBoxText);
         }
 
         public static DialogResult showMessageBox(string message, string messageBoxTitle,
                                                   MessageBoxButtons messageBoxButtons)
         {
-            return DI.log.showMessageBox(message, messageBoxTitle, messageBoxButtons);
+            return PublicDI.log.showMessageBox(message, messageBoxTitle, messageBoxButtons);
         }*/
 
         public static void openAscx(string ascxControlToLoad, O2DockState dockState, String guiWindowName)
         {
-            var type = DI.reflection.getType(ascxControlToLoad);
+            var type = PublicDI.reflection.getType(ascxControlToLoad);
             if (type == null)
-                DI.log.error("in O2AscxGui.openAscx, could not resolve type called: {0}", ascxControlToLoad);
+                PublicDI.log.error("in O2AscxGui.openAscx, could not resolve type called: {0}", ascxControlToLoad);
             else
                 openAscx(type, dockState, guiWindowName);
         }
@@ -215,9 +225,9 @@ namespace O2.External.WinFormsUI.Forms
         }
         public static void openAscxASync(string ascxControlToLoad, O2DockState dockState, String guiWindowName)
         {
-            var type = DI.reflection.getType(ascxControlToLoad);
+            var type = PublicDI.reflection.getType(ascxControlToLoad);
             if (type == null)
-                DI.log.error("in O2AscxGui.openAscx, could not resolve type called: {0}", ascxControlToLoad);
+                PublicDI.log.error("in O2AscxGui.openAscx, could not resolve type called: {0}", ascxControlToLoad);
             else
                 openAscxASync(type, dockState, guiWindowName);
         }
@@ -231,8 +241,8 @@ namespace O2.External.WinFormsUI.Forms
         // was not working (tried to fix the annoying cases where the windows cursor was stuck with the HourGlass shape
         /* public static void setCursor(Cursor cursor)
          {
-             if (DI.o2GuiWithDockPanel != null)
-                 DI.o2GuiWithDockPanel.Cursor = cursor;
+             if (O2AscxGUI.o2GuiWithDockPanel != null)
+                 O2AscxGUI.o2GuiWithDockPanel.Cursor = cursor;
          }*/
 
         public static void openAscxAsForm(Type ascxControlToLoad)
@@ -247,16 +257,16 @@ namespace O2.External.WinFormsUI.Forms
 
         public static void openAscxAsForm(string ascxControlToLoad, string formName)
         {
-            Type typeOfAscxControlToLoad = DI.reflection.getType(ascxControlToLoad);
+            Type typeOfAscxControlToLoad = PublicDI.reflection.getType(ascxControlToLoad);
             if (typeOfAscxControlToLoad == null)
-                DI.log.error("in O2Messages.openAscxAsForm could not resolve Type:{0}", ascxControlToLoad);
+                PublicDI.log.error("in O2Messages.openAscxAsForm could not resolve Type:{0}", ascxControlToLoad);
             else
                 O2DockContent.launchO2DockContentAsStandAloneForm(typeOfAscxControlToLoad, formName);
         }
 
         public static Control getGuiWithDockPanelAsControl()
         {
-            return DI.o2GuiWithDockPanel;
+            return O2AscxGUI.o2GuiWithDockPanel;
         }
 
         public static Control getAscx(string ascxControlName)
@@ -271,7 +281,7 @@ namespace O2.External.WinFormsUI.Forms
 
         public static bool isGuiLoaded()
         {
-            return DI.o2GuiWithDockPanel != null;
+            return O2AscxGUI.o2GuiWithDockPanel != null;
         }
 
         public static object invokeOnAscxControl(string ascxTargetControl, string methodToExecute)
@@ -283,7 +293,7 @@ namespace O2.External.WinFormsUI.Forms
         {
             var ascxControl = getAscx(ascxTargetControl);
             if (ascxControl != null)
-                return DI.reflection.invoke(ascxControl, methodToExecute, methodParameters);
+                return PublicDI.reflection.invoke(ascxControl, methodToExecute, methodParameters);
             return null;
         }
 
@@ -297,7 +307,7 @@ namespace O2.External.WinFormsUI.Forms
             var ascxControl = getAscx(ascxTargetControl);
             if (ascxControl != null)
             {
-                var returnData = DI.reflection.invoke(ascxControl, methodToExecute, methodParameters);
+                var returnData = PublicDI.reflection.invoke(ascxControl, methodToExecute, methodParameters);
                 if (returnData != null && returnData is List<String>)
                     return (List<String>) returnData;
             }
@@ -323,7 +333,7 @@ namespace O2.External.WinFormsUI.Forms
         
         public static void addControlToMenu(string menuItemName, Action onMenuItemClick)
         {
-            DI.o2GuiWithDockPanel.addToLoadedO2ModulesMenu(menuItemName, onMenuItemClick);
+            O2AscxGUI.o2GuiWithDockPanel.addToLoadedO2ModulesMenu(menuItemName, onMenuItemClick);
         }
 
         public static void addControlToMenu(Type ascxControlToLoad, O2DockState dockState, String guiWindowName)

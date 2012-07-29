@@ -6,6 +6,7 @@ using O2.DotNetWrappers.DotNet;
 using O2.External.WinFormsUI.Forms;
 using O2.Interfaces.Views;
 using WeifenLuo.WinFormsUI.Docking;
+using O2.Kernel;
 
 namespace O2.External.WinFormsUI.O2Environment
 {
@@ -87,7 +88,7 @@ namespace O2.External.WinFormsUI.O2Environment
             }
             catch (Exception ex)
             {
-                DI.log.ex(ex, "in createControlFromType");
+                PublicDI.log.ex(ex, "in createControlFromType");
             }
             return false;            
 
@@ -97,7 +98,7 @@ namespace O2.External.WinFormsUI.O2Environment
         {
             
             if (typeOfControlToLoad == null)
-                DI.log.error("in launchO2DockContentAsStandAloneForm typeOfControlToLoad was null");
+                PublicDI.log.error("in launchO2DockContentAsStandAloneForm typeOfControlToLoad was null");
             else
                 try
                 {
@@ -106,7 +107,7 @@ namespace O2.External.WinFormsUI.O2Environment
                                            {
                                                try
                                                {
-                                                   DI.o2GuiStandAloneFormMode = true;
+                                                   O2AscxGUI.o2GuiStandAloneFormMode = true;
                                                    //var controlToLoad = (Control) Activator.CreateInstance(typeOfControlToLoad);
                                                   // if (typeOfControlToLoad != null)
                                                   // {
@@ -120,7 +121,7 @@ namespace O2.External.WinFormsUI.O2Environment
                                                         O2DockUtils.addO2DockContentToDIGlobalVar(o2DockContent);
                                                         o2DockContent.dockContent.Closed += (sender, e) =>
                                                                                                 {
-                                                                                                    if (DI.dO2LoadedO2DockContent.Count == 0) // if there are no more controls trigger the end of the GUI session
+                                                                                                    if (O2AscxGUI.dO2LoadedO2DockContent.Count == 0) // if there are no more controls trigger the end of the GUI session
                                                                                                         O2AscxGUI.guiClosed.Set();
                                                                                                 };
 
@@ -128,14 +129,14 @@ namespace O2.External.WinFormsUI.O2Environment
                                                     }
                                                     else
                                                     {
-                                                        DI.log.error(
+                                                        PublicDI.log.error(
                                                             "in launchO2DockContentAsStandAloneForm, could not create instance of controlToLoad: {0}",
                                                             typeOfControlToLoad.ToString());
                                                     }
                                                }
                                                catch (Exception ex)
                                                {
-                                                   DI.log.ex(ex, "in launchO2DockContentAsStandAloneForm");
+                                                   PublicDI.log.ex(ex, "in launchO2DockContentAsStandAloneForm");
                                                }
                                                sync.Set();
                                            });
@@ -143,7 +144,7 @@ namespace O2.External.WinFormsUI.O2Environment
                 }
                 catch (Exception ex)
                 {
-                    DI.log.ex(ex);
+                    PublicDI.log.ex(ex);
                 }
             
         }

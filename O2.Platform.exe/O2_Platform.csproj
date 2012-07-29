@@ -76,20 +76,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_BCL.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_BCL.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_CoreLib.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_CoreLib.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_NGit.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_NGit.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_REPL.dll">
-      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.dll</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_Roslyn.dll">
       <Link>_Dlls_Embeded\O2_FluentSharp_Roslyn.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\O2.FluentSharp\binaries\O2_FluentSharp_REPL.exe">
+      <Link>_Dlls_Embeded\O2_FluentSharp_REPL.exe</Link>
     </EmbeddedResource>
     <Content Include="O2_Setup.cs.txt" />
     <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
