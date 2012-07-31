@@ -512,7 +512,7 @@ namespace ICSharpCode.SharpDevelop.Dom.NRefactoryResolver
             //startOffset++;                  // DC to fix extra { which was breaking parser
 			System.Text.StringBuilder b = new System.Text.StringBuilder(classDecl, length + classDecl.Length + endClassDecl.Length + startLine - 1);
 			b.Append('\n', startLine - 1);
-            O2.Kernel.PublicDI.log.error("O2:DC:Applying ExtractMethod Patch");
+          //  O2.Kernel.PublicDI.log.error("O2:DC:Applying ExtractMethod Patch");
             b.Append("public void test()\n");       // DC
             var text = fileContent.Substring(startOffset, length);
 			b.Append(fileContent, startOffset, length);

@@ -29,7 +29,7 @@ namespace O2.External.SharpDevelop.ScriptSamples {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public O2SampleScripts() {
+        internal O2SampleScripts() {
         }
         
         /// <summary>
