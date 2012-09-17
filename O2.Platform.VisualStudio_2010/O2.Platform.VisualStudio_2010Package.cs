@@ -8,53 +8,41 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using O2.FluentSharp;
 
-namespace O2Platform.O2_Platform_VisualStudio_2010
+namespace O2.Platform.VisualStudio_2010_Extension
 {
-    /// <summary>
-    /// This is the class that implements the package exposed by this assembly.
-    ///
-    /// The minimum requirement for a class to be considered a valid package for Visual Studio
-    /// is to implement the IVsPackage interface and register itself with the shell.
-    /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-    /// to do it: it derives from the Package class that provides the implementation of the 
-    /// IVsPackage interface and uses the registration attributes defined in the framework to 
-    /// register itself and its components with the shell.
-    /// </summary>
-    // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is
-    // a package.
-    [PackageRegistration(UseManagedResourcesOnly = true)]
-    // This attribute is used to register the informations needed to show the this package
-    // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
-    [Guid(GuidList.guidO2_Platform_VisualStudio_2010PkgString)]
-    public sealed class O2_Platform_VisualStudio_2010Package : Package
+    static class GuidList
     {
-        /// <summary>
-        /// Default constructor of the package.
-        /// Inside this method you can place any initialization code that does not require 
-        /// any Visual Studio service because at this point the package object is created but 
-        /// not sited yet inside Visual Studio environment. The place to do all the other 
-        /// initialization is the Initialize method.
-        /// </summary>
+        public const string guidO2_Platform_VisualStudio_2010PkgString = "F886416F-3DBF-4DEE-9578-E7692FC59871";
+        //     public const string guidO2_Platform_VisualStudio_2010CmdSetString = "dcf44788-1870-4627-9dbb-910bee34c55c";
+
+        //     public static readonly Guid guidO2_Platform_VisualStudio_2010CmdSet = new Guid(guidO2_Platform_VisualStudio_2010CmdSetString);
+    }
+    [PackageRegistration(UseManagedResourcesOnly = true)]    
+    [Guid(GuidList.guidO2_Platform_VisualStudio_2010PkgString)]
+    [ProvideAutoLoad(UIContextGuids80.NoSolution)]               // ensures this gets called on VisualStudio start
+    public sealed class O2_Platform_VisualStudio_2010Package : NoSolution_Package
+    {
+     
         public O2_Platform_VisualStudio_2010Package()
-        {
-            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+        {            
+            
         }
 
 
-
+         
         /////////////////////////////////////////////////////////////////////////////
         // Overriden Package Implementation
         #region Package Members
-
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initilaization code that rely on services provided by VisualStudio.
-        /// </summary>
+      
         protected override void Initialize()
-        {
-            Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+        {            
+            //VisualStudio_O2_Utils.open_LogViewer();
+            //VisualStudio_O2_Utils.open_ScriptEditor();
+            //new NoSolution_Package().Initialize();          // 
+            VisualStudio_O2_Utils.compileAndExecuteScript(@"VS_Scripts\O2_Platform_Gui.cs", "O2_Platform_Gui", "buildGui"); 
+            
             base.Initialize();
 
         }

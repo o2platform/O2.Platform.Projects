@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>
+"In Create TeamMentor Menu Script".info();
+var visualStudio = new VisualStudio_2010();
+var o2PlatformGui = new O2_Platform_Gui();
+var toolsMenu = visualStudio.dte().add_TopMenu("Tools");
+
+//            var o2Menu = dte.add_TopMenu("Tools");  //shouldn't need to create since it is usually already there           
+var o2Menu = toolsMenu.add_SubMenu("O2 Platform",1);
+o2Menu	.add_Menu_Button("O2 VisualStudio PlugIns Editor", ()=&gt; o2PlatformGui.openScriptsViewer())
+	  	.add_Menu_Button("C# REPL Script", () =&gt; o2PlatformGui.openScriptsViewer())
+		.add_Menu_Button("Log Viewer", () =&gt; visualStudio.open_LogViewer())
+		.add_Menu_Button("Development Environment", () =&gt; open.devEnvironment())
+//o2Menu.add_Menu_Button("Code Editor", () =&gt; visualStudio.open_CodeEditor());
+//o2Menu.add_Menu_Button("Create Dock Window", () =&gt; this.createDocWindow());                        
+		.add_Menu_Button("O2Script: Util - O2 Available scripts", ()=&gt; "Util - O2 Available scripts.h2".local().executeH2Script())
+		.add_Menu_Button("O2Script: Main O2 Gui", () =&gt; "Main O2 Gui.h2".local().executeH2Script())
+		.add_Menu_Button("Update O2 Scripts (download from GitHub)", () =&gt; O2Scripts.downloadO2Scripts());
+           
+/*TeamMentorMenu//.add_Menu_Button("--",()=&gt;{}) 
+		.add_Menu_Button("Open TeamMentor Landing Pages Window", ()=&gt; teamMentorGui.createLandingPagesWindow())
+		.add_Menu_Button("Open TeamMentor + Cat.Net Config Window", ()=&gt; teamMentorGui.createOptionsWindow())
+		.add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
+		.add_Menu_Button("------- Debug-----")
+		.add_Menu_Button("Trigger Scan", () =&gt; visualStudio.dte().Solution.SolutionBuild.Build())			  
+          .add_Menu_Button("LogViewer", () =&gt; visualStudio.open_LogViewer())
+          .add_Menu_Button("Scripts Editor", ()=&gt; scriptsFolder.open_Script_Viewer_GUI())
+          .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor());
+             */
+return visualStudio;
+//using O2.FluentSharp.REPL
+//O2File:VS_Scripts\O2_Platform_Gui.cs
+//O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
+  <ReferencedAssemblies />
+</H2>

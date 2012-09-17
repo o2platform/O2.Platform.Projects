@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>var o2DevDir = @"E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010";
+CompileEngine.LocalFoldersToSearchForCodeFiles.clear().add(o2DevDir);
+var o2PlatformGui = new O2_Platform_Gui();
+o2PlatformGui.openScriptsViewer();
+//O2File:VS_Scripts\O2_Platform_Gui.cs</SourceCode>
+  <ReferencedAssemblies />
+</H2>

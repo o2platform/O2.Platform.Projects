@@ -78,8 +78,8 @@ namespace Microsoft.Scripting.Math {
         public static implicit operator Complex64(int i) {
             return MakeReal(i);
         }
-
-        [CLSCompliant(false)]
+        
+        [CLSCompliant(false)]   
         public static implicit operator Complex64(uint i) {
             return MakeReal(i);
         }
