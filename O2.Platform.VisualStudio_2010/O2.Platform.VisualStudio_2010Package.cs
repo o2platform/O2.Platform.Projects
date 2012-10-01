@@ -8,7 +8,11 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
-using O2.FluentSharp;
+using O2.FluentSharp.VisualStudio;
+using O2.Kernel;
+using O2.DotNetWrappers.DotNet;
+using O2.DotNetWrappers.ExtensionMethods;
+using System.Windows.Forms;
 
 namespace O2.Platform.VisualStudio_2010_Extension
 {
@@ -26,8 +30,9 @@ namespace O2.Platform.VisualStudio_2010_Extension
     {
      
         public O2_Platform_VisualStudio_2010Package()
-        {            
-            
+        {
+			O2ConfigSettings.O2Version = "O2_VS2010_4.4.5";
+			PublicDI.config = new O2.Kernel.InterfacesBaseImpl.KO2Config();
         }
 
 
@@ -37,13 +42,25 @@ namespace O2.Platform.VisualStudio_2010_Extension
         #region Package Members
       
         protected override void Initialize()
-        {            
-            //VisualStudio_O2_Utils.open_LogViewer();
-            //VisualStudio_O2_Utils.open_ScriptEditor();
-            //new NoSolution_Package().Initialize();          // 
-            VisualStudio_O2_Utils.compileAndExecuteScript(@"VS_Scripts\O2_Platform_Gui.cs", "O2_Platform_Gui", "buildGui"); 
+        {
+			base.Initialize();
+			if (Control.ModifierKeys == Keys.Shift)
+				open.scriptEditor();
+			try
+			{
+				VisualStudio_O2_Utils.waitForDTEObject();
+				"[O2_Platform_VisualStudio_2010Package] Package: {0}, DTE: {1}".info(VisualStudio_2010.Package, VisualStudio_2010.DTE2);
+				
+				CompileEngine.LocalFoldersToSearchForCodeFiles.Add(this.type().assemblyLocation().parentFolder());		// so that "{file}".local() is able to find files included with this
+
+				VisualStudio_O2_Utils.compileAndExecuteScript(@"VS_Scripts\O2_Platform_Gui.cs", "O2_Platform_Gui", "buildGui");
+			}
+			catch (Exception ex)
+			{
+				ex.log("in O2_Platform_VisualStudio_2010Package Initialize");
+			}
             
-            base.Initialize();
+            
 
         }
         #endregion
