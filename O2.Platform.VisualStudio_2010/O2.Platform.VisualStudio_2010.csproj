@@ -44,20 +44,15 @@
       <Private>false</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
-    <Reference Include="O2_FluentSharp_BCL, Version=4.4.0.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.4.4.0.0\lib\net35\O2_FluentSharp_BCL.dll</HintPath>
+    <Reference Include="O2_FluentSharp_BCL, Version=4.4.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.4.4.2.0\lib\net35\O2_FluentSharp_BCL.dll</HintPath>
     </Reference>
-    <Reference Include="O2_FluentSharp_CoreLib, Version=4.4.0.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.4.4.0.0\lib\net35\O2_FluentSharp_CoreLib.dll</HintPath>
+    <Reference Include="O2_FluentSharp_CoreLib, Version=4.4.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.4.4.2.0\lib\net35\O2_FluentSharp_CoreLib.dll</HintPath>
     </Reference>
-    <Reference Include="O2_FluentSharp_REPL, Version=4.4.0.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.4.4.0.0\lib\net35\O2_FluentSharp_REPL.exe</HintPath>
-    </Reference>
-    <Reference Include="O2_FluentSharp_VisualStudio_2010, Version=4.4.2.0, Culture=neutral, PublicKeyToken=0eea3742d7f750b9, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.VisualStudio2010.4.4.2.0\lib\net40\O2_FluentSharp_VisualStudio_2010.dll</HintPath>
+    <Reference Include="O2_FluentSharp_REPL, Version=4.4.3.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.4.4.3.0\lib\net35\O2_FluentSharp_REPL.exe</HintPath>
     </Reference>
     <Reference Include="O2_FluentSharp_WPF, Version=4.4.0.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -151,10 +146,12 @@
     <Content Include="VS_O2_PlugIns\On Save - Compile File.h2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="VS_O2_PlugIns\Set development environment.h2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -178,6 +175,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\O2.FluentSharp.VisualStudio_2010.csproj">
+      <Project>{38AFBBBD-48E5-4792-B90E-B9A1A540F906}</Project>
+      <Name>O2.FluentSharp.VisualStudio_2010</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
