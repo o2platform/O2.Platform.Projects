@@ -44,19 +44,18 @@
       <Private>false</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
-    <Reference Include="O2_FluentSharp_BCL, Version=4.4.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.4.4.2.0\lib\net35\O2_FluentSharp_BCL.dll</HintPath>
+    <Reference Include="O2_FluentSharp_BCL, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.4.5.2.0\lib\net35\O2_FluentSharp_BCL.dll</HintPath>
     </Reference>
-    <Reference Include="O2_FluentSharp_CoreLib, Version=4.4.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.4.4.2.0\lib\net35\O2_FluentSharp_CoreLib.dll</HintPath>
+    <Reference Include="O2_FluentSharp_CoreLib, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.4.5.2.0\lib\net35\O2_FluentSharp_CoreLib.dll</HintPath>
     </Reference>
-    <Reference Include="O2_FluentSharp_REPL, Version=4.4.3.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=x86">
+    <Reference Include="O2_FluentSharp_REPL, Version=4.5.3.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
       <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.4.4.3.0\lib\net35\O2_FluentSharp_REPL.exe</HintPath>
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.4.5.3.0\lib\net35\O2_FluentSharp_REPL.exe</HintPath>
     </Reference>
-    <Reference Include="O2_FluentSharp_WPF, Version=4.4.0.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.WPF.4.4.0.0\lib\net40\O2_FluentSharp_WPF.dll</HintPath>
+    <Reference Include="O2_FluentSharp_WPF, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.WPF.4.5.2.0\lib\net40\O2_FluentSharp_WPF.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -161,6 +160,9 @@
     <Content Include="VS_O2_PlugIns\Create O2 Platform Menu.h2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="VS_O2_PlugIns\Compile and Display a O2 UserControl inside VS.h2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

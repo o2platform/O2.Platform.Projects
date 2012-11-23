@@ -31,8 +31,10 @@ namespace O2.Platform.VisualStudio_2010_Extension
      
         public O2_Platform_VisualStudio_2010Package()
         {
-			O2ConfigSettings.O2Version = "O2_VS2010_4.4.14";			
+			O2ConfigSettings.O2Version = "O2_VS2010_4.4.16";			
 			PublicDI.config = new O2.Kernel.InterfacesBaseImpl.KO2Config();
+			"aaa".popupWindow();
+			open.logViewer();
         }
 
 

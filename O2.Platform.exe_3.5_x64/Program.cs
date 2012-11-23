@@ -12,7 +12,7 @@ namespace O2.Platform
 
         [STAThread]
         static void Main(string[] args)
-        {            
+        {       
 			//new O2_Setup().startO2(args);
             launch.o2Gui(args);
         }                
