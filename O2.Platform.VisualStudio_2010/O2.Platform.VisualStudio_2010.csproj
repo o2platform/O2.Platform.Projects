@@ -34,11 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Platform.WindowManagement, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.UI.Internal, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.10.0">
       <Private>false</Private>
@@ -60,6 +65,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -67,6 +73,11 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>c:\Program Files (x86)\Common Files\Microsoft Shared\MSEnv\PublicAssemblies\VSLangProj.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
@@ -127,11 +138,37 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="O2.Platform.VisualStudio_2010Package.cs" />
+    <Compile Include="Controls\Control_WinForms.xaml.cs">
+      <DependentUpon>Control_WinForms.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Control_WPF.xaml.cs">
+      <DependentUpon>Control_WPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WindowPane_WinForms.cs" />
+    <Compile Include="Controls\WindowPane_WPF.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Windows.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_TO_ADD_TO_O2.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_DTE.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_WPF_WinForms.cs" />
+    <Compile Include="ExtensionMethods\_VisualStudio_2010_ExtensionMethods_Empty.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Document.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_ErrorList.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_IVsUIShell.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Menus.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Multiple_Guis.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Projects.cs" />
+    <Compile Include="NoSolution_Package.cs" />
+    <Content Include="O2.Platform.VisualStudio_2010Package.cs.txt" />
+    <Compile Include="O2Platform_VisualStudio.cs" />
+    <Compile Include="Packages\Packages_for_ProvideAutoLoads.cs" />
+    <Compile Include="Packages\Package_IWpfTextViewCreationListener.cs" />
+    <Compile Include="Packages\Package_IWpfTextViewMarginProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualStudio_2010.cs" />
+    <Compile Include="VisualStudio_O2_Utils.cs" />
     <Content Include="VS_Scripts\O2_Platform_Gui.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +201,7 @@
     <Content Include="VS_O2_PlugIns\Compile and Display a O2 UserControl inside VS.h2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="VS_O2_PlugIns\PoCs\Create Window to Show MainGui Live Preview.h2" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Key.snk" />
@@ -179,10 +217,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\O2.FluentSharp.VisualStudio_2010.csproj">
-      <Project>{38AFBBBD-48E5-4792-B90E-B9A1A540F906}</Project>
-      <Name>O2.FluentSharp.VisualStudio_2010</Name>
-    </ProjectReference>
+    <Page Include="Controls\Control_WinForms.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\Control_WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

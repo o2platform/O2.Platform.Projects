@@ -92,7 +92,7 @@ return visualStudio.dte();
 //using O2.FluentSharp.VisualStudio
 //using EnvDTE80 
 
-//O2File:E:\O2_V4\O2.Platform.Scripts\Utils\ExtensionMethods\_Extra_methods_To_Add_to_Main_CodeBase.cs
-//O2File:E:\O2_V4\O2.Platform.Scripts\3rdParty\Microsoft\VisualStudio\Inside VisualStudio 2010\VisualStudio_2010_ExtensionMethods_ExtraMethods.cs</SourceCode>
+//_O2File:E:\O2_V4\O2.Platform.Scripts\Utils\ExtensionMethods\_Extra_methods_To_Add_to_Main_CodeBase.cs
+//_O2File:E:\O2_V4\O2.Platform.Scripts\3rdParty\Microsoft\VisualStudio\Inside VisualStudio 2010\VisualStudio_2010_ExtensionMethods_ExtraMethods.cs</SourceCode>
   <ReferencedAssemblies />
 </H2>

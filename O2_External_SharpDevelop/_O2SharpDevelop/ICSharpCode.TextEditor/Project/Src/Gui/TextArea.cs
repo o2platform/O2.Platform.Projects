@@ -19,6 +19,8 @@ using ICSharpCode.TextEditor.Document;
 using ICSharpCode.TextEditor.Gui.CompletionWindow;
 using ICSharpCode.NRefactory;
 
+using O2.DotNetWrappers.ExtensionMethods;
+
 namespace ICSharpCode.TextEditor
 {
 	public delegate bool KeyEventHandler(char ch);
@@ -534,15 +536,14 @@ namespace ICSharpCode.TextEditor
 		protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs pevent)
 		{
 		}
-		
+
+		static int count = 0;
 		protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
 		{
+			var here = count;
+			//"start paint:{0} : {1}".info(count++, here++);
             if (false == this.CheckThread())
-                return;
-            // DC
-            if (this.InvokeRequired)
-            { 
-            }
+                return;            
 			int currentXPos = 0;
 			int currentYPos = 0;
 			bool adjustScrollBars = false;
@@ -564,7 +565,8 @@ namespace ICSharpCode.TextEditor
 			}
 			
 			foreach (AbstractMargin margin in leftMargins) {
-				if (margin.IsVisible) {
+				if (margin.IsVisible) 
+				{
 					Rectangle marginRectangle = new Rectangle(currentXPos , currentYPos, margin.Size.Width, Height - currentYPos);
 					if (marginRectangle != margin.DrawingPosition) {
 						// margin changed size
@@ -574,13 +576,21 @@ namespace ICSharpCode.TextEditor
 						adjustScrollBars = true;
 						margin.DrawingPosition = marginRectangle;
 					}
-					currentXPos += margin.DrawingPosition.Width;
-					if (clipRectangle.IntersectsWith(marginRectangle)) {
-						marginRectangle.Intersect(clipRectangle);
-						if (!marginRectangle.IsEmpty) {
-							margin.Paint(g, marginRectangle);
-						}
-					}
+					lock (g)					
+						lock (margin)
+							lock (leftMargins)								
+								{
+									currentXPos += margin.DrawingPosition.Width;
+									if (clipRectangle.IntersectsWith(marginRectangle))
+									{
+										marginRectangle.Intersect(clipRectangle);
+										if (!marginRectangle.IsEmpty)
+										{
+											margin.Paint(g, marginRectangle);
+										}
+									}
+
+								}
 				}
 			}
 			
@@ -604,7 +614,11 @@ namespace ICSharpCode.TextEditor
 			
 			// we cannot update the caret position here, it's not allowed to call the caret API inside WM_PAINT
 			//Caret.UpdateCaretPosition();
-			
+
+			//"end paint:{0} : {1}".debug(count, here);
+			if(count !=here)
+				"count !=here : {0} != {1}".error(count, here);
+
 			base.OnPaint(e);
 		}
 		void DocumentFoldingsChanged(object sender, EventArgs e)

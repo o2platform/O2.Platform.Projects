@@ -82,20 +82,24 @@ namespace ICSharpCode.TextEditor
                 {
                     int ypos = drawingPosition.Y + fontHeight * y - textArea.TextView.VisibleLineDrawingRemainder;
                     Rectangle backgroundRectangle = new Rectangle(drawingPosition.X, ypos, drawingPosition.Width, fontHeight);
-                    if (rect.IntersectsWith(backgroundRectangle))
-                    {
-                        g.FillRectangle(fillBrush, backgroundRectangle);
-                        int curLine = textArea.Document.GetFirstLogicalLine(textArea.Document.GetVisibleLine(textArea.TextView.FirstVisibleLine) + y);
+					if (rect.IntersectsWith(backgroundRectangle))
+					{
+						lock (g)
+							lock (fillBrush)
+							{
+								g.FillRectangle(fillBrush, backgroundRectangle);
+								int curLine = textArea.Document.GetFirstLogicalLine(textArea.Document.GetVisibleLine(textArea.TextView.FirstVisibleLine) + y);
 
-                        if (curLine < textArea.Document.TotalNumberOfLines)
-                        {
-                            g.DrawString((curLine + 1).ToString(),
-                                         lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
-                                         drawBrush,
-                                         backgroundRectangle,
-                                         numberStringFormat);
-                        }
-                    }
+								if (curLine < textArea.Document.TotalNumberOfLines)
+								{
+									g.DrawString((curLine + 1).ToString(),
+												 lineNumberPainterColor.GetFont(TextEditorProperties.FontContainer),
+												 drawBrush,
+												 backgroundRectangle,
+												 numberStringFormat);
+								}
+							}
+					}
                 }
             }
             catch (Exception ex)

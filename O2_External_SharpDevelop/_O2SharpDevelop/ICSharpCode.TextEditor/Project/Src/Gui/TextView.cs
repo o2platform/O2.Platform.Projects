@@ -161,12 +161,15 @@ namespace ICSharpCode.TextEditor
 				Rectangle lineRectangle = new Rectangle(DrawingPosition.X - horizontalDelta,
 				                                        DrawingPosition.Top + y * fontHeight - VisibleLineDrawingRemainder,
 				                                        DrawingPosition.Width + horizontalDelta,
-				                                        fontHeight);
-				
-				if (rect.IntersectsWith(lineRectangle)) {
-					int fvl = textArea.Document.GetVisibleLine(FirstVisibleLine);
-					int currentLine = textArea.Document.GetFirstLogicalLine(textArea.Document.GetVisibleLine(FirstVisibleLine) + y);
-					PaintDocumentLine(g, currentLine, lineRectangle);
+				                                        fontHeight);				
+				if (rect.IntersectsWith(lineRectangle)) 
+				{
+					lock (g)
+					{
+						int fvl = textArea.Document.GetVisibleLine(FirstVisibleLine);
+						int currentLine = textArea.Document.GetFirstLogicalLine(textArea.Document.GetVisibleLine(FirstVisibleLine) + y);
+						PaintDocumentLine(g, currentLine, lineRectangle);
+					}
 				}
 			}
 			
@@ -182,114 +185,116 @@ namespace ICSharpCode.TextEditor
 		{
             try
             {
-                if (false == this.CheckThread())
-                    return;
-                Debug.Assert(lineNumber >= 0);
-                Brush bgColorBrush = GetBgColorBrush(lineNumber);
-                Brush backgroundBrush = textArea.Enabled ? bgColorBrush : SystemBrushes.InactiveBorder;
+				lock (g)
+				{
+					if (false == this.CheckThread())
+						return;
+					Debug.Assert(lineNumber >= 0);
+					Brush bgColorBrush = GetBgColorBrush(lineNumber);
+					Brush backgroundBrush = textArea.Enabled ? bgColorBrush : SystemBrushes.InactiveBorder;
 
-                if (lineNumber >= textArea.Document.TotalNumberOfLines)
-                {
-                    g.FillRectangle(backgroundBrush, lineRectangle);
-                    if (TextEditorProperties.ShowInvalidLines)
-                    {
-                        DrawInvalidLineMarker(g, lineRectangle.Left, lineRectangle.Top);
-                    }
-                    if (TextEditorProperties.ShowVerticalRuler)
-                    {
-                        DrawVerticalRuler(g, lineRectangle);
-                    }
-                    //				bgColorBrush.Dispose();
-                    return;
-                }
+					if (lineNumber >= textArea.Document.TotalNumberOfLines)
+					{
+						g.FillRectangle(backgroundBrush, lineRectangle);
+						if (TextEditorProperties.ShowInvalidLines)
+						{
+							DrawInvalidLineMarker(g, lineRectangle.Left, lineRectangle.Top);
+						}
+						if (TextEditorProperties.ShowVerticalRuler)
+						{
+							DrawVerticalRuler(g, lineRectangle);
+						}
+						//				bgColorBrush.Dispose();
+						return;
+					}
 
-                int physicalXPos = lineRectangle.X;
-                // there can't be a folding wich starts in an above line and ends here, because the line is a new one,
-                // there must be a return before this line.
-                int column = 0;
-                physicalColumn = 0;
-                if (TextEditorProperties.EnableFolding)
-                {
-                    while (true)
-                    {
-                        List<FoldMarker> starts = textArea.Document.FoldingManager.GetFoldedFoldingsWithStartAfterColumn(lineNumber, column - 1);
-                        if (starts == null || starts.Count <= 0)
-                        {
-                            if (lineNumber < textArea.Document.TotalNumberOfLines)
-                            {
-                                physicalXPos = PaintLinePart(g, lineNumber, column, textArea.Document.GetLineSegment(lineNumber).Length, lineRectangle, physicalXPos);
-                            }
-                            break;
-                        }
-                        // search the first starting folding
-                        FoldMarker firstFolding = (FoldMarker)starts[0];
-                        foreach (FoldMarker fm in starts)
-                        {
-                            if (fm.StartColumn < firstFolding.StartColumn)
-                            {
-                                firstFolding = fm;
-                            }
-                        }
-                        starts.Clear();
+					int physicalXPos = lineRectangle.X;
+					// there can't be a folding wich starts in an above line and ends here, because the line is a new one,
+					// there must be a return before this line.
+					int column = 0;
+					physicalColumn = 0;
+					if (TextEditorProperties.EnableFolding)
+					{
+						while (true)
+						{
+							List<FoldMarker> starts = textArea.Document.FoldingManager.GetFoldedFoldingsWithStartAfterColumn(lineNumber, column - 1);
+							if (starts == null || starts.Count <= 0)
+							{
+								if (lineNumber < textArea.Document.TotalNumberOfLines)
+								{
+									physicalXPos = PaintLinePart(g, lineNumber, column, textArea.Document.GetLineSegment(lineNumber).Length, lineRectangle, physicalXPos);
+								}
+								break;
+							}
+							// search the first starting folding
+							FoldMarker firstFolding = (FoldMarker)starts[0];
+							foreach (FoldMarker fm in starts)
+							{
+								if (fm.StartColumn < firstFolding.StartColumn)
+								{
+									firstFolding = fm;
+								}
+							}
+							starts.Clear();
 
-                        physicalXPos = PaintLinePart(g, lineNumber, column, firstFolding.StartColumn, lineRectangle, physicalXPos);
-                        column = firstFolding.EndColumn;
-                        lineNumber = firstFolding.EndLine;
-                        if (lineNumber >= textArea.Document.TotalNumberOfLines)
-                        {
-                            Debug.Assert(false, "Folding ends after document end");
-                            break;
-                        }
+							physicalXPos = PaintLinePart(g, lineNumber, column, firstFolding.StartColumn, lineRectangle, physicalXPos);
+							column = firstFolding.EndColumn;
+							lineNumber = firstFolding.EndLine;
+							if (lineNumber >= textArea.Document.TotalNumberOfLines)
+							{
+								Debug.Assert(false, "Folding ends after document end");
+								break;
+							}
 
-                        ColumnRange selectionRange2 = textArea.SelectionManager.GetSelectionAtLine(lineNumber);
-                        bool drawSelected = ColumnRange.WholeColumn.Equals(selectionRange2) || firstFolding.StartColumn >= selectionRange2.StartColumn && firstFolding.EndColumn <= selectionRange2.EndColumn;
+							ColumnRange selectionRange2 = textArea.SelectionManager.GetSelectionAtLine(lineNumber);
+							bool drawSelected = ColumnRange.WholeColumn.Equals(selectionRange2) || firstFolding.StartColumn >= selectionRange2.StartColumn && firstFolding.EndColumn <= selectionRange2.EndColumn;
 
-                        physicalXPos = PaintFoldingText(g, lineNumber, physicalXPos, lineRectangle, firstFolding.FoldText, drawSelected);
-                    }
-                }
-                else
-                {
-                    physicalXPos = PaintLinePart(g, lineNumber, 0, textArea.Document.GetLineSegment(lineNumber).Length, lineRectangle, physicalXPos);
-                }
+							physicalXPos = PaintFoldingText(g, lineNumber, physicalXPos, lineRectangle, firstFolding.FoldText, drawSelected);
+						}
+					}
+					else
+					{
+						physicalXPos = PaintLinePart(g, lineNumber, 0, textArea.Document.GetLineSegment(lineNumber).Length, lineRectangle, physicalXPos);
+					}
 
-                if (lineNumber < textArea.Document.TotalNumberOfLines)
-                {
-                    // Paint things after end of line
-                    ColumnRange selectionRange = textArea.SelectionManager.GetSelectionAtLine(lineNumber);
-                    LineSegment currentLine = textArea.Document.GetLineSegment(lineNumber);
-                    HighlightColor selectionColor = textArea.Document.HighlightingStrategy.GetColorFor("Selection");
+					if (lineNumber < textArea.Document.TotalNumberOfLines)
+					{
+						// Paint things after end of line
+						ColumnRange selectionRange = textArea.SelectionManager.GetSelectionAtLine(lineNumber);
+						LineSegment currentLine = textArea.Document.GetLineSegment(lineNumber);
+						HighlightColor selectionColor = textArea.Document.HighlightingStrategy.GetColorFor("Selection");
 
-                    bool selectionBeyondEOL = selectionRange.EndColumn > currentLine.Length || ColumnRange.WholeColumn.Equals(selectionRange);
+						bool selectionBeyondEOL = selectionRange.EndColumn > currentLine.Length || ColumnRange.WholeColumn.Equals(selectionRange);
 
-                    if (TextEditorProperties.ShowEOLMarker)
-                    {
-                        HighlightColor eolMarkerColor = textArea.Document.HighlightingStrategy.GetColorFor("EOLMarkers");
-                        physicalXPos += DrawEOLMarker(g, eolMarkerColor.Color, selectionBeyondEOL ? bgColorBrush : backgroundBrush, physicalXPos, lineRectangle.Y);
-                    }
-                    else
-                    {
-                        if (selectionBeyondEOL)
-                        {
-                            g.FillRectangle(BrushRegistry.GetBrush(selectionColor.BackgroundColor), new RectangleF(physicalXPos, lineRectangle.Y, WideSpaceWidth, lineRectangle.Height));
-                            physicalXPos += WideSpaceWidth;
-                        }
-                    }
+						if (TextEditorProperties.ShowEOLMarker)
+						{
+							HighlightColor eolMarkerColor = textArea.Document.HighlightingStrategy.GetColorFor("EOLMarkers");
+							physicalXPos += DrawEOLMarker(g, eolMarkerColor.Color, selectionBeyondEOL ? bgColorBrush : backgroundBrush, physicalXPos, lineRectangle.Y);
+						}
+						else
+						{
+							if (selectionBeyondEOL)
+							{
+								g.FillRectangle(BrushRegistry.GetBrush(selectionColor.BackgroundColor), new RectangleF(physicalXPos, lineRectangle.Y, WideSpaceWidth, lineRectangle.Height));
+								physicalXPos += WideSpaceWidth;
+							}
+						}
 
-                    Brush fillBrush = selectionBeyondEOL && TextEditorProperties.AllowCaretBeyondEOL ? bgColorBrush : backgroundBrush;
-                    try
-                    {
-                        g.FillRectangle(fillBrush,
-                                    new RectangleF(physicalXPos, lineRectangle.Y, lineRectangle.Width - physicalXPos + lineRectangle.X, lineRectangle.Height));
-                    }
-                    catch (Exception ex)
-                    {
-                        O2.Kernel.PublicDI.log.error("Error in TextView: " + ex.Message);
-                    }
-                }
-                if (TextEditorProperties.ShowVerticalRuler)
-                {
-                    DrawVerticalRuler(g, lineRectangle);
-                }
+						Brush fillBrush = selectionBeyondEOL && TextEditorProperties.AllowCaretBeyondEOL ? bgColorBrush : backgroundBrush;
+						try
+						{
+							g.FillRectangle(fillBrush,new RectangleF(physicalXPos, lineRectangle.Y, lineRectangle.Width - physicalXPos + lineRectangle.X, lineRectangle.Height));
+						}
+						catch (Exception ex)
+						{
+							O2.Kernel.PublicDI.log.error("Error in TextView: " + ex.Message);
+						}
+					}
+					if (TextEditorProperties.ShowVerticalRuler)
+					{
+						DrawVerticalRuler(g, lineRectangle);
+					}
+				}
                 //			bgColorBrush.Dispose();
             }
             catch (Exception ex)
@@ -586,14 +591,20 @@ namespace ICSharpCode.TextEditor
                     }
                     else
                     {
-                        int wordWidth = DrawDocumentWord(g,
-                                                         currentWord.Word,
-                                                         new Point(physicalXPos, lineRectangle.Y),
-                                                         currentWord.GetFont(fontContainer),
-                                                         wordForeColor,
-                                                         wordBackBrush);
-                        wordRectangle = new RectangleF(physicalXPos, lineRectangle.Y, wordWidth, lineRectangle.Height);
-                        physicalXPos += wordWidth;
+						lock(g)
+							lock(currentWord)
+								lock (fontContainer)
+									lock (wordBackBrush)
+									{
+										int wordWidth = DrawDocumentWord(g,
+																		 currentWord.Word,
+																		 new Point(physicalXPos, lineRectangle.Y),
+																		 currentWord.GetFont(fontContainer),
+																		 wordForeColor,
+																		 wordBackBrush);
+										wordRectangle = new RectangleF(physicalXPos, lineRectangle.Y, wordWidth, lineRectangle.Height);
+										physicalXPos += wordWidth;
+									}
                     }
                     foreach (TextMarker marker in markers)
                     {
@@ -668,12 +679,15 @@ namespace ICSharpCode.TextEditor
                 g.FillRectangle(backBrush, //num == 0 ? Brushes.LightBlue : num == 1 ? Brushes.LightGreen : Brushes.Yellow,
                                 new RectangleF(position.X, position.Y, wordWidth + 1, FontHeight));
 
-                DrawString(g,
-                           word,
-                           font,
-                           foreColor,
-                           position.X,
-                           position.Y);
+				lock (g)
+				{
+					DrawString(g,
+							   word,
+							   font,
+							   foreColor,
+							   position.X,
+							   position.Y);
+				}
             }
             catch (Exception ex)
             {

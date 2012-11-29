@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>var visualStudio = new VisualStudio_2010();
+var livePreview = visualStudio.open_Panel("Live preview of MainGui object");
+var maxCreations = 100; 
+Action&lt;Type&gt; callbackFromVS = 
+	(type)=&gt;{					
+					"I was called on MainGui ctor with: {0}".info(type);
+					"Assembly location: {0}".info(type.assemblyLocation());			
+					O2Thread.mtaThread(
+						()=&gt;{
+								if (maxCreations-- &gt;0)
+								{
+									var control = livePreview.clear().add_Control(type);
+									control.invoke("buildGui");
+									visualStudio.errorList().add_Message("Created Live preview of control: {0}".format(type.typeName()));
+								}
+								else
+									visualStudio.errorList().add_Error("maxCreations reached");									
+							});
+					"type".o2Cache(type);		
+		       };
+
+"onMainGuiCtor".o2Cache(callbackFromVS);
+
+return "done";</SourceCode>
+  <ReferencedAssemblies />
+</H2>
