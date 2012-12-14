@@ -26,7 +26,7 @@ namespace ICSharpCode.TextEditor.Document
 		public ResourceSyntaxModeProvider()
 		{
 			Assembly assembly = typeof(SyntaxMode).Assembly;
-            Stream syntaxModeStream = assembly.GetManifestResourceStream("O2.External.SharpDevelop._O2SharpDevelop.ICSharpCode.TextEditor.Project.Resources.SyntaxModes.xml");
+            Stream syntaxModeStream = assembly.GetManifestResourceStream("O2.Platform.External.SharpDevelop._O2SharpDevelop.ICSharpCode.TextEditor.Project.Resources.SyntaxModes.xml");
 			if (syntaxModeStream != null) {
 				syntaxModes = SyntaxMode.GetSyntaxModes(syntaxModeStream);
 			} else {
@@ -37,7 +37,7 @@ namespace ICSharpCode.TextEditor.Document
 		public XmlTextReader GetSyntaxModeFile(SyntaxMode syntaxMode)
 		{
 			Assembly assembly = typeof(SyntaxMode).Assembly;           
-            return new XmlTextReader(assembly.GetManifestResourceStream("O2.External.SharpDevelop._O2SharpDevelop.ICSharpCode.TextEditor.Project.Resources." + syntaxMode.FileName));
+            return new XmlTextReader(assembly.GetManifestResourceStream("O2.Platform.External.SharpDevelop._O2SharpDevelop.ICSharpCode.TextEditor.Project.Resources." + syntaxMode.FileName));
 		}
 		
 		public void UpdateSyntaxModeList()

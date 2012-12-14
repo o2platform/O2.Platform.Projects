@@ -12,6 +12,7 @@ using System.Text;
 
 using ICSharpCode.SharpDevelop.Dom.ReflectionLayer;
 using Mono.Cecil;
+using Mono.Collections.Generic;
 
 namespace ICSharpCode.SharpDevelop.Dom
 {
@@ -24,7 +25,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 			if (registry == null)
 				throw new ArgumentNullException("registry");
 			LoggingService.Info("Cecil: Load from " + fileName);
-			AssemblyDefinition asm = AssemblyFactory.GetAssembly(fileName);
+			AssemblyDefinition asm = AssemblyDefinition.ReadAssembly(fileName);
 			List<DomAssemblyName> referencedAssemblies = new List<DomAssemblyName>();
 			foreach (ModuleDefinition module in asm.Modules) {
 				foreach (AssemblyNameReference anr in module.AssemblyReferences) {
@@ -34,15 +35,18 @@ namespace ICSharpCode.SharpDevelop.Dom
 			return new CecilProjectContent(asm.Name.FullName, fileName, referencedAssemblies.ToArray(), asm, registry);
 		}
 		
-		static void AddAttributes(IProjectContent pc, IList<IAttribute> list, CustomAttributeCollection attributes)
+		static void AddAttributes(IProjectContent pc, IList<IAttribute> list, Collection<CustomAttribute> attributes)
 		{
-			foreach (CustomAttribute att in attributes) {
+			foreach (CustomAttribute att in attributes) 
+			{
 				DefaultAttribute a = new DefaultAttribute(CreateType(pc, null, att.Constructor.DeclaringType));
 				// Currently Cecil returns string instead of TypeReference for typeof() arguments to attributes
 				var parameters = att.Constructor.Parameters;
-				for (int i = 0; i < Math.Min(parameters.Count, att.ConstructorParameters.Count); i++) {
-					object o = att.ConstructorParameters[i];
-					if (parameters[i].ParameterType.FullName == "System.Type" && o is string) {
+				for (int i = 0; i < Math.Min(parameters.Count, att.Constructor.Parameters.Count); i++) 
+				{
+					object o = att.Constructor.Parameters[i];
+					if (parameters[i].ParameterType.FullName == "System.Type" && o is string) 
+					{
 						try {
 							a.PositionalArguments.Add(ReflectionReturnType.Parse(pc, (string)o));
 						} catch (ReflectionTypeNameSyntaxError ex) {
@@ -53,8 +57,9 @@ namespace ICSharpCode.SharpDevelop.Dom
 						a.PositionalArguments.Add(o);
 					}
 				}
-				foreach (DictionaryEntry entry in att.Properties) {
-					a.NamedArguments.Add(entry.Key.ToString(), entry.Value);
+				foreach (CustomAttributeNamedArgument entry in att.Properties) 
+				{
+					a.NamedArguments.Add(entry.Name.ToString(), entry.Argument);
 				}
 				list.Add(a);
 			}
@@ -76,33 +81,44 @@ namespace ICSharpCode.SharpDevelop.Dom
 		/// </summary>
 		internal static IReturnType CreateType(IProjectContent pc, IEntity member, TypeReference type)
 		{
-			while (type is ModType) {
-				type = (type as ModType).ElementType;
+			while (type is TypeSpecification) 
+			{
+				type = (type as TypeSpecification).ElementType;
 			}
-			if (type == null) {
+			if (type == null) 
+			{
 				LoggingService.Warn("CecilReader: Null type for: " + member);
 				return new VoidReturnType(pc);
 			}
-			if (type is ReferenceType) {
+			if (type is ByReferenceType) 
+			{
 				// TODO: Use ByRefRefReturnType
-				return CreateType(pc, member, (type as ReferenceType).ElementType);
-			} else if (type is PointerType) {
+				return CreateType(pc, member, (type as ByReferenceType).ElementType);
+			} else if (type is PointerType) 
+			{
 				return new PointerReturnType(CreateType(pc, member, (type as PointerType).ElementType));
-			} else if (type is ArrayType) {
+			} else if (type is ArrayType) 
+			{
 				return new ArrayReturnType(pc, CreateType(pc, member, (type as ArrayType).ElementType), (type as ArrayType).Rank);
-			} else if (type is GenericInstanceType) {
+			} else if (type is GenericInstanceType) 
+			{
 				GenericInstanceType gType = (GenericInstanceType)type;
 				IReturnType[] para = new IReturnType[gType.GenericArguments.Count];
-				for (int i = 0; i < para.Length; ++i) {
+				for (int i = 0; i < para.Length; ++i) 
+				{
 					para[i] = CreateType(pc, member, gType.GenericArguments[i]);
 				}
 				return new ConstructedReturnType(CreateType(pc, member, gType.ElementType), para);
-			} else if (type is GenericParameter) {
+			} else if (type is GenericParameter) 
+			{
 				GenericParameter typeGP = type as GenericParameter;
-				if (typeGP.Owner is MethodDefinition) {
+				if (typeGP.Owner is MethodDefinition) 
+				{
 					IMethod method = member as IMethod;
-					if (method != null) {
-						if (typeGP.Position < method.TypeParameters.Count) {
+					if (method != null) 
+					{
+						if (typeGP.Position < method.TypeParameters.Count) 
+						{
 							return new GenericReturnType(method.TypeParameters[typeGP.Position]);
 						}
 					}
@@ -154,7 +170,8 @@ namespace ICSharpCode.SharpDevelop.Dom
 			                           AssemblyDefinition assembly, ProjectContentRegistry registry)
 				: base(fullName, fileName, referencedAssemblies, registry)
 			{
-				foreach (ModuleDefinition module in assembly.Modules) {
+				foreach (ModuleDefinition module in assembly.Modules) 
+				{
 					AddTypes(module.Types);
 				}
 				AddAttributes(this, this.AssemblyCompilationUnit.Attributes, assembly.CustomAttributes);
@@ -162,7 +179,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 				this.AssemblyCompilationUnit.Freeze();
 			}
 			
-			void AddTypes(TypeDefinitionCollection types)
+			void AddTypes(Collection<TypeDefinition> types)
 			{
 				foreach (TypeDefinition td in types) {
 					if ((td.Attributes & TypeAttributes.Public) == TypeAttributes.Public) {
@@ -270,9 +287,9 @@ namespace ICSharpCode.SharpDevelop.Dom
 				string defaultMemberName = null;
 				foreach (CustomAttribute att in type.CustomAttributes) {
 					if (att.Constructor.DeclaringType.FullName == "System.Reflection.DefaultMemberAttribute"
-					    && att.ConstructorParameters.Count == 1)
+					    && att.Constructor.Parameters.Count == 1)
 					{
-						defaultMemberName = att.ConstructorParameters[0] as string;
+						defaultMemberName = att.Constructor.Parameters[0].Name;
 					}
 				}
 				
@@ -303,11 +320,13 @@ namespace ICSharpCode.SharpDevelop.Dom
 					}
 				}
 				
-				foreach (PropertyDefinition property in type.Properties) {
+				foreach (PropertyDefinition property in type.Properties) 
+				{
 					AddProperty(defaultMemberName, property);
 				}
 				
-				foreach (EventDefinition eventDef in type.Events) {
+				foreach (EventDefinition eventDef in type.Events) 
+				{
 					if (eventDef.AddMethod != null && IsVisible(eventDef.AddMethod.Attributes)) {
 						DefaultEvent e = new DefaultEvent(this, eventDef.Name);
 						if (this.ClassType == ClassType.Interface) {
@@ -320,13 +339,12 @@ namespace ICSharpCode.SharpDevelop.Dom
 						Events.Add(e);
 					}
 				}
-				
-				foreach (MethodDefinition method in type.Constructors) {
-					AddMethod(method);
-				}
+								
 				this.AddDefaultConstructorIfRequired = (this.ClassType == ClassType.Struct || this.ClassType == ClassType.Enum);
-				foreach (MethodDefinition method in type.Methods) {
-					if (!method.IsSpecialName) {
+				foreach (MethodDefinition method in type.Methods) 
+				{
+					if (!method.IsSpecialName) 
+					{
 						AddMethod(method);
 					}
 				}
@@ -386,7 +404,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 					if (method.IsConstructor)
 						m.ReturnType = this.DefaultReturnType;
 					else
-						m.ReturnType = CreateType(this.ProjectContent, m, method.ReturnType.ReturnType);
+						m.ReturnType = CreateType(this.ProjectContent, m, method.ReturnType);
 					AddAttributes(CompilationUnit.ProjectContent, m.Attributes, method.CustomAttributes);
 					if (this.ClassType == ClassType.Interface) {
 						m.Modifiers = ModifierEnum.Public | ModifierEnum.Abstract;
@@ -399,8 +417,8 @@ namespace ICSharpCode.SharpDevelop.Dom
 					Methods.Add(m);
 				}
 			}
-			
-			void AddExplicitInterfaceImplementations(OverrideCollection overrides, IMember targetMember)
+
+			void AddExplicitInterfaceImplementations(Collection<MethodReference> overrides, IMember targetMember)
 			{
 				foreach (MethodReference overrideRef in overrides) {
 					if (overrideRef.Name == targetMember.Name && targetMember.IsPublic) {
@@ -413,12 +431,13 @@ namespace ICSharpCode.SharpDevelop.Dom
 				}
 			}
 			
-			void AddParameters(IMethodOrProperty target, ParameterDefinitionCollection plist)
+			void AddParameters(IMethodOrProperty target, Collection<ParameterDefinition> plist)
 			{
 				foreach (ParameterDefinition par in plist) {
 					IReturnType pReturnType = CreateType(this.ProjectContent, target, par.ParameterType);
 					DefaultParameter p = new DefaultParameter(par.Name, pReturnType, DomRegion.Empty);
-					if (par.ParameterType is ReferenceType) {
+					if (par.ParameterType is ByReferenceType) 
+					{
 						if ((par.Attributes & ParameterAttributes.Out) == ParameterAttributes.Out) {
 							p.Modifiers = ParameterModifiers.Out;
 						} else {

@@ -8,8 +8,8 @@
     <ProjectGuid>{E76BCE43-8511-4CE8-A965-C0150F713CE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>O2.External.SharpDevelop</RootNamespace>
-    <AssemblyName>O2_External_SharpDevelop</AssemblyName>
+    <RootNamespace>O2.Platform.External.SharpDevelop</RootNamespace>
+    <AssemblyName>O2_Platform_External_SharpDevelop</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <FileUpgradeFlags>
@@ -24,7 +24,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\O2_Platform_ReferencedAssemblies\O2_Assemblies\</OutputPath>
+    <OutputPath>bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>2</WarningLevel>
@@ -45,9 +45,19 @@
     <AssemblyOriginatorKeyFile>TmpKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Cecil">
-      <HintPath>_ExternalDlls\Mono.Cecil.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Mono.Cecil.0.9.5.4\lib\net35\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>packages\Mono.Cecil.0.9.5.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Mono.Cecil.0.9.5.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>packages\Mono.Cecil.0.9.5.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -479,6 +489,7 @@
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\Tex-Mode.xshd" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\VBNET-Mode.xshd" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\XML-Mode.xshd" />
+    <None Include="packages.config" />
     <None Include="TmpKey.snk" />
     <None Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\BuildKeywords.pl" />
     <None Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\CSharp\cs.ATG" />
@@ -511,7 +522,10 @@
     <Content Include="Resources\images\tbShowO2ObjectModel.Image.png" />
     <Content Include="Resources\ScriptSamples\IronPython_CreateFindingManually_py.py" />
     <None Include="Resources\ScriptSamples\IronPython_HelloWorld_py.py" />
-    <EmbeddedResource Include="_ExternalDlls\Mono.Cecil.dll" />
+    <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.dll" />
+    <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Mdb.dll" />
+    <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Pdb.dll" />
+    <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Rocks.dll" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\CSharp\KeywordList.txt" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\VBNet\KeywordList.txt" />
     <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\Frames\SharpCoco.exe" />
