@@ -7,20 +7,24 @@
 
 using System;
 using System.Text;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.TextEditor.Document
 {
 	public class GapTextBufferStrategy : ITextBufferStrategy
-	{
-		#if DEBUG
+	{		
 		int creatorThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
-		
-		void CheckThread()
+
+		private bool ThreadOK()
 		{
 			if (System.Threading.Thread.CurrentThread.ManagedThreadId != creatorThread)
-				throw new InvalidOperationException("GapTextBufferStategy is not thread-safe!");
+			{
+				//throw new InvalidOperationException("GapTextBufferStategy is not thread-safe!");
+				"GapTextBufferStategy is not thread-safe!".error();
+				return false;
+			}
+			return true;
 		}
-		#endif
 		
 		char[] buffer = new char[0];
 		string cachedContent;
@@ -50,9 +54,8 @@ namespace ICSharpCode.TextEditor.Document
 		
 		public char GetCharAt(int offset)
 		{
-			#if DEBUG
-			CheckThread();
-			#endif
+			if (ThreadOK().isFalse())
+				return default(char);
 			
 			if (offset < 0 || offset >= Length) {
 				throw new ArgumentOutOfRangeException("offset", offset, "0 <= offset < " + Length.ToString());
@@ -63,9 +66,8 @@ namespace ICSharpCode.TextEditor.Document
 		
 		public string GetText(int offset, int length)
 		{
-			#if DEBUG
-			CheckThread();
-			#endif
+			if (ThreadOK().isFalse())
+				return default(string);
 			
 			if (offset < 0 || offset > Length) {
 				throw new ArgumentOutOfRangeException("offset", offset, "0 <= offset <= " + Length.ToString());
@@ -119,10 +121,9 @@ namespace ICSharpCode.TextEditor.Document
 			if (text == null) {
 				text = String.Empty;
 			}
-			
-			#if DEBUG
-			CheckThread();
-			#endif
+
+			if (ThreadOK().isFalse())
+				return;
 			
 			if (offset < 0 || offset > Length) {
 				throw new ArgumentOutOfRangeException("offset", offset, "0 <= offset <= " + Length.ToString());

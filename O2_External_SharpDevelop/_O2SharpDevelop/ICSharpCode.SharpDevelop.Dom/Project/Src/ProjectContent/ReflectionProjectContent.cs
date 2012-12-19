@@ -131,8 +131,8 @@ namespace ICSharpCode.SharpDevelop.Dom
 			}
 			
 			if (fileName != null) {
-				if (registry.persistence != null) {
-					this.XmlDoc = XmlDoc.Load(fileName, Path.Combine(registry.persistence.CacheDirectory, "XmlDoc"));
+				if (ProjectContentRegistry.persistence != null) {
+					this.XmlDoc = XmlDoc.Load(fileName, Path.Combine(ProjectContentRegistry.persistence.CacheDirectory, "XmlDoc"));
 				} else {
 					this.XmlDoc = XmlDoc.Load(fileName, null);
 				}

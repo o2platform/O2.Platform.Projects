@@ -21,7 +21,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 	/// </summary>
 	public class ProjectContentRegistry : IDisposable
 	{
-		internal DomPersistence persistence;
+		public static DomPersistence persistence;
 		Dictionary<string, IProjectContent> contents = new Dictionary<string, IProjectContent>(StringComparer.OrdinalIgnoreCase);
 		
 		/// <summary>

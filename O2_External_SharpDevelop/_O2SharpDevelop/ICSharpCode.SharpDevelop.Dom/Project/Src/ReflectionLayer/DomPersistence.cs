@@ -44,6 +44,8 @@ namespace ICSharpCode.SharpDevelop.Dom
 		public string SaveProjectContent(ReflectionProjectContent pc)
 		{
 			string assemblyFullName = pc.AssemblyFullName;
+			if (pc.AssemblyFullName.starts("tmp"))
+				return null;
 			int pos = assemblyFullName.IndexOf(',');
 			string fileName = Path.Combine(cacheDirectory,
 			                               assemblyFullName.Substring(0, pos)

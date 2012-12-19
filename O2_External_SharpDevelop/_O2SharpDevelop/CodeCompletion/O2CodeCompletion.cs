@@ -52,6 +52,8 @@ namespace O2.External.SharpDevelop.Ascx
         public ExpressionResult currentExpression;
         public List<String> loadedReferences { get; set; }
         public List<String> gacAssemblies { get; set; }
+		public ICompletionDataProvider completionDataProvider { get; set; }
+		public Action<CodeCompletionWindow> After_CodeCompletionWindow_IsAvailable { get; set; }
 
         public O2CodeCompletion(TextEditorControl _textEditor)
             : this(_textEditor,(text)=>text.info())
@@ -321,32 +323,33 @@ namespace O2.External.SharpDevelop.Ascx
                         return true;
             }
    //         "key pressed:{0}".format(key).info();
-            if (key == '.')// || key == ' ')
+         //   if (key == '.')// || key == ' ')
+			if (key == '.')
             {
-                onDot_showCodeCompleteWindow();
+				showCodeCompleteWindow(key);
                  
                 //});
 //                return true;
-            }
+            }			
             return false;
         }
 
-        public void onDot_showCodeCompleteWindow()
+        public void showCodeCompleteWindow(char key)
         { 
 //            CodeCompleteTargetText = textEditor.get_Text(); // update this text so that we are working with the latest version of the code/snippet
-            var key = '.';
+            //var key = '.';
             //O2Thread.mtaThread(   //I really want to run this on a separate thread but It is causing a weird problem where the codecomplete only happens after the 2nd char
                 //() =>
                 //{
 
             currentExpression = FindExpression();
-            "[O2CodeComplete] Current Expression: {0}".info(currentExpression);
-            var o2Timer = new O2Timer("Code Completion").start();
+            //"[O2CodeComplete] Current Expression: {0}".info(currentExpression);
+            //var o2Timer = new O2Timer("Code Completion").start();
             //textEditor.invokeOnThread(()=> textEditor.textArea().Caret.Column ++ );
             try
             {
                 //startOffset = textEditor.currentOffset() + 1;   // it was +1 before we made this run on an mta thread
-                ICompletionDataProvider completionDataProvider = this;//new CodeCompletionProvider(this);
+                completionDataProvider = this;//new CodeCompletionProvider(this);
 
                 codeCompletionWindow = CodeCompletionWindow.ShowCompletionWindow(
                     textEditor.ParentForm,					// The parent window for the completion window
@@ -362,12 +365,17 @@ namespace O2.External.SharpDevelop.Ascx
                     codeCompletionWindow.Closed += new EventHandler(CloseCodeCompletionWindow);
                 }
                 //textEditor.insertTextAtCurrentCaretLocation(".");
+				codeCompletionWindow.AfterLoadGui = () =>
+					{
+						codeCompletionWindow.AfterLoadGui = null;			//so that we only invoke this once
+						After_CodeCompletionWindow_IsAvailable.invoke(codeCompletionWindow);
+					};
             }
             catch (Exception ex)
             {
                 ex.log("in O2CodeCompletion.TextAreaKeyEventHandler");
             }
-            o2Timer.stop();
+           // o2Timer.stop();
         }
         
         void CloseCodeCompletionWindow(object sender, EventArgs e)
@@ -771,8 +779,9 @@ namespace O2.External.SharpDevelop.Ascx
                     // Group results by name and add "(x Overloads)" to the
                     // description if there are multiple results with the same name.                    
                     CodeCompletionData data;
-                    if (nameDictionary.TryGetValue(m.Name, out data)) {
-                        data.AddOverload();
+                    if (nameDictionary.TryGetValue(m.Name, out data)) 
+					{						
+						data.AddOverload(m);
                     } else {
                         nameDictionary[m.Name] = data = new CodeCompletionData(m,this);
                         resultList.Add(data);
@@ -807,11 +816,14 @@ namespace O2.External.SharpDevelop.Ascx
             o2CodeCompletion = _o2CodeCompletion;
         }
         
-        int overloads = 0;
-        
-        public void AddOverload()
-        {
-            overloads++;
+        //public int overloads = 0;
+	    public List<IMember> overloads = new List<IMember>();
+        //public void AddOverload()
+		internal void AddOverload(IMember member)
+		{
+			//var name = (m as DefaultMethod).DotNetName;
+			overloads.Add(member);
+//            overloads++;
         }
         
         static int GetMemberImageIndex(IMember member)
@@ -847,10 +859,21 @@ namespace O2.External.SharpDevelop.Ascx
                 if (description == null) {
                     IEntity entity = (IEntity)member ?? c;
                     description = GetText(entity);
-                    if (overloads > 1) {
-                        description += " (+" + overloads + " overloads)";
-                    }
-                    description += Environment.NewLine + XmlDocumentationToText(entity.Documentation);
+
+                    if (overloads.size() > 1) 
+					{
+                        description += " (+" + overloads.size() + " overloads)";
+						description += "\n\n-------------------------- \n\n";
+						foreach (var overload in overloads)
+						{
+							if (overload is DefaultMethod)
+								description += "{0}".line().format((overload as DefaultMethod).Signature());
+							else
+								description += "{0}".line().format(overload.str());
+						}
+					}
+	                
+                    //description += Environment.NewLine + XmlDocumentationToText(entity.Documentation);
                 }
                 return description;
             }
@@ -931,8 +954,8 @@ namespace O2.External.SharpDevelop.Ascx
             } catch (XmlException) {
                 return xmlDoc;
             }
-        }
-    }
+        }		
+	}
     
     
     public static class SharpdevelopExtensionMethods

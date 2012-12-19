@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.SharpDevelop.Dom
 {
@@ -190,12 +191,17 @@ namespace ICSharpCode.SharpDevelop.Dom
 			this.BodyRegion = bodyRegion;
 			Modifiers = m;
 		}
-		
-		public override string ToString()
+
+		public string Signature()
 		{
 			var cSharpAmbience = new Dom.CSharp.CSharpAmbience();
 			cSharpAmbience.ConversionFlags = ConversionFlags.StandardConversionFlags | ConversionFlags.UseFullyQualifiedMemberNames;
-			return String.Format("[DefaultMethod: {0}]", cSharpAmbience.Convert(this));
+			return cSharpAmbience.Convert(this);
+		}
+
+		public override string ToString()
+		{
+			return "[DefaultMethod: {0}]".format(this.Signature());
 		}
 		
 		public virtual int CompareTo(IMethod value)

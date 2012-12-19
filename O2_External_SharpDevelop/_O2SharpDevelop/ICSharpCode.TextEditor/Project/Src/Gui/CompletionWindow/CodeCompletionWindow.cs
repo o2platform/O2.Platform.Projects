@@ -6,36 +6,44 @@
 // </file>
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
 using O2.DotNetWrappers.ExtensionMethods;
 using O2.DotNetWrappers.DotNet;
-using CSharpEditor;
+using O2.External.SharpDevelop.Ascx;
 
 namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 {
 	public class CodeCompletionWindow : AbstractCompletionWindow
 	{
 		public ICompletionData[] completionData;
-		CodeCompletionListView codeCompletionListView;
-		VScrollBar vScrollBar = new VScrollBar();
-		ICompletionDataProvider dataProvider;
-		IDocument document;
-		bool showDeclarationWindow = true;
-		bool fixedListViewWidth = true;
-		const int ScrollbarWidth = 16;
-		const int MaxListLength = 10;
+		public CodeCompletionListView codeCompletionListView;
+		public VScrollBar vScrollBar = new VScrollBar();
+		public ICompletionDataProvider dataProvider;
+		public IDocument document;
+		public bool showDeclarationWindow = true;
+		public bool fixedListViewWidth = true;
+		public const int ScrollbarWidth = 16;
+		public const int MaxListLength = 10;
 
 		public int startOffset;         //DC: Made these public
 		public int endOffset;           //DC: Made these public
         public bool guiLoaded;           //DC
         public static bool busy;        //DC
+		public CodeCompletionData lastCodeCompleteData;
+		public DeclarationViewWindow declarationViewWindow = null;
+		public new Rectangle workingScreen;
 
-		DeclarationViewWindow declarationViewWindow = null;
-		new Rectangle workingScreen;
-		
+		//DC Couple events
+		public Action										AfterWindowOpen { get; set; }	
+		public Action										AfterLoadGui { get; set; }
+		public Action<Keys>									AfterKeyPress { get; set; }
+		public Func<ICompletionData[], ICompletionData[]>	FilterCompletionData { get; set; }		
+
 		public static CodeCompletionWindow ShowCompletionWindow(Form parent, TextEditorControl control, string fileName, ICompletionDataProvider completionDataProvider, char firstChar)
 		{
 			return ShowCompletionWindow(parent, control, fileName, completionDataProvider, firstChar, true, true);
@@ -59,6 +67,10 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
             
 		}
 
+		
+		
+		
+
         public static CodeCompletionWindow ShowCompletionWindow_Thread(Form parent,TextEditorControl control, string fileName, ICompletionDataProvider completionDataProvider, char firstChar, bool showDeclarationWindow, bool fixedListViewWidth)
         { 
             try
@@ -66,8 +78,10 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 
                     var tempCompletionData = new ICompletionData[] { };
                     CodeCompletionWindow codeCompletionWindow = new CodeCompletionWindow(completionDataProvider, tempCompletionData, parent, control, showDeclarationWindow, fixedListViewWidth);
-                    codeCompletionWindow.CloseWhenCaretAtBeginning = firstChar == '\0';
+	                codeCompletionWindow.CloseWhenCaretAtBeginning = firstChar == '\0';
                     codeCompletionWindow.ShowCompletionWindow();
+
+					codeCompletionWindow.AfterWindowOpen.invoke();
 
                     O2Thread.mtaThread(         // run in on a separate thread for performance reasons
                         () =>
@@ -110,7 +124,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 			this.fixedListViewWidth = fixedListViewWidth;
             this.guiLoaded = false;
             startOffset = control.ActiveTextAreaControl.Caret.Offset +1;
-            endOffset = startOffset;
+            endOffset = startOffset; 
             //startOffset = -1;
             //endOffset = -1;
 		}
@@ -120,7 +134,9 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
         //DC
         public void setCodeCompletionData(ICompletionData[] completionData)
         {
-            this.completionData = completionData;
+			this.completionData = FilterCompletionData.notNull()
+									? FilterCompletionData.invoke(completionData)
+									: completionData;
 
             //parentForm.invokeOnThread(() => loadGui());
             control.invokeOnThread(() => loadGui());
@@ -129,17 +145,18 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
         // DC (this code was in the constructor of this method which was not working on a multithread environment
         public void loadGui()
         {
+			this.clear();
             var completionDataProvider = this.dataProvider;            
 
             workingScreen = Screen.GetWorkingArea(Location);
         //    startOffset = control.ActiveTextAreaControl.Caret.Offset;// +1;
         //    endOffset = startOffset;
             
-            endOffset = control.ActiveTextAreaControl.Caret.Offset;
+			endOffset = control.ActiveTextAreaControl.Caret.Offset;
 
             if (completionDataProvider.PreSelection != null)
             {
-                startOffset -= completionDataProvider.PreSelection.Length + 1;
+                startOffset -= completionDataProvider.PreSelection.Length;
                 endOffset--;
             }
             guiLoaded = true;
@@ -149,6 +166,8 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
             codeCompletionListView.SelectedItemChanged += new EventHandler(CodeCompletionListViewSelectedItemChanged);
             codeCompletionListView.DoubleClick += new EventHandler(CodeCompletionListViewDoubleClick);
             codeCompletionListView.Click += new EventHandler(CodeCompletionListViewClick);
+			codeCompletionListView.KeyPress += new KeyPressEventHandler(codeCompletionListView_KeyPress);
+			codeCompletionListView.KeyUp += new System.Windows.Forms.KeyEventHandler(codeCompletionListView_KeyUp);
             Controls.Add(codeCompletionListView);
 
             if (completionData.Length > MaxListLength)
@@ -188,15 +207,18 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 
             vScrollBar.ValueChanged += VScrollBarValueChanged;
             document.DocumentAboutToBeChanged += DocumentAboutToBeChanged;
-            
-        }
-
+	        addToolStrip();
+			this.AfterLoadGui.invoke();
+        }		
 
 		void CodeCompletionListViewFirstItemChanged(object sender, EventArgs e)
 		{
-			if (inScrollUpdate) return;
+			if (inScrollUpdate) 
+				return;
 			inScrollUpdate = true;
-			vScrollBar.Value = Math.Min(vScrollBar.Maximum, codeCompletionListView.FirstItem);
+			var value = Math.Min(vScrollBar.Maximum, codeCompletionListView.FirstItem);
+			if (value > -1 && value < vScrollBar.Maximum)
+				vScrollBar.Value = value;
 			inScrollUpdate = false;
 		}
 		
@@ -274,17 +296,17 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
                 {
                     declarationViewWindow.Description = data.Description;
                     if (data is O2.External.SharpDevelop.Ascx.CodeCompletionData)
-                    {
-                        var codeCompleteData = (O2.External.SharpDevelop.Ascx.CodeCompletionData)data;
-                        if (codeCompleteData.member.notNull())
-                        {                  
-                            var memberSignature = codeCompleteData.member.str().remove("[DefaultMethod: ").removeLastChar();
+					{						
+                        lastCodeCompleteData = (O2.External.SharpDevelop.Ascx.CodeCompletionData)data;
+						if (lastCodeCompleteData.member.notNull())
+                        {
+							var memberSignature = lastCodeCompleteData.member.str().remove("[DefaultMethod: ").removeLastChar();
                             declarationViewWindow.Description = (declarationViewWindow.Description + memberSignature).trim();
                         }
-                        if (codeCompleteData.c.notNull())
+						if (lastCodeCompleteData.c.notNull())
                         {
-                            var classDescription = codeCompleteData.c.str().remove("[DefaultClass: ").removeLastChar().line();
-                            foreach (var method in codeCompleteData.c.Methods)
+							var classDescription = lastCodeCompleteData.c.str().remove("[DefaultClass: ").removeLastChar().line();
+							foreach (var method in lastCodeCompleteData.c.Methods)
                                 classDescription += " - {0}".info(method.str()).line();
                             declarationViewWindow.Description = (declarationViewWindow.Description + classDescription).trim();
                         }
@@ -338,6 +360,16 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		/// </summary>
 		public bool CloseWhenCaretAtBeginning { get; set; }
 		
+		public string TextSoFar
+		{
+			get
+			{
+				int offset = control.ActiveTextAreaControl.Caret.Offset - startOffset;				
+				return (offset> 0) 
+							? control.Document.GetText(startOffset, offset)
+							: "";
+			}
+		}
 		protected override void CaretOffsetChanged(object sender, EventArgs e)
 		{            
 			int offset = control.ActiveTextAreaControl.Caret.Offset;
@@ -352,13 +384,63 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 			}
 			if (offset < startOffset || offset > endOffset) {
 				Close();
-			} else {
-				codeCompletionListView.SelectItemWithStart(control.Document.GetText(startOffset, offset - startOffset));
+			} else
+			{
+				ShowEntriesThatMatchText(this.TextSoFar);
 			}
-		}       
-		
+		}
+
+		public void ShowEntriesThatMatchText(string text)
+		{
+			if (text.contains("d1"))
+			{
+				
+				"aa".o2Cache(this);
+				//this.codeCompletionListView.insert_Below(20);
+			}
+			codeCompletionListView.pink();
+			//if (text.contains("d"))
+			if (text.valid())
+			{
+				var lowerText = text.lower();
+				
+				var newCompletionData = new List<ICompletionData>();
+				foreach (var item in completionData)
+					if (item.Text.lower().contains(lowerText))
+						newCompletionData.add(item);
+				//completionData.Take(20).ToArray();
+
+				this.codeCompletionListView.completionData = newCompletionData.ToArray() ;
+				this.vScrollBar.Maximum = newCompletionData.size();
+				this.codeCompletionListView.ClearSelection();
+				this.codeCompletionListView.Refresh();
+				this.Refresh();
+			}
+			else
+			{
+				this.vScrollBar.Maximum = completionData.size();
+				this.codeCompletionListView.completionData = completionData;
+			}
+			
+			codeCompletionListView.SelectItemWithStart(text);
+		}
+
+		void codeCompletionListView_KeyUp(object sender, KeyEventArgs e)
+		{
+			"Keyup: {0}".info(e.KeyCode);
+			//ProcessTextAreaKey(e.KeyCode);
+		}		
+		void codeCompletionListView_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			//ProcessTextAreaKey(e.KeyChar);
+		}
+
 		protected override bool ProcessTextAreaKey(Keys keyData)
 		{
+			if (keyData == Keys.Back)
+			{
+				return false;			//DC: don't process backspace
+			}
             if (!Visible || codeCompletionListView == null)
             {
 				return false;
@@ -390,6 +472,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 					InsertSelectedItem('\n');
 					return true;
 			}
+			this.AfterKeyPress.invoke(keyData);
 			return base.ProcessTextAreaKey(keyData);
 		}
 		
@@ -400,6 +483,8 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		
 		void CodeCompletionListViewClick(object sender, EventArgs e)
 		{
+			O2Thread.mtaThread(() => this.focus()); // handle weird case where the focus went to the ScrollBar 
+
 			//control.ActiveTextAreaControl.TextArea.Focus();
 		}
 		
@@ -478,5 +563,12 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 			}
 			return (int)width;
 		}
+
+		//
+		public void addToolStrip()
+		{
+		//	this.insert_Below(20).add_ToolStrip();
+		}
 	}
+
 }

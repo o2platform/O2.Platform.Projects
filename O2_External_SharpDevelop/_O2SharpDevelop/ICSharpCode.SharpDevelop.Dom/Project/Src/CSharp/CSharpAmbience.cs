@@ -74,8 +74,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+            //if (false == CheckThread())
+            //    return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			
@@ -231,8 +231,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+            //if (false == CheckThread())
+            //    return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			
@@ -290,8 +290,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+           // if (false == CheckThread())
+           //   return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			
@@ -356,8 +356,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+            //if (false == CheckThread())
+            //    return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			
@@ -397,8 +397,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+            //if (false == CheckThread())
+            //    return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			builder.Append(ConvertAccessibility(m.Modifiers));
@@ -492,7 +492,7 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		
 		public override string Convert(IReturnType returnType)
 		{
-			CheckThread();
+		//	CheckThread();
 			
 			if (returnType == null) {
 				return String.Empty;
@@ -575,8 +575,8 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 		{
             //DC 
             //CheckThread();                
-            if (false == CheckThread())
-                return "";      // this could have some weird side effects
+            //if (false == CheckThread())
+            //    return "";      // this could have some weird side effects
 			
 			StringBuilder builder = new StringBuilder();
 			

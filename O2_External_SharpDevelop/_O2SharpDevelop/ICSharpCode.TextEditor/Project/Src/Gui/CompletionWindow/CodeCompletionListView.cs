@@ -44,7 +44,8 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		
 		public ICompletionData SelectedCompletionData {
 			get {
-				if (selectedItem < 0) {
+				if (selectedItem < 0 || completionData.Length < selectedItem  ) 
+				{
 					return null;
 				}
 				return completionData[selectedItem];
@@ -154,60 +155,89 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		}
 		
 		public void SelectItemWithStart(string startText)
-		{           
-			if (startText == null || startText.Length == 0) return;
-			string originalStartText = startText;
-			startText = startText.ToLower();
-			int bestIndex = -1;
-			int bestQuality = -1;
-			// Qualities: 0 = match start
-			//            1 = match start case sensitive
-			//            2 = full match
-			//            3 = full match case sensitive
-			double bestPriority = 0;
-			for (int i = 0; i < completionData.Length; ++i) {
-				string itemText = completionData[i].Text;
-				string lowerText = itemText.ToLower();
-				if (lowerText.StartsWith(startText)) {
-					double priority = completionData[i].Priority;
-					int quality;
-					if (lowerText == startText) {
-						if (itemText == originalStartText)
-							quality = 3;
+		{
+			lock (this)
+			{
+				if(startText == null || startText.Length == 0)
+					return;
+				string originalStartText = startText;
+				startText = startText.ToLower();
+				int bestIndex = -1;
+				int bestQuality = -1;
+				// Qualities: 0 = match start
+				//            1 = match start case sensitive
+				//            2 = full match
+				//            3 = full match case sensitive
+				double bestPriority = 0;
+				for (int i = 0; i < completionData.Length; ++i)
+				{
+					string itemText = completionData[i].Text;
+					string lowerText = itemText.ToLower();
+					if (lowerText.StartsWith(startText))
+					{
+						double priority = completionData[i].Priority;
+						int quality;
+						if (lowerText == startText)
+						{
+							if (itemText == originalStartText)
+								quality = 3;
+							else
+								quality = 2;
+						}
+						else if (itemText.StartsWith(originalStartText))
+						{
+							quality = 1;
+						}
 						else
-							quality = 2;
-					} else if (itemText.StartsWith(originalStartText)) {
-						quality = 1;
-					} else {
-						quality = 0;
-					}
-					bool useThisItem;
-					if (bestQuality < quality) {
-						useThisItem = true;
-					} else {
-						if (bestIndex == selectedItem) {
-							useThisItem = false;
-						} else if (i == selectedItem) {
-							useThisItem = bestQuality == quality;
-						} else {
-							useThisItem = bestQuality == quality && bestPriority < priority;
+						{
+							quality = 0;
+						}
+						bool useThisItem;
+						if (bestQuality < quality)
+						{
+							useThisItem = true;
+						}
+						else
+						{
+							if (bestIndex == selectedItem)
+							{
+								useThisItem = false;
+							}
+							else if (i == selectedItem)
+							{
+								useThisItem = bestQuality == quality;
+							}
+							else
+							{
+								useThisItem = bestQuality == quality && bestPriority < priority;
+							}
+						}
+						if (useThisItem)
+						{
+							bestIndex = i;
+							bestPriority = priority;
+							bestQuality = quality;
 						}
 					}
-					if (useThisItem) {
-						bestIndex = i;
-						bestPriority = priority;
-						bestQuality = quality;
-					}
 				}
-			}
-			if (bestIndex < 0) {
-				ClearSelection();
-			} else {
-				if (bestIndex < firstItem || firstItem + MaxVisibleItem <= bestIndex) {
-					SelectIndex(bestIndex);
-					CenterViewOn(bestIndex);
-				} else {
-					SelectIndex(bestIndex);
+				if (bestIndex < 0)
+				{
+					if (completionData.Length > 0)
+						SelectIndex(0);
+					else
+						ClearSelection();
+				}
+				else
+				{
+					if (bestIndex < firstItem || firstItem + MaxVisibleItem <= bestIndex)
+					{
+						SelectIndex(bestIndex);
+						CenterViewOn(bestIndex);
+					}
+					else
+					{
+						SelectIndex(bestIndex);
+					}
 				}
 			}
 		}
@@ -221,7 +251,14 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 			
 			int curItem = firstItem;
 			Graphics g  = pe.Graphics;
-			while (curItem < completionData.Length && yPos < Height) {
+
+			
+			var rec = new Rectangle(0, 0, Width - 1, Height - 1);
+			if (completionData.Length<10)
+				g.FillRectangle(SystemBrushes.Window, rec);	//DC:fill it all with white
+
+			while (curItem < completionData.Length && yPos < Height) 
+			{
 				RectangleF drawingBackground = new RectangleF(1, yPos, Width - 2, itemHeight);
 				if (drawingBackground.IntersectsWith(pe.ClipRectangle)) {
 					// draw Background
@@ -247,9 +284,10 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 				}
 				
 				yPos += itemHeight;
-				++curItem;
-			}
-			g.DrawRectangle(SystemPens.Control, new Rectangle(0, 0, Width - 1, Height - 1));
+				++curItem;				
+			}			
+			g.DrawRectangle(SystemPens.Control, rec);
+			
 		}
 		
 		protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
@@ -267,6 +305,7 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 				yPos += itemHeight;
 				++curItem;
 			}
+			this.Focus();
 		}
 		
 		protected override void OnPaintBackground(PaintEventArgs pe)

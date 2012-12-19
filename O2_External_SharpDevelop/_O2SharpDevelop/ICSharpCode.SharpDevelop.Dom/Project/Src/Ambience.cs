@@ -108,11 +108,11 @@ namespace ICSharpCode.SharpDevelop.Dom
 	public abstract class AbstractAmbience : IAmbience
 	{
 		//#if DEBUG
-		int ownerThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
+		//int ownerThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
 		//#endif
 		
 		//[System.Diagnostics.Conditional("DEBUG")]
-		protected bool CheckThread()    // DC
+		/*protected bool CheckThread()    // DC
 		{   
 			//#if DEBUG // DC
             if (ownerThread != System.Threading.Thread.CurrentThread.ManagedThreadId)
@@ -123,7 +123,7 @@ namespace ICSharpCode.SharpDevelop.Dom
             return true;
 			//	throw new InvalidOperationException("Ambience may only be used by the thread that created it");
 			//#endif    // DC
-		}
+		}*/
 		
 		ConversionFlags conversionFlags = ConversionFlags.StandardConversionFlags;
 		
@@ -132,8 +132,8 @@ namespace ICSharpCode.SharpDevelop.Dom
 				return conversionFlags;
 			}
 			set {
-                if (false == CheckThread())
-                    return;
+                //if (false == CheckThread())
+                //    return;
 				conversionFlags = value;
 			}
 		}
