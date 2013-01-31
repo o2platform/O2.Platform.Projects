@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>2</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -514,32 +515,32 @@
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\RightArrow.cur" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\SyntaxModes.xml" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\TextEditorControl.bmp" />
-    <Content Include="Resources\images\btCompileCode.Image.png" />
-    <Content Include="Resources\images\btDebugMethod.Image.png" />
-    <Content Include="Resources\images\btDragAssemblyCreated.Image.png" />
-    <Content Include="Resources\images\btExecuteAssemblyUnderDebug.Image.png" />
-    <Content Include="Resources\images\btExecuteMethodWithoutDebugger.Image.png" />
-    <Content Include="Resources\images\btExecuteOnExternalEngine.Image.png" />
-    <Content Include="Resources\images\btExecuteSelectedMethod.Image.png" />
-    <Content Include="Resources\images\btOpenFile.Image.png" />
-    <Content Include="Resources\images\btSaveFile.Image.png" />
-    <Content Include="Resources\images\btSeachAndViewAst.Image.png" />
-    <Content Include="Resources\images\btSelectedLineHistory.Image.png" />
-    <Content Include="Resources\images\btSettings.Image.png" />
-    <Content Include="Resources\images\btShowAssemblyExecutionPanel.Image.png" />
-    <Content Include="Resources\images\btShowHideCompilationErrors.Image.png" />
-    <Content Include="Resources\images\btShowHidePythonLogExecutionOutputData.Image.png" />
-    <Content Include="Resources\images\btShowLogs.Image.png" />
-    <Content Include="Resources\images\tbShowO2ObjectModel.Image.png" />
+    <None Include="Resources\images\btCompileCode.Image.png" />
+    <None Include="Resources\images\btDebugMethod.Image.png" />
+    <None Include="Resources\images\btDragAssemblyCreated.Image.png" />
+    <None Include="Resources\images\btExecuteAssemblyUnderDebug.Image.png" />
+    <None Include="Resources\images\btExecuteMethodWithoutDebugger.Image.png" />
+    <None Include="Resources\images\btExecuteOnExternalEngine.Image.png" />
+    <None Include="Resources\images\btExecuteSelectedMethod.Image.png" />
+    <None Include="Resources\images\btOpenFile.Image.png" />
+    <None Include="Resources\images\btSaveFile.Image.png" />
+    <None Include="Resources\images\btSeachAndViewAst.Image.png" />
+    <None Include="Resources\images\btSelectedLineHistory.Image.png" />
+    <None Include="Resources\images\btSettings.Image.png" />
+    <None Include="Resources\images\btShowAssemblyExecutionPanel.Image.png" />
+    <None Include="Resources\images\btShowHideCompilationErrors.Image.png" />
+    <None Include="Resources\images\btShowHidePythonLogExecutionOutputData.Image.png" />
+    <None Include="Resources\images\btShowLogs.Image.png" />
+    <None Include="Resources\images\tbShowO2ObjectModel.Image.png" />
     <Content Include="Resources\ScriptSamples\IronPython_CreateFindingManually_py.py" />
     <None Include="Resources\ScriptSamples\IronPython_HelloWorld_py.py" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.dll" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Mdb.dll" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Pdb.dll" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Rocks.dll" />
-    <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\CSharp\KeywordList.txt" />
-    <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\VBNet\KeywordList.txt" />
-    <Content Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\Frames\SharpCoco.exe" />
+    <None Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\CSharp\KeywordList.txt" />
+    <None Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\VBNet\KeywordList.txt" />
+    <None Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\Frames\SharpCoco.exe" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
