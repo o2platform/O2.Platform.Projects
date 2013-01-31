@@ -138,17 +138,17 @@
     </FileAssociation>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\O2.FluentSharp.BCL.csproj">
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\FluentSharp.BCL.csproj">
       <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
-      <Name>O2.FluentSharp.BCL</Name>
+      <Name>FluentSharp.BCL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\O2.FluentSharp.CoreLib.csproj">
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\FluentSharp.CoreLib.csproj">
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
-      <Name>O2.FluentSharp.CoreLib</Name>
+      <Name>FluentSharp.CoreLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.REPL\O2.FluentSharp.REPL.csproj">
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.REPL\FluentSharp.REPL.csproj">
       <Project>{D742BBEF-BFDC-477F-9880-5E0E2C89B6B2}</Project>
-      <Name>O2.FluentSharp.REPL</Name>
+      <Name>FluentSharp.REPL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\O2.FluentSharp.Roslyn.csproj">
       <Project>{1D5E7298-537E-409B-8059-2040CA60B55A}</Project>
