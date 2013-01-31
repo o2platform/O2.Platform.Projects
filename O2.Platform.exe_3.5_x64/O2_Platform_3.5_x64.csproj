@@ -50,6 +50,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x64</PlatformTarget>
     <NoStdLib>false</NoStdLib>
+    <NoWarn>1607</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -129,6 +130,10 @@
     <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\FluentSharp.CoreLib.csproj">
       <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
       <Name>FluentSharp.CoreLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.REPL\FluentSharp.REPL.csproj">
+      <Project>{D742BBEF-BFDC-477F-9880-5E0E2C89B6B2}</Project>
+      <Name>FluentSharp.REPL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

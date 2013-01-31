@@ -45,6 +45,12 @@
     <AssemblyOriginatorKeyFile>TmpKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentSharp.BCL, Version=5.0.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>packages\FluentSharp.BCL.5.0.44\lib\net35\FluentSharp.BCL.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.CoreLib, Version=5.0.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>packages\FluentSharp.CoreLib.5.0.44\lib\net35\FluentSharp.CoreLib.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Mono.Cecil.0.9.5.4\lib\net35\Mono.Cecil.dll</HintPath>
@@ -493,6 +499,7 @@
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\Tex-Mode.xshd" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\VBNET-Mode.xshd" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\XML-Mode.xshd" />
+    <None Include="O2.Platform.External.SharpDevelop.nuspec" />
     <None Include="packages.config" />
     <None Include="TmpKey.snk" />
     <None Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\BuildKeywords.pl" />
@@ -536,16 +543,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.BCL\FluentSharp.BCL.csproj">
-      <Project>{DF7E73CB-02AC-4689-BB8C-AC21FFCCDDC5}</Project>
-      <Name>FluentSharp.BCL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\O2.FluentSharp\O2.FluentSharp.CoreLib\FluentSharp.CoreLib.csproj">
-      <Project>{0A7CE0E0-B092-43B5-AB80-99BA909019C9}</Project>
-      <Name>FluentSharp.CoreLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

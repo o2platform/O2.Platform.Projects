@@ -2,11 +2,13 @@
 using System;
 using System.Reflection;
 using System.IO;
+using O2.DotNetWrappers.ExtensionMethods;
+using O2.FluentSharp.REPL;
 using O2.Kernel;
 
 namespace O2.Platform
 {
-    static class Program
+    public class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -14,9 +16,9 @@ namespace O2.Platform
 
         [STAThread]
         static void Main(string[] args)
-        {            
+        {                        
 			//new O2_Setup().startO2(args);
-            launch.o2Gui(args);
+            O2Launch.o2Gui(args);
             //launch_O2Gui_Via_Emebeded_Assembly(args);
         }
 
