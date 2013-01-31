@@ -532,7 +532,7 @@
     <None Include="Resources\images\btShowHidePythonLogExecutionOutputData.Image.png" />
     <None Include="Resources\images\btShowLogs.Image.png" />
     <None Include="Resources\images\tbShowO2ObjectModel.Image.png" />
-    <Content Include="Resources\ScriptSamples\IronPython_CreateFindingManually_py.py" />
+    <None Include="Resources\ScriptSamples\IronPython_CreateFindingManually_py.py" />
     <None Include="Resources\ScriptSamples\IronPython_HelloWorld_py.py" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.dll" />
     <EmbeddedResource Include="_Embedded_Dlls\Mono.Cecil.Mdb.dll" />
