@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="O2_Setup.cs.txt" />
-    <Content Include="O2_Setup.cs %28with no dependency on O2 Dlls%29.txt" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

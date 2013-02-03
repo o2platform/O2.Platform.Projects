@@ -501,7 +501,9 @@
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\VBNET-Mode.xshd" />
     <EmbeddedResource Include="_O2SharpDevelop\ICSharpCode.TextEditor\Project\Resources\XML-Mode.xshd" />
     <None Include="O2.Platform.External.SharpDevelop.nuspec" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="TmpKey.snk" />
     <None Include="_O2SharpDevelop\NRefactory\Project\Src\Lexer\BuildKeywords.pl" />
     <None Include="_O2SharpDevelop\NRefactory\Project\Src\Parser\CSharp\cs.ATG" />

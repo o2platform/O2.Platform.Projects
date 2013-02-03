@@ -981,7 +981,7 @@ namespace O2.External.SharpDevelop.Ascx
             }
             catch (Exception ex)
             {
-                ex.log("in DefaultProjectContent.add_Reference");
+                ex.log("in DefaultProjectContent.add_Reference for assembly: {0}".format(assemblyToLoad));
             }
         }
     }

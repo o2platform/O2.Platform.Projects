@@ -8,6 +8,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using O2.DotNetWrappers.ExtensionMethods;
 
 namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 {
@@ -244,50 +245,65 @@ namespace ICSharpCode.TextEditor.Gui.CompletionWindow
 		
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			float yPos       = 1;
-			float itemHeight = ItemHeight;
-			// Maintain aspect ratio
-			int imageWidth = (int)(itemHeight * imageList.ImageSize.Width / imageList.ImageSize.Height);
-			
-			int curItem = firstItem;
-			Graphics g  = pe.Graphics;
+		    try
+		    {
+		        float yPos = 1;
+		        float itemHeight = ItemHeight;
+		        // Maintain aspect ratio
+		        int imageWidth = (int) (itemHeight*imageList.ImageSize.Width/imageList.ImageSize.Height);
 
-			
-			var rec = new Rectangle(0, 0, Width - 1, Height - 1);
-			if (completionData.Length<10)
-				g.FillRectangle(SystemBrushes.Window, rec);	//DC:fill it all with white
+		        int curItem = firstItem;
+		        Graphics g = pe.Graphics;
 
-			while (curItem < completionData.Length && yPos < Height) 
-			{
-				RectangleF drawingBackground = new RectangleF(1, yPos, Width - 2, itemHeight);
-				if (drawingBackground.IntersectsWith(pe.ClipRectangle)) {
-					// draw Background
-					if (curItem == selectedItem) {
-						g.FillRectangle(SystemBrushes.Highlight, drawingBackground);
-					} else {
-						g.FillRectangle(SystemBrushes.Window, drawingBackground);
-					}
-					
-					// draw Icon
-					int   xPos   = 0;
-					if (imageList != null && completionData[curItem].ImageIndex < imageList.Images.Count) {
-						g.DrawImage(imageList.Images[completionData[curItem].ImageIndex], new RectangleF(1, yPos, imageWidth, itemHeight));
-						xPos = imageWidth;
-					}
-					
-					// draw text
-					if (curItem == selectedItem) {
-						g.DrawString(completionData[curItem].Text, Font, SystemBrushes.HighlightText, xPos, yPos);
-					} else {
-						g.DrawString(completionData[curItem].Text, Font, SystemBrushes.WindowText, xPos, yPos);
-					}
-				}
-				
-				yPos += itemHeight;
-				++curItem;				
-			}			
-			g.DrawRectangle(SystemPens.Control, rec);
-			
+
+		        var rec = new Rectangle(0, 0, Width - 1, Height - 1);
+		        if (completionData.Length < 10)
+		            g.FillRectangle(SystemBrushes.Window, rec); //DC:fill it all with white
+
+		        while (curItem < completionData.Length && yPos < Height)
+		        {
+		            RectangleF drawingBackground = new RectangleF(1, yPos, Width - 2, itemHeight);
+		            if (drawingBackground.IntersectsWith(pe.ClipRectangle))
+		            {
+		                // draw Background
+		                if (curItem == selectedItem)
+		                {
+		                    g.FillRectangle(SystemBrushes.Highlight, drawingBackground);
+		                }
+		                else
+		                {
+		                    g.FillRectangle(SystemBrushes.Window, drawingBackground);
+		                }
+
+		                // draw Icon
+		                int xPos = 0;
+		                if (imageList != null && completionData[curItem].ImageIndex < imageList.Images.Count)
+		                {
+		                    g.DrawImage(imageList.Images[completionData[curItem].ImageIndex],
+		                                new RectangleF(1, yPos, imageWidth, itemHeight));
+		                    xPos = imageWidth;
+		                }
+
+		                // draw text
+		                if (curItem == selectedItem)
+		                {
+		                    g.DrawString(completionData[curItem].Text, Font, SystemBrushes.HighlightText, xPos, yPos);
+		                }
+		                else
+		                {
+		                    g.DrawString(completionData[curItem].Text, Font, SystemBrushes.WindowText, xPos, yPos);
+		                }
+		            }
+
+		            yPos += itemHeight;
+		            ++curItem;
+		        }
+		        g.DrawRectangle(SystemPens.Control, rec);
+		    }
+		    catch (Exception ex)
+		    {
+		        ex.log();
+		    }
 		}
 		
 		protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)

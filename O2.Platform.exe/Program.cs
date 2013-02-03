@@ -21,18 +21,5 @@ namespace O2.Platform
             O2Launch.o2Gui(args);
             //launch_O2Gui_Via_Emebeded_Assembly(args);
         }
-
-        /*public static void launch_O2Gui_Via_Emebeded_Assembly(string[] args)
-        {
-            var resourceName = "O2.Platform._Dlls_Embeded.O2_FluentSharp_CoreLib.dll";
-            var assemblyStream = Assembly.GetEntryAssembly().GetManifestResourceStream(resourceName);
-            byte[] data = new BinaryReader(assemblyStream).ReadBytes((int)assemblyStream.Length);
-            Assembly assembly = Assembly.Load(data);
-            var type = assembly.GetType("O2.Kernel.launch");
-            var method = type.GetMethod("o2Gui");
-            method.Invoke(null, new object[] { args });
-        } */    
-
-
     }
 }
