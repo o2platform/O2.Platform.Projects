@@ -157,7 +157,7 @@ namespace ICSharpCode.SharpDevelop.Dom
 		
 		public string Documentation {
 			get {
-				if (documentation == null) {
+				if (documentation == null || documentation == "") {
 					string documentationTag = this.DocumentationTag;
 					if (documentationTag != null) {
 						IProjectContent pc = null;
@@ -166,9 +166,14 @@ namespace ICSharpCode.SharpDevelop.Dom
 						} else if (declaringType != null) {
 							pc = declaringType.ProjectContent;
 						}
-						if (pc != null) {
-							return pc.GetXmlDocumentation(documentationTag);
-						}
+						if (pc != null) 
+                        {
+							//return pc.GetXmlDocumentation(documentationTag); //DC:13/Dev/13: was returing null when the Documentation Tag had good stuff
+                            var xmlDocumentation = pc.GetXmlDocumentation(documentationTag);
+                            if (xmlDocumentation != null)
+                                return xmlDocumentation;
+                            return documentationTag.Substring(2); // remove the training M:
+                        }
 					}
 				}
 				return documentation;

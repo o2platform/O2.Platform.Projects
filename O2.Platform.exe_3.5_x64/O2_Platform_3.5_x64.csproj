@@ -16,7 +16,8 @@
     <ManifestKeyFile>O2_XRules_Database_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>false</GenerateManifests>
     <SignManifests>false</SignManifests>
-    <ApplicationIcon>Icons\O2Logo.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -106,11 +107,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\app.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Icons\H2Logo.ico" />
-    <EmbeddedResource Include="Icons\O2Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <FileAssociation Include=".h2">

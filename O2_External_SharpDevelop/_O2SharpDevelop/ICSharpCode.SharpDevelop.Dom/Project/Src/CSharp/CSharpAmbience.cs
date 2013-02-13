@@ -498,7 +498,10 @@ namespace ICSharpCode.SharpDevelop.Dom.CSharp
 				return String.Empty;
 			}
 			
-			returnType = returnType.GetDirectReturnType();
+			//returnType = returnType.GetDirectReturnType(); //DC:13/Feb/13 was returning ? a lot
+            var directReturnType = returnType.GetDirectReturnType();
+            if(directReturnType.ToString().Contains("ICSharpCode.SharpDevelop.Dom.UnknownReturnType") == false)
+                returnType = directReturnType;
 			
 			StringBuilder builder = new StringBuilder();
 			
