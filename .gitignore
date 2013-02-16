@@ -12,3 +12,5 @@ binaries
 /Misc_Microsoft_MPL_Libs/packages
 *.nupkg
 /VisualStudio Solution Files/packages
+/O2_Platform_Installer/Debug/O2_Platform_Installer.msi
+/O2_Platform_Installer/Debug/setup.exe

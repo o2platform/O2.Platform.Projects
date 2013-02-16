@@ -46,8 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.FluentSharp.CoreLib", "..\..\O2.FluentSharp\UnitTests\UnitTests.FluentSharp.CoreLib\UnitTests.FluentSharp.CoreLib.csproj", "{2D70DDE6-EC9B-4B69-8BD3-BCCC7FA4F165}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "O2_Platform_Installer", "..\O2_Platform_Installer\O2_Platform_Installer.vdproj", "{1D0D1B64-C21D-447E-AD01-C9B52A5040A4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.FluentSharp.BCL", "..\..\O2.FluentSharp\UnitTests\UnitTests.FluentSharp.BCL\UnitTests.FluentSharp.BCL.csproj", "{15ABA7E8-436C-4D60-97CA-E63D221FC09C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.FluentSharp.REPL", "..\..\O2.FluentSharp\UnitTests\UnitTests.FluentSharp.REPL\UnitTests.FluentSharp.REPL.csproj", "{EF0BBE23-9379-4595-B7E9-3496A70262FE}"
@@ -110,8 +108,6 @@ Global
 		{2D70DDE6-EC9B-4B69-8BD3-BCCC7FA4F165}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D70DDE6-EC9B-4B69-8BD3-BCCC7FA4F165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D70DDE6-EC9B-4B69-8BD3-BCCC7FA4F165}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D0D1B64-C21D-447E-AD01-C9B52A5040A4}.Debug|Any CPU.ActiveCfg = Debug
-		{1D0D1B64-C21D-447E-AD01-C9B52A5040A4}.Release|Any CPU.ActiveCfg = Release
 		{15ABA7E8-436C-4D60-97CA-E63D221FC09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15ABA7E8-436C-4D60-97CA-E63D221FC09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15ABA7E8-436C-4D60-97CA-E63D221FC09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
