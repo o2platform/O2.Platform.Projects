@@ -154,7 +154,7 @@
       <Project>{1D5E7298-537E-409B-8059-2040CA60B55A}</Project>
       <Name>O2.FluentSharp.Roslyn</Name>
     </ProjectReference>
-    <ProjectReference Include="..\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj">
+    <ProjectReference Include="..\..\O2.FluentSharp\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj">
       <Project>{E76BCE43-8511-4CE8-A965-C0150F713CE9}</Project>
       <Name>O2_External_SharpDevelop</Name>
     </ProjectReference>

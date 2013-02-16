@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FluentSharp - Main", "Fluen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependency code REPL CodeEditor", "Dependency code REPL CodeEditor", "{DEFD6957-3D31-413B-85CF-A2786CA439EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_External_SharpDevelop", "..\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj", "{E76BCE43-8511-4CE8-A965-C0150F713CE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2_External_SharpDevelop", "..\..\O2.FluentSharp\O2_External_SharpDevelop\O2_External_SharpDevelop.csproj", "{E76BCE43-8511-4CE8-A965-C0150F713CE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{E41B6E00-7977-44C2-95A9-F34142AE2C88}"
 EndProject
