@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WinForms = System.Windows.Forms;
+﻿using WinForms = System.Windows.Forms;
 using EnvDTE;
-using EnvDTE80;
 using Microsoft.VisualStudio.Shell.Interop;
-using O2.DotNetWrappers.DotNet;
-using O2.FluentSharp.VisualStudio;
 using O2.DotNetWrappers.ExtensionMethods;
 
 namespace O2.FluentSharp.VisualStudio.ExtensionMethods

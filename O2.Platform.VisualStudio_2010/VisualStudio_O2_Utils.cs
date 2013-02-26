@@ -16,14 +16,14 @@ namespace O2.FluentSharp.VisualStudio
 {
     public class VisualStudio_O2_Utils
     {
-        public static void installO2Scripts_IfDoesntExist()
+        /*public static void installO2Scripts_IfDoesntExist()
         {
             if (PublicDI.config.LocalScriptsFolder.dirExists().isFalse())
             {
                 O2Scripts.downloadO2Scripts();
             }
         
-        }         
+        } */        
         public static Thread compileAndExecuteScript(string scriptFile, string type, string method)
         {
             "[VisualStudio_O2_Utils]: compileAndExecuteScript: {0}!{1}.{2}".debug(scriptFile, type, method);
@@ -90,8 +90,7 @@ namespace O2.FluentSharp.VisualStudio
         public static void addVisualStudioReferencesForCompilation()
         {
             CompileEngine.DefaultReferencedAssemblies
-                            .add_OnlyNewItems(//needed for VS scripting
-                                              "O2_FluentSharp_VisualStudio_2010.dll",
+                            .add_OnlyNewItems(//needed for VS scripting                                              
                                               "Microsoft.VisualStudio.Shell.10.0.dll",
                                               "Microsoft.VisualStudio.Shell.Interop.dll",
                                               "Microsoft.VisualStudio.Shell.Interop.8.0.dll",
@@ -110,12 +109,14 @@ namespace O2.FluentSharp.VisualStudio
                                               "Microsoft.VisualStudio.CoreUtility.dll",
                                               "Microsoft.VisualStudio.Platform.VSEditor.dll",
                                               "Microsoft.VisualStudio.Text.Data.dll",
-                                              "O2_FluentSharp_WPF.dll",
+                                              "FluentSharp.WPF.dll",
                                               //needed for WPF
                                               "PresentationFramework.dll",
                                               "PresentationCore.dll",
                                               "WindowsBase.dll",
-                                              "System.Xaml.dll"
+                                              "System.Xaml.dll",
+                                              //needed for FluentSharp ExtensionMethods
+                                              "O2.Platform.VisualStudio_2010.dll"
                                               );
             CompileEngine.DefaultUsingStatements
                             .add_OnlyNewItems("O2.FluentSharp.VisualStudio",

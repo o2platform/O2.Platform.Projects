@@ -30,7 +30,8 @@ namespace O2.Platform.VisualStudio_2010_Extension
 
         public O2_Platform_Gui installO2Scripts()
         {
-            VisualStudio_O2_Utils.installO2Scripts_IfDoesntExist();
+            "Skipping: VisualStudio_O2_Utils.installO2Scripts_IfDoesntExist();".info();
+            //VisualStudio_O2_Utils.installO2Scripts_IfDoesntExist();
             return this;
         }
         public O2_Platform_Gui createTopLevelMenu()

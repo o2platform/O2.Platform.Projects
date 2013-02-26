@@ -28,11 +28,11 @@ namespace O2.FluentSharp.VisualStudio
 
         public NoSolution_Package()
         {
-			O2ConfigSettings.O2Version = "O2_VS2010_4.4.16";
+			O2ConfigSettings.O2Version += "_VS2010";
 			PublicDI.config = new O2.Kernel.InterfacesBaseImpl.KO2Config();
-			open.logViewer();
-			//O2ConfigSettings.O2Version = "VisualStudio_v1.5.4";
-            //Trace.WriteLine("In NoSolution_Package ctor");
+
+            //open.scriptEditor();
+			//open.logViewer();			
         }
 
         /*public void showErrorInOutputWindow(Exception exToShow)
@@ -54,9 +54,9 @@ namespace O2.FluentSharp.VisualStudio
             try
             {				
                 //These two assemblies must be on the localPath
-                if (Assembly.Load("O2_FluentSharp_CoreLib") == null || Assembly.Load("O2_FluentSharp_REPL") == null)
+                if (Assembly.Load("FluentSharp.CoreLib") == null || Assembly.Load("FluentSharp.REPL") == null)
                 {
-                    Debug.WriteLine("[O2.FLuentSharp.VisualStudio] Error in loading O2_FluentSharp_CoreLib.exe or O2_FluentSharp_REPL.exe assemblies");
+                    Debug.WriteLine("[O2.FLuentSharp.VisualStudio] Error in loading FluentSharp.CoreLib.dll or FluentSharp.REPL.exe assemblies");
                     return;
                 }
                 AssemblyResolver.Init();    //set's up assembly resolver (the O2.FluentSharp.CoreLib.dll must be on local path);
@@ -80,8 +80,7 @@ namespace O2.FluentSharp.VisualStudio
                         VisualStudio_O2_Utils.open_LogViewer();
 					
                     populateDefaultVSComObjects();
-                    VisualStudio_2010.Initialized = true;
-                    //VisualStudio_O2_Utils.compileAndExecuteScript(@"VS_Scripts\O2_Platform_Gui.cs", "O2_Platform_Gui", "buildGui");
+                    VisualStudio_2010.Initialized = true;                    
 
 					O2Thread.mtaThread(
 							()=> new O2Platform_VisualStudio().loadO2PlatformVSEnvironment());

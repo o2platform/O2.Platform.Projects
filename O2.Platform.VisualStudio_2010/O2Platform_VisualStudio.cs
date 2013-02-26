@@ -8,11 +8,7 @@ using O2.DotNetWrappers.ExtensionMethods;
 using O2.Kernel.InterfacesBaseImpl;
 
 namespace O2.FluentSharp.VisualStudio
-{
-	public class VS_O2_MemoryLogger : MemoryLogger
-	{ 
-		public override 
-	}
+{	
 	public class O2Platform_VisualStudio
 	{
 		public void loadO2PlatformVSEnvironment()
@@ -22,7 +18,7 @@ namespace O2.FluentSharp.VisualStudio
 				VisualStudio_O2_Utils.waitForDTEObject();
 				VisualStudio_O2_Utils.waitForOutputWindow();
 				
-				VisualStudio_2010.O2_OutputWindow.
+				//VisualStudio_2010.O2_OutputWindow.
 				"[O2_Platform_VisualStudio_2010Package] Package: {0}, DTE: {1}".info(VisualStudio_2010.Package, VisualStudio_2010.DTE2);
 
 				CompileEngine.LocalFoldersToSearchForCodeFiles.Add(this.type().assemblyLocation().parentFolder());		// so that "{file}".local() is able to find files included with this

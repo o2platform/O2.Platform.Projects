@@ -18,10 +18,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\O2_Platform_ReferencedAssemblies\O2_Assemblies\</OutputPath>
+    <OutputPath>bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,25 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentSharp.BCL, Version=5.1.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.5.0.78\lib\net35\FluentSharp.BCL.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.CoreLib, Version=5.1.1.1, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.5.0.78\lib\net35\FluentSharp.CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.NGit, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.NGit.5.0.78\lib\net40\FluentSharp.NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.REPL, Version=5.1.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.5.0.78\lib\net35\FluentSharp.REPL.exe</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.Roslyn, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.Roslyn.5.0.78\lib\net40\FluentSharp.Roslyn.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentSharp.WPF, Version=5.1.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.WPF.5.0.78\lib\net40\FluentSharp.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
@@ -49,21 +69,20 @@
       <Private>false</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
-    <Reference Include="O2_FluentSharp_BCL, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.BCL.4.5.2.0\lib\net35\O2_FluentSharp_BCL.dll</HintPath>
+    <Reference Include="NGit">
+      <HintPath>..\..\O2.FluentSharp\O2.FluentSharp.NGit\_EmbededDlls\NGit.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="O2_FluentSharp_CoreLib, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.CoreLib.4.5.2.0\lib\net35\O2_FluentSharp_CoreLib.dll</HintPath>
-    </Reference>
-    <Reference Include="O2_FluentSharp_REPL, Version=4.5.3.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.REPL.4.5.3.0\lib\net35\O2_FluentSharp_REPL.exe</HintPath>
-    </Reference>
-    <Reference Include="O2_FluentSharp_WPF, Version=4.5.2.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
-      <HintPath>..\VisualStudio Solution Files\packages\FluentSharp.WPF.4.5.2.0\lib\net40\O2_FluentSharp_WPF.dll</HintPath>
+    <Reference Include="O2_Platform_External_SharpDevelop, Version=5.1.1.0, Culture=neutral, PublicKeyToken=55a0f9bf4256d533, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\VisualStudio Solution Files\packages\O2.Platform.External.SharpDevelop.5.0.78\lib\net35\O2_Platform_External_SharpDevelop.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Roslyn.Compilers">
+      <HintPath>..\..\O2.FluentSharp\O2.FluentSharp.Roslyn\_EmbededDlls\Roslyn.Compilers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -146,20 +165,43 @@
     </Compile>
     <Compile Include="Controls\WindowPane_WinForms.cs" />
     <Compile Include="Controls\WindowPane_WPF.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Windows.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_TO_ADD_TO_O2.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_DTE.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_WPF_WinForms.cs" />
-    <Compile Include="ExtensionMethods\_VisualStudio_2010_ExtensionMethods_Empty.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Document.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_ErrorList.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_IVsUIShell.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Menus.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Multiple_Guis.cs" />
-    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Projects.cs" />
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Document.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_DTE.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_ErrorList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_IVsUIShell.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Menus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Multiple_Guis.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Projects.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_TO_ADD_TO_O2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_Windows.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\VisualStudio_2010_ExtensionMethods_WPF_WinForms.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\_VisualStudio_2010_ExtensionMethods_Empty.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="NoSolution_Package.cs" />
-    <Content Include="O2.Platform.VisualStudio_2010Package.cs.txt" />
     <Compile Include="O2Platform_VisualStudio.cs" />
     <Compile Include="Packages\Packages_for_ProvideAutoLoads.cs" />
     <Compile Include="Packages\Package_IWpfTextViewCreationListener.cs" />
@@ -169,6 +211,7 @@
     <Compile Include="VisualStudio_O2_Utils.cs" />
     <Content Include="VS_Scripts\O2_Platform_Gui.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +245,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="VS_O2_PlugIns\PoCs\Create Window to Show MainGui Live Preview.h2" />
+    <Content Include="VS_O2_PlugIns\Setup CatNet and TeamMentor.h2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Key.snk" />
@@ -228,6 +275,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>

@@ -1,0 +1,3 @@
+﻿var localDevFolder = @"E:\O2_V4\O2 Platform REPOS\O2.Platform.CatNet";
+CompileEngine.LocalFoldersToSearchForCodeFiles.add_If_Not_There(localDevFolder);
+ @"VS_Scripts\TeamMentor_Gui.cs".local().executeFirstMethod();

@@ -10,6 +10,7 @@ using O2.FluentSharp.VisualStudio;
 using O2.DotNetWrappers.DotNet;
 using O2.DotNetWrappers.ExtensionMethods;
 using EnvDTE;
+using Microsoft.VisualStudio;
 
 
 

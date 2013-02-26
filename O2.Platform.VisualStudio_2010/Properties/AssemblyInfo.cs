@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Owasp O2 Platform")]
+[assembly: AssemblyTitle("Owasp O2 Platform - VisualStudio 2010")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("O2 Platform")]
@@ -29,8 +29,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("4.5.3.1")]
-[assembly: AssemblyFileVersion("4.5.3.1")]
+[assembly: AssemblyVersion("5.1.1.1")]
+[assembly: AssemblyFileVersion("5.1.1.1")]
 
 
 
