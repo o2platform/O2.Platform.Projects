@@ -60,6 +60,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.IdentityModel">
@@ -340,6 +341,7 @@
     <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WebServiceHost2Factory.cs" />
     <Compile Include="WCF REST Starter Kit Preview 2\Microsoft.ServiceModel.Web\WrappedOperationSelector.cs" />
     <Compile Include="WCF REST Starter Kit Preview 2\PasteXmlAsType\Converter.cs" />
+    <Compile Include="XmlToXsd_ExtensionMethods.cs" />
     <Compile Include="XObjects\Cmdline\update.cs" />
     <Compile Include="XObjects\Cmdline\XObjectsGenerator.cs" />
     <Compile Include="XObjects\Src\API\ContentModel.cs" />

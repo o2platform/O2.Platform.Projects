@@ -1,6 +1,9 @@
 //----------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //----------------------------------------------------------------
+
+using FluentSharp.CoreLib.API;
+
 namespace Microsoft.Http
 {
     using System;
@@ -107,7 +110,7 @@ namespace Microsoft.Http
             }
             if (local.exception != null && throwException)
             {
-                O2.Kernel.PublicDI.log.ex(local.exception);
+                PublicDI.log.ex(local.exception);
                 throw local.exception;
             }
             return local;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FluentSharp.CoreLib;
 using Xml.Schema.Linq;
 using System.Xml.Linq;
 using System.Windows.Forms;

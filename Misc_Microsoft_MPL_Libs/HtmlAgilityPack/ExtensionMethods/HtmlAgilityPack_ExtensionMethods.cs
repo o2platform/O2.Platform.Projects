@@ -6,6 +6,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using FluentSharp.CoreLib;
 using O2.DotNetWrappers.ExtensionMethods;
 
 //O2Ref:System.Xml.Linq.dll
