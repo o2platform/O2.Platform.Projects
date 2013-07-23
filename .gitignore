@@ -14,3 +14,4 @@ binaries
 /VisualStudio Solution Files/packages
 /O2_Platform_Installer/Debug/O2_Platform_Installer.msi
 /O2_Platform_Installer/Debug/setup.exe
+*.ncrunchsolution

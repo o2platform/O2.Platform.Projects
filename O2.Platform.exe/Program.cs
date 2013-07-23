@@ -1,10 +1,6 @@
 // This file is part of the OWASP O2 Platform (http://www.owasp.org/index.php/OWASP_O2_Platform) and is released under the Apache 2.0 License (http://www.apache.org/licenses/LICENSE-2.0)
 using System;
-using System.Reflection;
-using System.IO;
-using O2.DotNetWrappers.ExtensionMethods;
-using O2.FluentSharp.REPL;
-using O2.Kernel;
+using FluentSharp.REPL.Utils;
 
 namespace O2.Platform
 {
@@ -15,7 +11,7 @@ namespace O2.Platform
         /// </summary>
 
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {                        
 			//new O2_Setup().startO2(args);
             O2Launch.o2Gui(args);

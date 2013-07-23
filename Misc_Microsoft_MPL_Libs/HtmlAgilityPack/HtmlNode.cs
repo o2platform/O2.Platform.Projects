@@ -5,7 +5,6 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using FluentSharp.CoreLib;
-using O2.DotNetWrappers.ExtensionMethods;
 
 namespace HtmlAgilityPack
 {

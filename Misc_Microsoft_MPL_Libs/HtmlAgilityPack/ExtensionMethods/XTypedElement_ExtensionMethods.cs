@@ -7,7 +7,7 @@ using Xml.Schema.Linq;
 using System.Xml.Linq;
 using System.Windows.Forms;
 
-namespace O2.DotNetWrappers.ExtensionMethods
+namespace FluentSharp.For_XmlSchemaLinq
 {
     public static class XTypedElement_ExtensionMethods
     {

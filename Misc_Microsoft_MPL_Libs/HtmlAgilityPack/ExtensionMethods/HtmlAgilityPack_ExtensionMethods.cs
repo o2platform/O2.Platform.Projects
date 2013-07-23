@@ -7,14 +7,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using FluentSharp.CoreLib;
-using O2.DotNetWrappers.ExtensionMethods;
 
 //O2Ref:System.Xml.Linq.dll
 //O2Ref:System.Xml.dll
 
 //O2File:_Extra_methods_WinForms_TreeView.cs
 
-namespace O2.XRules.Database.Utils
+namespace FluentSharp.For_HtmlAgilityPack
 {
     public static class HtmlAgilityPack_ExtensionMethods
     {
